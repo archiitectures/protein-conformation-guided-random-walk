@@ -1,4 +1,9 @@
-"""Simple PDB-style C-alpha coordinate input and output."""
+"""Simple PDB-style C-alpha coordinate input and output.
+
+The parser and writer are intentionally minimal. They support enough fixed-column
+PDB syntax to run demos and tests, but they are not replacements for BioPython,
+MDAnalysis, or a full mmCIF/PDB parser.
+"""
 
 from __future__ import annotations
 
@@ -10,8 +15,10 @@ import numpy as np
 def read_pdb_ca(path: str | Path) -> np.ndarray:
     """Read C-alpha coordinates from a PDB file.
 
-    This intentionally supports a minimal PDB subset for the MVP. It reads ATOM
-    records whose atom name is CA and returns an array of shape (L, 3).
+    This intentionally supports a minimal PDB subset for the MVP. It reads
+    ``ATOM``/``HETATM`` records whose atom name is ``CA`` and returns an array of
+    shape ``(L, 3)``. Residue identity, chain breaks, alternate locations, and
+    insertion codes are not interpreted yet.
     """
     pdb_path = Path(path)
     coords: list[list[float]] = []
@@ -44,7 +51,12 @@ def write_pdb_ca(
     residue_name: str = "ALA",
     chain_id: str = "A",
 ) -> None:
-    """Write C-alpha coordinates to a minimal PDB-like file."""
+    """Write C-alpha coordinates to a minimal PDB-like file.
+
+    The output is suitable for inspecting generated C-alpha traces and for this
+    package's own ``read_pdb_ca`` function. It is not intended to be a complete
+    physically meaningful all-atom PDB.
+    """
     pdb_path = Path(path)
     pdb_path.parent.mkdir(parents=True, exist_ok=True)
     array = np.asarray(coords, dtype=float)

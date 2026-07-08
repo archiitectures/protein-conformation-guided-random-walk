@@ -11,7 +11,15 @@ import numpy as np
 
 @dataclass(slots=True)
 class PathResult:
-    """Structured shortest-path result."""
+    """Structured shortest-path result.
+
+    Attributes:
+        node_ids: Ordered graph node IDs from start to end.
+        total_cost: Sum of edge weights along the selected path.
+        edge_scores: Per-edge raw scores, final weights, and optional probability
+            diagnostics.
+        metadata: Small JSON-serializable summary of path settings.
+    """
 
     node_ids: list[str]
     total_cost: float
@@ -19,7 +27,7 @@ class PathResult:
     metadata: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
-        """Return a JSON-serializable dictionary."""
+        """Return a JSON-serializable dictionary for demo output."""
         return {
             "node_ids": self.node_ids,
             "total_cost": self.total_cost,
@@ -34,7 +42,15 @@ def find_shortest_path(
     end_id: str,
     beta: float | None = None,
 ) -> PathResult:
-    """Find the Dijkstra shortest path between endpoint node IDs."""
+    """Find the Dijkstra shortest path between endpoint node IDs.
+
+    NetworkX's Dijkstra implementation minimizes the sum of stored edge
+    ``weight`` values. The optional ``beta`` parameter does not change that
+    objective; it only adds the diagnostic quantity ``exp(-beta * weight)`` to
+    each returned edge record. That diagnostic can be interpreted as an
+    unnormalized transition preference where lower-cost edges receive larger
+    values.
+    """
     node_ids = nx.shortest_path(graph, start_id, end_id, weight="weight")
     total_cost = float(nx.shortest_path_length(graph, start_id, end_id, weight="weight"))
     edge_scores: list[dict[str, float | str]] = []

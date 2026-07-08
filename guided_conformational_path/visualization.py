@@ -1,4 +1,9 @@
-"""Graph visualization helpers."""
+"""Graph visualization helpers.
+
+Visualization is intentionally static in the MVP. The goal is to give a quick
+inspection artifact for graph topology and selected path membership, not a
+publication-quality structural movie.
+"""
 
 from __future__ import annotations
 
@@ -33,7 +38,14 @@ def plot_graph(
     output_path: str | Path = "outputs/graph.png",
     seed: int = 7,
 ) -> None:
-    """Save a static graph layout PNG with optional shortest-path highlight."""
+    """Save a static graph layout PNG with optional shortest-path highlight.
+
+    Nodes are colored by source label and endpoints are drawn larger than
+    generated nodes. If ``path_node_ids`` is supplied, edges along that path are
+    drawn darker and wider. The layout is a NetworkX spring layout over graph
+    connectivity, so positions are schematic and do not correspond to molecular
+    coordinates or embedding distances.
+    """
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path_nodes = set(path_node_ids or [])
@@ -79,5 +91,10 @@ def plot_graph(
 
 
 def animate_graph_build(*args: Any, **kwargs: Any) -> None:
-    """Placeholder for future graph construction animation."""
+    """Placeholder for future graph construction animation.
+
+    The placeholder reserves the API location for a future implementation that
+    could animate node addition, edge creation, or path refinement. It is not
+    implemented because the first version only needs static PNG output.
+    """
     raise NotImplementedError("Graph animation is intentionally left as a future extension.")

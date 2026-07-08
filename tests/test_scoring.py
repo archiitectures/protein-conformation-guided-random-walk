@@ -6,7 +6,12 @@ import numpy as np
 import pytest
 
 from guided_conformational_path.nodes import ConformationNode
-from guided_conformational_path.scoring import DistanceHistogramScorer, RMSDScorer, kabsch_rmsd
+from guided_conformational_path.scoring import (
+    DistanceHistogramScorer,
+    RMSDScorer,
+    distance_histogram,
+    kabsch_rmsd,
+)
 
 
 def test_kabsch_rmsd_zero_for_rotated_translated_coordinates() -> None:
@@ -42,3 +47,11 @@ def test_distance_histogram_score_is_finite_and_nonnegative() -> None:
     score = DistanceHistogramScorer(metric="js").score(node_a, node_b)
     assert np.isfinite(score)
     assert score >= 0.0
+
+
+def test_distance_histogram_is_normalized() -> None:
+    coords = np.arange(18, dtype=float).reshape(6, 3)
+    hist = distance_histogram(coords, bins=8, distance_range=(0.0, 40.0))
+
+    assert hist.shape == (8,)
+    assert hist.sum() == pytest.approx(1.0)

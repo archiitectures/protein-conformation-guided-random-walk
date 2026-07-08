@@ -6,13 +6,17 @@ from abc import ABC, abstractmethod
 from typing import Literal
 
 import numpy as np
-from scipy.spatial.distance import jensenshannon
+from scipy.spatial.distance import jensenshannon, pdist
 
 from guided_conformational_path.nodes import ConformationNode
 
 
 class EdgeScorer(ABC):
-    """Abstract interface for edge-cost scoring between conformation nodes."""
+    """Abstract interface for edge-cost scoring between conformation nodes.
+
+    Scores are interpreted as edge costs in the graph: lower values imply a more
+    plausible or shorter transition between two candidate conformations.
+    """
 
     @abstractmethod
     def score(self, node_i: ConformationNode, node_j: ConformationNode) -> float:
@@ -20,7 +24,12 @@ class EdgeScorer(ABC):
 
 
 class RMSDScorer(EdgeScorer):
-    """C-alpha RMSD scorer using Kabsch alignment."""
+    """C-alpha RMSD scorer using Kabsch alignment.
+
+    RMSD is computed after optimal rigid-body superposition, so global
+    translation and rotation do not affect the score. The two nodes must contain
+    the same number of C-alpha coordinates in the same residue order.
+    """
 
     def score(self, node_i: ConformationNode, node_j: ConformationNode) -> float:
         """Return Kabsch-aligned RMSD between two nodes."""
@@ -28,7 +37,12 @@ class RMSDScorer(EdgeScorer):
 
 
 class DistanceHistogramScorer(EdgeScorer):
-    """Compare distributions of pairwise C-alpha distances."""
+    """Compare distributions of pairwise C-alpha distances.
+
+    This scorer compares global distance distributions rather than residue-wise
+    correspondences. It can be useful as a coarse shape similarity measure, but
+    it discards which residue pair produced each distance.
+    """
 
     def __init__(
         self,
@@ -36,6 +50,14 @@ class DistanceHistogramScorer(EdgeScorer):
         distance_range: tuple[float, float] = (0.0, 80.0),
         metric: Literal["l2", "js"] = "l2",
     ) -> None:
+        """Create a distance-histogram scorer.
+
+        Args:
+            bins: Number of histogram bins.
+            distance_range: Inclusive distance span passed to NumPy histogram.
+            metric: ``"l2"`` for Euclidean histogram distance or ``"js"`` for
+                Jensen-Shannon distance.
+        """
         if metric not in {"l2", "js"}:
             raise ValueError("metric must be 'l2' or 'js'")
         self.bins = bins
@@ -52,7 +74,12 @@ class DistanceHistogramScorer(EdgeScorer):
 
 
 def kabsch_rmsd(coords_a: np.ndarray, coords_b: np.ndarray) -> float:
-    """Compute RMSD after optimal rigid-body alignment."""
+    """Compute RMSD after optimal rigid-body alignment.
+
+    The implementation centers both coordinate sets, computes the covariance
+    matrix, obtains the optimal rotation via singular value decomposition, and
+    corrects improper rotations before calculating RMSD.
+    """
     a = _validated_coords(coords_a, "coords_a")
     b = _validated_coords(coords_b, "coords_b")
     if a.shape != b.shape:
@@ -75,14 +102,16 @@ def distance_histogram(
     bins: int = 32,
     distance_range: tuple[float, float] = (0.0, 80.0),
 ) -> np.ndarray:
-    """Return a normalized histogram of all nonzero pairwise distances."""
+    """Return a normalized histogram of all pairwise C-alpha distances.
+
+    Pairwise distances are computed with ``scipy.spatial.distance.pdist`` to
+    avoid constructing an explicit ``L x L x 3`` broadcasted difference array.
+    """
     array = _validated_coords(coords, "coords")
     if array.shape[0] < 2:
         raise ValueError("At least two coordinates are required for distance histograms")
-    deltas = array[:, None, :] - array[None, :, :]
-    distances = np.sqrt(np.sum(deltas * deltas, axis=-1))
-    upper = distances[np.triu_indices(array.shape[0], k=1)]
-    hist, _ = np.histogram(upper, bins=bins, range=distance_range, density=False)
+    distances = pdist(array, metric="euclidean")
+    hist, _ = np.histogram(distances, bins=bins, range=distance_range, density=False)
     hist = hist.astype(float)
     total = hist.sum()
     if total == 0:
@@ -91,6 +120,7 @@ def distance_histogram(
 
 
 def _validated_coords(coords: np.ndarray, name: str) -> np.ndarray:
+    """Normalize and validate a C-alpha coordinate array."""
     array = np.asarray(coords, dtype=float)
     if array.ndim != 2 or array.shape[1] != 3:
         raise ValueError(f"{name} must have shape (L, 3); got {array.shape}")

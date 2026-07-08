@@ -1,4 +1,10 @@
-"""Run the end-to-end guided conformational path demo."""
+"""Run the end-to-end guided conformational path demo.
+
+The demo is intentionally small and CPU-friendly. It either loads two supplied
+PDB files or creates toy C-alpha endpoint traces, generates validity-filtered
+Gaussian perturbation nodes, builds a weighted graph, finds the Dijkstra
+shortest path, and writes inspection artifacts under ``outputs/``.
+"""
 
 from __future__ import annotations
 
@@ -23,7 +29,11 @@ from guided_conformational_path.visualization import plot_graph
 
 
 def main() -> None:
-    """Parse arguments and run the demo pipeline."""
+    """Parse arguments and run the demo pipeline.
+
+    This command is the quickest integration check for the package. It does not
+    perform model inference, physical simulation, or trajectory validation.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--endpoint-a", type=Path, default=None)
     parser.add_argument("--endpoint-b", type=Path, default=None)
@@ -73,6 +83,12 @@ def _load_or_create_endpoints(
     endpoint_a_path: Path | None,
     endpoint_b_path: Path | None,
 ) -> tuple[ConformationNode, ConformationNode]:
+    """Load both endpoint PDBs or create deterministic toy endpoints.
+
+    The CLI requires both endpoint paths or neither. Supplying only one endpoint
+    would make the graph path problem ill-defined for this demo, so it raises a
+    clear ``ValueError``.
+    """
     if endpoint_a_path is not None and endpoint_b_path is not None:
         return (
             ConformationNode("A", "A_endpoint", read_pdb_ca(endpoint_a_path), file_path=endpoint_a_path),
@@ -89,7 +105,12 @@ def _load_or_create_endpoints(
 
 
 def _make_toy_endpoints(n_residues: int = 30) -> tuple[np.ndarray, np.ndarray]:
-    """Create two smooth synthetic C-alpha traces for quick CPU demos."""
+    """Create two smooth synthetic C-alpha traces for quick CPU demos.
+
+    The second endpoint bends the back half of the chain relative to the first.
+    This gives the graph a visible endpoint difference without requiring any
+    external structure files.
+    """
     residue_idx = np.arange(n_residues, dtype=float)
     coords_a = np.column_stack(
         [

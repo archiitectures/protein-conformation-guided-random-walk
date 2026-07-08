@@ -20,7 +20,18 @@ def build_conformation_graph(
     lambda_validity: float = 0.1,
     k_neighbors: int | None = None,
 ) -> nx.Graph:
-    """Build a weighted conformation graph from endpoints and generated nodes."""
+    """Build a weighted conformation graph from endpoints and generated nodes.
+
+    Each ``ConformationNode`` becomes one NetworkX node keyed by ``node_id``.
+    Edges are scored by the supplied ``EdgeScorer`` and then augmented by a
+    lightweight validity penalty:
+
+    ``weight = scorer.score(i, j) + lambda_validity * (penalty_i + penalty_j)``
+
+    If ``k_neighbors`` is ``None``, all node pairs are connected. Otherwise, the
+    function keeps each node's ``k`` lowest-cost incident edges, producing a
+    sparse undirected graph for larger candidate sets.
+    """
     nodes = [endpoint_a, endpoint_b, *generated_a, *generated_b]
     graph = nx.Graph()
     validity_by_id = {node.node_id: check_node_validity(node) for node in nodes}
@@ -59,7 +70,11 @@ def _select_knn_edges(
     node_ids: object,
     k_neighbors: int,
 ) -> set[tuple[float, str, str, float]]:
-    """Select undirected k-nearest-neighbor edges by cost."""
+    """Select undirected k-nearest-neighbor edges by edge cost.
+
+    The candidate edge tuple is ``(weight, node_i, node_j, raw_score)``. Because
+    the graph is undirected, an edge selected by either endpoint is retained.
+    """
     if k_neighbors <= 0:
         raise ValueError("k_neighbors must be positive")
     selected: set[tuple[float, str, str, float]] = set()

@@ -1,4 +1,10 @@
-"""Core data structures for protein conformations."""
+"""Core data structures for protein conformations.
+
+This MVP represents each conformation with one coordinate per residue: the
+alpha-carbon position. That keeps the graph prototype lightweight and easy to
+test, but it also means validity and clash checks are coarse C-alpha checks
+rather than full atomistic validation.
+"""
 
 from __future__ import annotations
 
@@ -20,7 +26,17 @@ VALID_SOURCES = {
 
 @dataclass(slots=True)
 class ConformationNode:
-    """A C-alpha protein conformation used as a graph node."""
+    """A C-alpha protein conformation used as a graph node.
+
+    Attributes:
+        node_id: Unique identifier used as the NetworkX node key.
+        source: Provenance label. Valid values distinguish endpoints, generated
+            nodes from each endpoint, and externally supplied structures.
+        coords: NumPy array with shape ``(L, 3)`` where ``L`` is the number of
+            residues represented by C-alpha coordinates.
+        metadata: Optional free-form provenance/debug information.
+        file_path: Optional path to the source PDB/mmCIF-like file.
+    """
 
     node_id: str
     source: str
@@ -29,7 +45,7 @@ class ConformationNode:
     file_path: str | Path | None = None
 
     def __post_init__(self) -> None:
-        """Validate and normalize node fields."""
+        """Validate source labels and normalize coordinates to float arrays."""
         if self.source not in VALID_SOURCES:
             allowed = ", ".join(sorted(VALID_SOURCES))
             raise ValueError(f"Invalid source '{self.source}'. Expected one of: {allowed}")
@@ -44,5 +60,5 @@ class ConformationNode:
 
     @property
     def n_residues(self) -> int:
-        """Return the number of C-alpha coordinates."""
+        """Return the number of represented residues/C-alpha coordinates."""
         return int(self.coords.shape[0])

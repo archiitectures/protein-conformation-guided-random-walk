@@ -25,6 +25,32 @@ Generated plausible structures are candidate graph nodes only. Equilibrium-like
 samples or model-generated conformations do not automatically determine
 transition dynamics.
 
+## Current Abstractions
+
+- `ConformationNode` is the central data object. It stores a unique node ID,
+  source label, optional metadata, optional source path, and C-alpha coordinates
+  with shape `(L, 3)`.
+- `NodeGenerator` defines how candidate nodes are proposed from an endpoint.
+  The dummy generator adds Gaussian noise to C-alpha coordinates and rejects
+  samples that fail lightweight validity checks.
+- `EdgeScorer` defines graph edge costs. `RMSDScorer` uses Kabsch-aligned
+  C-alpha RMSD. `DistanceHistogramScorer` compares global pairwise C-alpha
+  distance histograms.
+- `validity.py` provides coarse C-alpha checks for finite coordinates,
+  consecutive C-alpha bond-distance ranges, and non-neighbor C-alpha
+  clash-like overlaps.
+- `build_conformation_graph` creates a NetworkX weighted graph. Edge weights are
+  scorer costs plus an additive validity penalty.
+- `find_shortest_path` uses Dijkstra shortest path over graph edge weights. Its
+  optional `beta` parameter only reports unnormalized `exp(-beta * weight)`
+  diagnostics; it does not change the path objective.
+
+The clash filter is intentionally C-alpha-only because the current data model
+does not store full atom coordinates. It helps reject severe coordinate overlaps
+from Gaussian perturbations, but it is not a full atom-atom steric validation.
+Full clash detection will require full-atom structures or atom reconstruction in
+a later version.
+
 ## Setup
 
 ```bash
@@ -82,6 +108,11 @@ external model, convert generated structures into C-alpha coordinate arrays, and
 return `ConformationNode` objects. The graph, scoring, validity, visualization,
 and path-search layers should not need to know which generator produced the
 nodes.
+
+The dummy Gaussian generator may return fewer than the requested number of nodes
+if validity filtering rejects too many proposed samples within its attempt
+budget. The generator records accepted/rejected counts in
+`last_generation_summary` and in accepted node metadata.
 
 ## Checkpoint And Resume
 

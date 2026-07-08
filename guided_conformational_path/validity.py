@@ -1,4 +1,10 @@
-"""Lightweight physical validity checks for C-alpha conformations."""
+"""Lightweight physical validity checks for C-alpha conformations.
+
+The current data model stores only C-alpha coordinates, so these checks are
+coarse filters rather than full molecular validation. In particular, the clash
+check is a C-alpha-only proxy that catches severe coordinate overlaps; it is not
+equivalent to full atom-atom steric clash detection.
+"""
 
 from __future__ import annotations
 
@@ -11,7 +17,14 @@ from guided_conformational_path.nodes import ConformationNode
 
 @dataclass(slots=True)
 class ValidityResult:
-    """Result of simple conformation validity checks."""
+    """Result of simple conformation validity checks.
+
+    Attributes:
+        valid: True when no penalty-producing checks fired.
+        score: Additive penalty. Larger values indicate more severe violations.
+        messages: Human-readable reasons for penalties, suitable for metadata
+            and debugging.
+    """
 
     valid: bool
     score: float
@@ -24,7 +37,22 @@ def check_node_validity(
     max_bond_distance: float = 4.5,
     clash_distance: float | None = 2.0,
 ) -> ValidityResult:
-    """Check finite coordinates, C-alpha bond distances, and coarse clashes."""
+    """Check finite coordinates, C-alpha bond distances, and coarse clashes.
+
+    Args:
+        node: Conformation to validate.
+        min_bond_distance: Minimum expected distance between consecutive
+            C-alpha atoms.
+        max_bond_distance: Maximum expected distance between consecutive
+            C-alpha atoms.
+        clash_distance: If provided, non-neighbor C-alpha pairs closer than this
+            threshold are counted as clash-like overlaps.
+
+    Returns:
+        A ``ValidityResult`` containing a boolean decision, additive penalty,
+        and explanatory messages. Consecutive residues are excluded from the
+        clash-like check because bonded neighbors are expected to be close.
+    """
     coords = np.asarray(node.coords, dtype=float)
     messages: list[str] = []
     penalty = 0.0
@@ -46,13 +74,24 @@ def check_node_validity(
             penalty += float(np.sum(np.maximum(bond_distances - max_bond_distance, 0.0)))
 
     if clash_distance is not None and coords.shape[0] >= 3:
-        deltas = coords[:, None, :] - coords[None, :, :]
-        distances = np.sqrt(np.sum(deltas * deltas, axis=-1))
-        mask = np.triu(np.ones(distances.shape, dtype=bool), k=2)
-        clashes = distances[mask] < clash_distance
+        clashes = non_neighbor_ca_clashes(coords, clash_distance)
         if np.any(clashes):
             count = int(np.count_nonzero(clashes))
             messages.append(f"{count} non-neighbor C-alpha distances below clash threshold")
             penalty += float(count)
 
     return ValidityResult(valid=penalty == 0.0, score=penalty, messages=messages)
+
+
+def non_neighbor_ca_clashes(coords: np.ndarray, clash_distance: float) -> np.ndarray:
+    """Return a boolean vector for non-neighbor C-alpha clash-like distances.
+
+    The returned array corresponds to all residue pairs separated by at least two
+    sequence positions. It is intentionally C-alpha-only because full atom
+    coordinates are not represented in this MVP.
+    """
+    array = np.asarray(coords, dtype=float)
+    deltas = array[:, None, :] - array[None, :, :]
+    distances = np.sqrt(np.sum(deltas * deltas, axis=-1))
+    mask = np.triu(np.ones(distances.shape, dtype=bool), k=2)
+    return distances[mask] < clash_distance
