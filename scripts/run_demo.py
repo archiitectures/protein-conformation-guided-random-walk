@@ -1,0 +1,109 @@
+"""Run the end-to-end guided conformational path demo."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from guided_conformational_path.generators import DummyPerturbationGenerator
+from guided_conformational_path.graph import build_conformation_graph
+from guided_conformational_path.io import read_pdb_ca, write_pdb_ca
+from guided_conformational_path.nodes import ConformationNode
+from guided_conformational_path.path_search import find_shortest_path
+from guided_conformational_path.scoring import DistanceHistogramScorer, RMSDScorer
+from guided_conformational_path.visualization import plot_graph
+
+
+def main() -> None:
+    """Parse arguments and run the demo pipeline."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--endpoint-a", type=Path, default=None)
+    parser.add_argument("--endpoint-b", type=Path, default=None)
+    parser.add_argument("--n-samples", type=int, default=20)
+    parser.add_argument("--scorer", choices=["rmsd", "distance_histogram"], default="rmsd")
+    parser.add_argument("--outputs-dir", type=Path, default=Path("outputs"))
+    parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Placeholder only; no long-running training or checkpoint resume exists in v1.",
+    )
+    args = parser.parse_args()
+
+    if args.resume:
+        print("Resume requested, but checkpoint/resume is a placeholder in this MVP.")
+
+    endpoint_a, endpoint_b = _load_or_create_endpoints(args.endpoint_a, args.endpoint_b)
+    n_from_a = args.n_samples // 2
+    n_from_b = args.n_samples - n_from_a
+
+    generator = DummyPerturbationGenerator(seed=args.seed)
+    generated_a = generator.generate_from_endpoint(endpoint_a, n_from_a)
+    generated_b = generator.generate_from_endpoint(endpoint_b, n_from_b)
+
+    scorer = RMSDScorer() if args.scorer == "rmsd" else DistanceHistogramScorer(metric="l2")
+    graph = build_conformation_graph(endpoint_a, endpoint_b, generated_a, generated_b, scorer)
+    result = find_shortest_path(graph, endpoint_a.node_id, endpoint_b.node_id, beta=1.0)
+
+    args.outputs_dir.mkdir(parents=True, exist_ok=True)
+    nodes_dir = args.outputs_dir / "nodes"
+    nodes_dir.mkdir(parents=True, exist_ok=True)
+    for node in [endpoint_a, endpoint_b, *generated_a, *generated_b]:
+        write_pdb_ca(nodes_dir / f"{node.node_id}.pdb", node.coords)
+
+    summary_path = args.outputs_dir / "path_summary.json"
+    with summary_path.open("w", encoding="utf-8") as handle:
+        json.dump(result.to_dict(), handle, indent=2)
+
+    plot_graph(graph, result.node_ids, args.outputs_dir / "graph.png")
+    print(f"Shortest path: {' -> '.join(result.node_ids)}")
+    print(f"Total cost: {result.total_cost:.4f}")
+    print(f"Wrote {summary_path} and {args.outputs_dir / 'graph.png'}")
+
+
+def _load_or_create_endpoints(
+    endpoint_a_path: Path | None,
+    endpoint_b_path: Path | None,
+) -> tuple[ConformationNode, ConformationNode]:
+    if endpoint_a_path is not None and endpoint_b_path is not None:
+        return (
+            ConformationNode("A", "A_endpoint", read_pdb_ca(endpoint_a_path), file_path=endpoint_a_path),
+            ConformationNode("B", "B_endpoint", read_pdb_ca(endpoint_b_path), file_path=endpoint_b_path),
+        )
+    if endpoint_a_path is not None or endpoint_b_path is not None:
+        raise ValueError("Provide both --endpoint-a and --endpoint-b, or neither.")
+
+    coords_a, coords_b = _make_toy_endpoints()
+    return (
+        ConformationNode("A", "A_endpoint", coords_a, metadata={"synthetic": True}),
+        ConformationNode("B", "B_endpoint", coords_b, metadata={"synthetic": True}),
+    )
+
+
+def _make_toy_endpoints(n_residues: int = 30) -> tuple[np.ndarray, np.ndarray]:
+    """Create two smooth synthetic C-alpha traces for quick CPU demos."""
+    residue_idx = np.arange(n_residues, dtype=float)
+    coords_a = np.column_stack(
+        [
+            residue_idx * 3.8,
+            np.sin(residue_idx * 0.35) * 2.0,
+            np.cos(residue_idx * 0.35) * 2.0,
+        ]
+    )
+    hinge = residue_idx >= n_residues // 2
+    coords_b = coords_a.copy()
+    coords_b[hinge, 1] += np.linspace(0.0, 12.0, int(np.count_nonzero(hinge)))
+    coords_b[hinge, 2] += np.linspace(0.0, -6.0, int(np.count_nonzero(hinge)))
+    return coords_a, coords_b
+
+
+if __name__ == "__main__":
+    main()
