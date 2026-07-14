@@ -37,14 +37,23 @@ def plot_graph(
     path_node_ids: list[str] | None = None,
     output_path: str | Path = "outputs/graph.png",
     seed: int = 7,
+    min_edge_weight: float | None = None,
+    max_edge_weight: float | None = None,
+    non_path_edge_alpha: float = 0.85,
+    path_edge_alpha: float = 0.95,
 ) -> None:
     """Save a static graph layout PNG with optional shortest-path highlight.
 
     Nodes are colored by source label and endpoints are drawn larger than
     generated nodes. If ``path_node_ids`` is supplied, edges along that path are
-    drawn darker and wider. The layout is a NetworkX spring layout over graph
-    connectivity, so positions are schematic and do not correspond to molecular
-    coordinates or embedding distances.
+    drawn darker and wider. Non-path edges can be filtered by stored edge
+    ``weight`` and/or drawn with low alpha for large dense graphs. Path edges
+    are always retained even when they fall outside the filter range.
+
+    In this project edge ``weight`` is a cost, so ``max_edge_weight`` is often
+    the useful sparse-view control: it hides high-cost edges while retaining the
+    lower-cost neighborhood. ``min_edge_weight`` is included for diagnostics when
+    a user explicitly wants to hide very low-cost edges.
     """
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -56,7 +65,11 @@ def plot_graph(
             for node_i, node_j in zip(path_node_ids[:-1], path_node_ids[1:])
         }
 
-    positions = nx.spring_layout(graph, seed=seed, weight="weight")
+    layout_graph = graph.copy()
+    for node_i, node_j, attrs in layout_graph.edges(data=True):
+        cost = max(float(attrs.get("weight", 1.0)), 1e-9)
+        attrs["layout_weight"] = 1.0 / cost
+    positions = nx.spring_layout(layout_graph, seed=seed, weight="layout_weight")
     node_colors = [
         SOURCE_COLORS.get(graph.nodes[node_id].get("source", "external"), "#bdbdbd")
         for node_id in graph.nodes
@@ -65,17 +78,37 @@ def plot_graph(
         420 if graph.nodes[node_id].get("source") in {"A_endpoint", "B_endpoint"} else 180
         for node_id in graph.nodes
     ]
-    edge_colors = [
-        "#111111" if tuple(sorted(edge)) in path_edges else "#cccccc"
-        for edge in graph.edges
-    ]
-    edge_widths = [
-        3.0 if tuple(sorted(edge)) in path_edges else 0.8
-        for edge in graph.edges
-    ]
+    path_edge_list = []
+    non_path_edge_list = []
+    for edge in graph.edges:
+        edge_key = tuple(sorted(edge))
+        if edge_key in path_edges:
+            path_edge_list.append(edge)
+            continue
+        weight = float(graph.edges[edge].get("weight", 0.0))
+        if min_edge_weight is not None and weight < min_edge_weight:
+            continue
+        if max_edge_weight is not None and weight > max_edge_weight:
+            continue
+        non_path_edge_list.append(edge)
 
     plt.figure(figsize=(9, 7))
-    nx.draw_networkx_edges(graph, positions, edge_color=edge_colors, width=edge_widths, alpha=0.85)
+    nx.draw_networkx_edges(
+        graph,
+        positions,
+        edgelist=non_path_edge_list,
+        edge_color="#cccccc",
+        width=0.8,
+        alpha=non_path_edge_alpha,
+    )
+    nx.draw_networkx_edges(
+        graph,
+        positions,
+        edgelist=path_edge_list,
+        edge_color="#111111",
+        width=3.0,
+        alpha=path_edge_alpha,
+    )
     nx.draw_networkx_nodes(
         graph,
         positions,

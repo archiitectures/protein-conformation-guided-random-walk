@@ -13,10 +13,12 @@ dependencies = [
     "scipy",
     "networkx",
     "matplotlib",
+    "Pillow",
 ]
 
 [project.optional-dependencies]
 test = ["pytest"]
+notebook = ["ipykernel", "py3Dmol", "tqdm"]
 
 [tool.setuptools.packages.find]
 include = ["guided_conformational_path*"]

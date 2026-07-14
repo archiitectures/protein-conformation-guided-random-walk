@@ -7,9 +7,26 @@ MDAnalysis, or a full mmCIF/PDB parser.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+
+
+@dataclass(frozen=True, slots=True)
+class CARecord:
+    """C-alpha atom record parsed from a PDB file."""
+
+    chain_id: str
+    residue_number: int
+    insertion_code: str
+    residue_name: str
+    coord: np.ndarray
+
+    @property
+    def residue_key(self) -> tuple[str, int, str]:
+        """Return the residue identity key used for exact endpoint matching."""
+        return (self.chain_id, self.residue_number, self.insertion_code)
 
 
 def read_pdb_ca(path: str | Path) -> np.ndarray:
@@ -20,8 +37,14 @@ def read_pdb_ca(path: str | Path) -> np.ndarray:
     shape ``(L, 3)``. Residue identity, chain breaks, alternate locations, and
     insertion codes are not interpreted yet.
     """
+    records = read_pdb_ca_records(path)
+    return np.asarray([record.coord for record in records], dtype=float)
+
+
+def read_pdb_ca_records(path: str | Path) -> list[CARecord]:
+    """Read C-alpha atom records and residue identifiers from a PDB file."""
     pdb_path = Path(path)
-    coords: list[list[float]] = []
+    records: list[CARecord] = []
     with pdb_path.open("r", encoding="utf-8") as handle:
         for line in handle:
             if not line.startswith(("ATOM", "HETATM")):
@@ -30,19 +53,28 @@ def read_pdb_ca(path: str | Path) -> np.ndarray:
             if atom_name != "CA":
                 continue
             try:
-                coords.append(
-                    [
-                        float(line[30:38]),
-                        float(line[38:46]),
-                        float(line[46:54]),
-                    ]
+                records.append(
+                    CARecord(
+                        chain_id=line[21].strip() or "_",
+                        residue_number=int(line[22:26]),
+                        insertion_code=line[26].strip(),
+                        residue_name=line[17:20].strip(),
+                        coord=np.asarray(
+                            [
+                                float(line[30:38]),
+                                float(line[38:46]),
+                                float(line[46:54]),
+                            ],
+                            dtype=float,
+                        ),
+                    )
                 )
             except ValueError as exc:
                 raise ValueError(f"Could not parse coordinate line in {pdb_path}: {line!r}") from exc
 
-    if not coords:
+    if not records:
         raise ValueError(f"No C-alpha coordinates found in {pdb_path}")
-    return np.asarray(coords, dtype=float)
+    return records
 
 
 def write_pdb_ca(
