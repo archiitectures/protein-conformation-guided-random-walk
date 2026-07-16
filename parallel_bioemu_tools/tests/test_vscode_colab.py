@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import sqlite3
 import subprocess
@@ -156,3 +157,57 @@ def test_download_closes_response_when_status_check_fails(monkeypatch, tmp_path)
     with pytest.raises(ColabConnectionError):
         client.download("/content/result.zip", tmp_path / "result.zip")
     assert response.closed
+
+
+def test_download_uses_contents_api_after_transient_file_404(monkeypatch, tmp_path) -> None:
+    server = AssignedColabServer(
+        base_url="https://example.test",
+        token="",
+        headers={},
+        accelerator="GPU",
+        variant="T4",
+        label="Colab T4",
+    )
+    client = ColabJupyterClient(server)
+
+    class Response:
+        def __init__(self, status_code: int, payload: dict[str, str] | None = None) -> None:
+            self.status_code = status_code
+            self.ok = status_code < 400
+            self.payload = payload or {}
+            self.closed = False
+
+        def iter_content(self, **kwargs):
+            del kwargs
+            return iter(())
+
+        def close(self):
+            self.closed = True
+
+        def json(self):
+            return self.payload
+
+    missing = Response(404)
+    contents = Response(
+        200,
+        {
+            "type": "file",
+            "format": "base64",
+            "content": base64.b64encode(b"completed archive").decode("ascii"),
+        },
+    )
+    responses = iter([missing, contents])
+    calls: list[str] = []
+
+    def request(method, path, **kwargs):
+        del method, kwargs
+        calls.append(path)
+        return next(responses)
+
+    monkeypatch.setattr(client, "request", request)
+    destination = client.download("/content/exports/result.zip", tmp_path / "result.zip")
+
+    assert destination.read_bytes() == b"completed archive"
+    assert calls == ["files/content/exports/result.zip", "api/contents/content/exports/result.zip"]
+    assert missing.closed
+    assert contents.closed

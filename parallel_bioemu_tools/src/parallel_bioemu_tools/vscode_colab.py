@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import binascii
 import hashlib
 import json
 import sqlite3
@@ -316,7 +317,7 @@ class ColabJupyterClient:
         return True
 
     def download(self, remote_path: str, destination: str | Path) -> Path:
-        """Stream a remote file to an atomic local destination."""
+        """Download atomically, falling back when Colab's file route lags."""
         output = Path(destination)
         output.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile(
@@ -330,11 +331,46 @@ class ColabJupyterClient:
             timeout=3600,
         )
         try:
+            if response.status_code == 404:
+                response.close()
+                return self._download_from_contents_api(remote_path, output, temporary)
             self._raise_for_status(response, f"download {remote_path}")
             with temporary.open("wb") as handle:
                 for chunk in response.iter_content(chunk_size=4 * 1024 * 1024):
                     if chunk:
                         handle.write(chunk)
+            temporary.replace(output)
+        finally:
+            temporary.unlink(missing_ok=True)
+            response.close()
+        return output
+
+    def _download_from_contents_api(
+        self,
+        remote_path: str,
+        output: Path,
+        temporary: Path,
+    ) -> Path:
+        """Use Jupyter's base64 contents response after a transient file 404."""
+        response = self.request(
+            "GET",
+            f"api/contents/{quote(remote_path.lstrip('/'))}",
+            params={"content": "1", "format": "base64"},
+            timeout=3600,
+        )
+        try:
+            self._raise_for_status(response, f"download {remote_path} through contents API")
+            payload = response.json()
+            if payload.get("type") != "file" or payload.get("format") != "base64":
+                raise ColabConnectionError("Colab contents API did not return a base64 file")
+            content = payload.get("content")
+            if not isinstance(content, str):
+                raise ColabConnectionError("Colab contents API returned no file content")
+            try:
+                decoded = base64.b64decode(content, validate=True)
+            except (ValueError, binascii.Error) as exc:
+                raise ColabConnectionError("Colab contents API returned invalid base64") from exc
+            temporary.write_bytes(decoded)
             temporary.replace(output)
         finally:
             temporary.unlink(missing_ok=True)
