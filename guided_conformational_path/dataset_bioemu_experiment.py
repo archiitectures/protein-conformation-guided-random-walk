@@ -16,6 +16,7 @@ from guided_conformational_path.large_synthetic import (
     summarize_graph,
 )
 from guided_conformational_path.validity import check_node_validity
+from guided_conformational_path.path_search import find_top_k_paths
 
 
 @dataclass(slots=True)
@@ -37,6 +38,11 @@ class DatasetBioEmuConfig:
     graph_min_edge_weight: float | None = None
     graph_max_edge_weight: float | None = None
     graph_non_path_edge_alpha: float = 0.125
+    path_top_k: int = 4
+    min_path_edge_diversity: float = 0.20
+    path_candidate_scan_limit: int = 1000
+    write_candidate_report: bool = True
+    write_alternative_path_visuals: bool = False
 
     @property
     def networkx_k_neighbors(self) -> int | None:
@@ -92,6 +98,15 @@ def run_dataset_bioemu_experiment(config: DatasetBioEmuConfig) -> LargeSynthetic
         "A": asdict(check_node_validity(selection.endpoint_a)),
         "B": asdict(check_node_validity(selection.endpoint_b)),
     }
+    candidate_paths = find_top_k_paths(
+        graph,
+        selection.endpoint_a.node_id,
+        selection.endpoint_b.node_id,
+        k=config.path_top_k,
+        beta=1.0,
+        diversity_threshold=config.min_path_edge_diversity,
+        scan_limit=config.path_candidate_scan_limit,
+    )
     return LargeSyntheticRun(
         endpoint_a=selection.endpoint_a,
         endpoint_b=selection.endpoint_b,
@@ -99,6 +114,7 @@ def run_dataset_bioemu_experiment(config: DatasetBioEmuConfig) -> LargeSynthetic
         path_result=result,
         summary=summary,
         fallback_used=False,
+        candidate_paths=candidate_paths,
     )
 
 

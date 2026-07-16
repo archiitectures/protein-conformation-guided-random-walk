@@ -167,6 +167,14 @@ Since edge `weight` is a cost, smaller is better.
 `path_search.py`
 
 - `find_shortest_path(...)` runs NetworkX Dijkstra search.
+- `find_top_k_paths(...)` performs one bounded Yen simple-path scan and returns
+  `CandidatePathCollection`: the Dijkstra path plus exact and edge-diverse
+  alternatives. `find_candidate_paths(...)` exposes either candidate subset.
+- Candidate metrics include structural-cost deltas, edge Jaccard/diversity,
+  intermediate-node Jaccard, global cost rank, and per-edge diagnostics.
+- `candidate_report.py` writes versioned JSON and sortable, escaped HTML with a
+  deterministic shared NetworkX layout. This comparison does not imply kinetic
+  connectivity or physical transition probabilities.
 - Returns `PathResult` with:
   - ordered node IDs
   - total cost

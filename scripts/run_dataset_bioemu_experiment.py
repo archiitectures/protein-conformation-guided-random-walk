@@ -43,13 +43,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--graph-min-edge-weight", type=float, default=None)
     parser.add_argument("--graph-max-edge-weight", type=float, default=None)
     parser.add_argument("--graph-non-path-edge-alpha", type=float, default=0.125)
+    parser.add_argument("--path-top-k", type=int, default=4)
+    parser.add_argument("--min-path-edge-diversity", type=float, default=0.20)
+    parser.add_argument("--path-candidate-scan-limit", type=int, default=1000)
+    parser.add_argument("--no-candidate-report", action="store_false", dest="write_candidate_report")
+    parser.add_argument("--write-alternative-path-visuals", action="store_true")
     parser.add_argument("--no-pymol", action="store_false", dest="write_pymol")
     parser.add_argument("--no-py3dmol", action="store_false", dest="write_py3dmol")
     parser.add_argument("--no-animation", action="store_false", dest="write_animation")
     parser.add_argument("--animation-frames-per-edge", type=int, default=20)
     parser.add_argument("--animation-fps", type=int, default=10)
     parser.add_argument("--animation-dpi", type=int, default=120)
-    parser.set_defaults(write_pymol=True, write_py3dmol=True, write_animation=True)
+    parser.set_defaults(
+        write_pymol=True,
+        write_py3dmol=True,
+        write_animation=True,
+        write_candidate_report=True,
+        write_alternative_path_visuals=False,
+    )
     return parser.parse_args()
 
 
@@ -72,6 +83,11 @@ def main() -> None:
         graph_min_edge_weight=args.graph_min_edge_weight,
         graph_max_edge_weight=args.graph_max_edge_weight,
         graph_non_path_edge_alpha=args.graph_non_path_edge_alpha,
+        path_top_k=args.path_top_k,
+        min_path_edge_diversity=args.min_path_edge_diversity,
+        path_candidate_scan_limit=args.path_candidate_scan_limit,
+        write_candidate_report=args.write_candidate_report,
+        write_alternative_path_visuals=args.write_alternative_path_visuals,
     )
     run = run_dataset_bioemu_experiment(config)
     write_run_outputs(run, config)

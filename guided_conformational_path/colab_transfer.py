@@ -117,6 +117,7 @@ def create_result_archive(
     for required in (graph_outputs / "path_summary.json", graph_outputs / "graph.png"):
         if not required.is_file():
             raise FileNotFoundError(f"Required graph output not found: {required}")
+    _validate_declared_candidate_report(graph_outputs, graph_summary)
 
     graph_input = graph_summary.get("input")
     if not isinstance(graph_input, dict) or graph_input.get("mode") != "dataset_bioemu":
@@ -245,6 +246,7 @@ def _validate_extracted_result(
     for required in (graph_dir / "path_summary.json", graph_dir / "graph.png"):
         if not required.is_file():
             raise ColabTransferError(f"Extracted result is missing {required.name}")
+    _validate_declared_candidate_report(graph_dir, graph_summary)
     samples = bundle_manifest.get("samples")
     if not isinstance(samples, list) or len(samples) != transfer_manifest.get("retained_samples"):
         raise ColabTransferError("Retained sample count does not match result manifest")
@@ -267,6 +269,29 @@ def _archive_files(source_root: Path, archive_root: PurePosixPath) -> list[tuple
         if path.is_file() and path.suffix != ".pyc":
             entries.append((path, archive_root.joinpath(*relative.parts)))
     return entries
+
+
+def _validate_declared_candidate_report(
+    graph_dir: Path,
+    graph_summary: dict[str, Any],
+) -> None:
+    """Validate candidate reports only when a new summary declares them."""
+    declaration = graph_summary.get("candidate_paths")
+    if declaration is None:
+        return
+    if not isinstance(declaration, dict):
+        raise ColabTransferError("candidate_paths declaration must be an object")
+    json_name = declaration.get("json")
+    html_name = declaration.get("html")
+    if json_name != "candidate_paths.json" or html_name != "candidate_paths.html":
+        raise ColabTransferError("candidate_paths declaration contains unsupported filenames")
+    candidate_json = graph_dir / json_name
+    candidate_html = graph_dir / html_name
+    if not candidate_json.is_file() or not candidate_html.is_file():
+        raise ColabTransferError("Declared candidate-path report files are missing")
+    payload = _read_json(candidate_json, "candidate path report")
+    if payload.get("schema_version") != "candidate_paths_v1":
+        raise ColabTransferError("Unsupported candidate path report schema")
 
 
 def _validate_bundle_sample_paths(bundle_dir: Path, samples: list[Any]) -> None:

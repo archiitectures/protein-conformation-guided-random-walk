@@ -11,8 +11,9 @@ current end-to-end workflow is:
    bundle.
 4. Validate and locally adapt the full-sequence BioEmu samples to the common
    endpoint residue set.
-5. Build a weighted graph, run Dijkstra shortest-path analysis, and write
-   graph, JSON, morph-animation, PyMOL, and py3Dmol outputs.
+5. Build a weighted graph, preserve the Dijkstra best path, enumerate nearby
+   simple paths, and write graph, JSON, HTML, morph-animation, PyMOL, and
+   py3Dmol outputs.
 
 The result is a proposed structural route through candidate nodes. It is not a
 validated kinetic pathway. Candidate paths are not validated kinetics, and the
@@ -140,16 +141,28 @@ required remote or local durability checks succeed.
 `guided_conformational_path` represents each endpoint or generated structure as
 a C-alpha `ConformationNode`. RMSD and distance-histogram scorers provide edge
 costs; validity checks add a coarse C-alpha penalty; NetworkX stores the graph;
-and Dijkstra returns the minimum-cost path. `k_neighbors=0` means fully
+and Dijkstra returns the canonical minimum-cost path. Yen's algorithm then
+enumerates simple paths in cost order. By default the report contains four
+exact paths including Dijkstra plus up to four non-best alternatives with at
+least 20% edge-set diversity from Dijkstra. `k_neighbors=0` means fully
 connected, while a positive value sparsifies the graph.
 
 Typical outputs include:
 
 - `experiment_summary.json` and `path_summary.json` for provenance and path data.
+- `candidate_paths.json` and sortable `candidate_paths.html` for exact and
+  diversity-filtered alternatives, cost deltas, overlap metrics, and shared-layout
+  graph thumbnails.
 - `graph.png` for the weighted NetworkX view.
 - `path_morph.gif` for an interpolated C-alpha path animation.
 - `pymol_path/view_path.pml` and path-node PDB files.
 - `py3dmol_path_view.html` for a standalone browser view.
+
+Use `--path-top-k`, `--min-path-edge-diversity`, and
+`--path-candidate-scan-limit` to tune candidate search. Expensive GIF, PyMOL,
+and py3Dmol artifacts remain best-path-only unless
+`--write-alternative-path-visuals` is set. These costs and rankings are
+heuristics, not calibrated energies or path probabilities.
 
 The C-alpha validity and clash checks are coarse and are not full-atom
 structural validation. A shortest graph path is a heuristic candidate route,

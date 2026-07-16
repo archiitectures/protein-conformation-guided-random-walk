@@ -25,6 +25,10 @@ def run_colab_pair(
     content_root: str | Path = "/content",
     graph_k_neighbors: int = 10,
     write_visual_outputs: bool = True,
+    path_top_k: int = 4,
+    min_path_edge_diversity: float = 0.20,
+    path_candidate_scan_limit: int = 1000,
+    write_alternative_path_visuals: bool = False,
     seed: int = 7,
 ) -> dict[str, Any]:
     """Sample, graph, and archive one exported endpoint pair on Colab.
@@ -96,6 +100,11 @@ def run_colab_pair(
         write_pymol=write_visual_outputs,
         write_py3dmol=write_visual_outputs,
         write_animation=write_visual_outputs,
+        path_top_k=path_top_k,
+        min_path_edge_diversity=min_path_edge_diversity,
+        path_candidate_scan_limit=path_candidate_scan_limit,
+        write_candidate_report=True,
+        write_alternative_path_visuals=write_alternative_path_visuals,
     )
     run = run_dataset_bioemu_experiment(config)
     write_run_outputs(run, config)
