@@ -1,0 +1,2 @@
+protein_id,protein_name,uniprot_id,pdb_a,chain_a,pdb_b,chain_b,state_a,state_b
+adenylate_kinase,adenylate kinase,P69441,4AKE,A,1AKE,A,open,closed

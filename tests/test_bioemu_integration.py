@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sys
+from types import SimpleNamespace
 from pathlib import Path
 
 import numpy as np
@@ -17,7 +18,11 @@ from guided_conformational_path.bioemu_io import (
     read_fasta,
     write_bioemu_bundle_manifest,
 )
-from guided_conformational_path.bioemu_runner import run_bioemu_from_fasta
+from guided_conformational_path.bioemu_runner import (
+    _resolve_bioemu_sampler,
+    _safe_batch_size_100,
+    run_bioemu_from_fasta,
+)
 from guided_conformational_path.io import write_pdb_ca
 from guided_conformational_path.large_synthetic import write_run_outputs
 from scripts.run_bioemu_precomputed_experiment import parse_args
@@ -112,6 +117,79 @@ def test_bioemu_runner_fake_sampler_writes_loadable_bundle(tmp_path: Path) -> No
     assert len(manifest["samples"]) == 2
     assert len(nodes) == 2
     assert nodes[0].metadata["generator"] == "BioEmu"
+
+
+def test_bioemu_runner_resolves_official_main_entry_point() -> None:
+    def main() -> None:
+        return None
+
+    assert _resolve_bioemu_sampler([SimpleNamespace(main=main)]) is main
+
+
+def test_bioemu_runner_prevents_zero_batch_for_long_sequence(tmp_path: Path) -> None:
+    fasta_path = tmp_path / "sequence.fasta"
+    fasta_path.write_text(f">long\n{'A' * 350}\n", encoding="utf-8")
+    captured: dict[str, int] = {}
+
+    def fake_sampler(
+        sequence: str,
+        n_samples: int,
+        batch_size_100: int = 10,
+    ) -> np.ndarray:
+        captured["batch_size_100"] = batch_size_100
+        return np.stack([_coords(len(sequence), 0.1)] * n_samples)
+
+    run_bioemu_from_fasta(
+        fasta_path,
+        tmp_path / "long_bundle",
+        n_samples=1,
+        sampler=fake_sampler,
+    )
+
+    assert captured["batch_size_100"] == 13
+    assert int(captured["batch_size_100"] * (100 / 350) ** 2) >= 1
+    assert _safe_batch_size_100(214) == 10
+
+
+def test_bioemu_runner_expands_standard_xtc_output(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    """Official topology/XTC output becomes one PDB node per frame."""
+    fasta_path = tmp_path / "sequence.fasta"
+    fasta_path.write_text(">toy\nAAAA\n", encoding="utf-8")
+
+    class FakeTopology:
+        def select(self, query: str) -> np.ndarray:
+            assert query == "name CA"
+            return np.array([1, 4, 7, 10])
+
+    xyz = np.zeros((3, 12, 3), dtype=float)
+    for frame_index in range(3):
+        xyz[frame_index, [1, 4, 7, 10], 0] = np.arange(4) * 0.38
+        xyz[frame_index, [1, 4, 7, 10], 1] = frame_index * 0.01
+    fake_mdtraj = SimpleNamespace(
+        load=lambda xtc, top: SimpleNamespace(xyz=xyz, topology=FakeTopology())
+    )
+    monkeypatch.setitem(sys.modules, "mdtraj", fake_mdtraj)
+
+    def fake_sampler(output_dir: str, **_: object) -> None:
+        raw_dir = Path(output_dir)
+        (raw_dir / "topology.pdb").write_text("END\n", encoding="utf-8")
+        (raw_dir / "samples.xtc").write_bytes(b"fake")
+
+    manifest = run_bioemu_from_fasta(
+        fasta_path,
+        tmp_path / "xtc_bundle",
+        n_samples=3,
+        sampler=fake_sampler,
+    )
+    nodes = load_bioemu_bundle(tmp_path / "xtc_bundle", expected_n_residues=4)
+
+    assert len(nodes) == 3
+    assert len(manifest["samples"]) == 3
+    assert nodes[0].metadata["bioemu_metadata"]["source_format"] == "xtc_trajectory"
+    np.testing.assert_allclose(nodes[0].coords[:, 0], np.arange(4) * 3.8, atol=1e-3)
 
 
 def test_run_bioemu_precomputed_experiment_writes_outputs(tmp_path: Path) -> None:

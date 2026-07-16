@@ -68,3 +68,50 @@ def test_validity_does_not_treat_bonded_neighbors_as_clashes() -> None:
 
     assert result.valid
     assert result.messages == []
+
+
+def test_validity_skips_bond_check_across_missing_residue_positions() -> None:
+    """Coordinate neighbors separated by a sequence gap are not bonded."""
+    node = ConformationNode(
+        "gapped",
+        "external",
+        np.array(
+            [
+                [0.0, 0.0, 0.0],
+                [20.0, 0.0, 0.0],
+                [23.8, 0.0, 0.0],
+            ]
+        ),
+        metadata={"residue_positions": [1, 3, 4]},
+    )
+
+    result = check_node_validity(node, clash_distance=None)
+
+    assert result.valid
+    assert result.messages == []
+
+
+def test_validity_checks_clash_across_adjacent_rows_with_sequence_gap() -> None:
+    """Rows separated by missing residues remain eligible for clash checks."""
+    node = ConformationNode(
+        "gapped_clash",
+        "external",
+        np.array(
+            [
+                [0.0, 0.0, 0.0],
+                [0.5, 0.0, 0.0],
+                [4.3, 0.0, 0.0],
+            ]
+        ),
+        metadata={"residue_positions": [1, 3, 4]},
+    )
+
+    result = check_node_validity(
+        node,
+        min_bond_distance=2.5,
+        max_bond_distance=4.5,
+        clash_distance=2.0,
+    )
+
+    assert not result.valid
+    assert any("clash threshold" in message for message in result.messages)

@@ -1,5 +1,15 @@
 # Tests Walkthrough
 
+## Experimental Dataset Tests
+
+The `test_dataset_*` modules use synthetic mmCIF fixtures and mocked clients, so
+the normal suite never requires internet access. They cover global sequence
+alignment, sequence identity and mutations, missing residues, insertion codes,
+altloc occupancy, multiple models, ligands and partner chains, Kabsch
+superposition, QC rejection/manual-review behavior, candidate ranking,
+standardized export, explicit manifest mode, HTTP caching, corrupt downloads,
+and stage-level resume.
+
 This folder contains pytest coverage for package behavior and experiment helpers.
 
 Run tests with:
@@ -84,6 +94,36 @@ Key areas:
 - Local precomputed BioEmu graph analysis.
 - CLI flag parsing for the BioEmu analyzer.
 - Fake-sampler bundle normalization through `run_bioemu_from_fasta(...)`.
+- Resolution of the documented `bioemu.sample.main` entry point.
+- Expansion of simulated official `topology.pdb`/`samples.xtc` output into one
+  Angstrom-scale C-alpha node per frame without installing BioEmu locally.
+
+## `test_dataset_bioemu_adapter.py`
+
+Covers the automatic dataset-pair to Colab BioEmu handoff.
+
+Key areas:
+
+- Full-sequence BioEmu samples are subset to common endpoint residue positions.
+- Exact bundle/dataset sequence validation.
+- Out-of-range residue mapping rejection.
+- End-to-end adapted graph construction and output writing.
+- Dataset-aware CLI flag parsing.
+
+`test_validity.py` additionally verifies that missing-residue gaps are not
+treated as C-alpha bonds and remain eligible for non-neighbor clash checks.
+
+## `test_colab_transfer.py`
+
+Covers deterministic workspace packaging, five-pair validation, result archive
+round trips, overwrite protection, archive path traversal rejection, and CLI
+parsing.
+
+## `test_colab_notebooks.py`
+
+Enforces the L4-only, no-Drive notebook contract, all five production pair
+calls, canonical local post-download paths, and Python syntax for every BioEmu
+notebook code cell.
 
 ## Adding Tests
 

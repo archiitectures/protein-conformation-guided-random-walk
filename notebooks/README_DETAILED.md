@@ -7,14 +7,18 @@ This folder contains notebook-based user interfaces. The notebook should remain 
 Install the notebook extras with:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv sync --extra test --extra notebook
+uv sync --extra test --extra notebook
 ```
 
 Optional kernel registration:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv run python -m ipykernel install --user --name guided-conformational-path
+uv run python -m ipykernel install --user --name guided-conformational-path --display-name "guided-conformational-path (.venv)"
 ```
+
+Select the `guided-conformational-path (.venv)` kernel in VS Code or Jupyter.
+If `tqdm` or another dependency is missing, the active notebook kernel is not the
+project `.venv`.
 
 Then open:
 
@@ -83,15 +87,15 @@ The synthetic A/B endpoints are compact globular C-alpha traces, not real protei
 Notebook progress note:
 
 - The recursive sampler accepts a `progress_callback`.
-- `large_synthetic_experiment.ipynb` uses that hook to drive tqdm plus a visible notebook fallback status block.
+- `large_synthetic_experiment.ipynb` uses that hook to drive tqdm plus a visible notebook status block.
 
 ## PDB Endpoint Workflow
 
 Drop files here:
 
 ```text
-data/pdb_inputs/A.pdb
-data/pdb_inputs/B.pdb
+data/pdb_inputs/a.pdb
+data/pdb_inputs/b.pdb
 ```
 
 The notebook uses `PDBEndpointConfig`.
@@ -137,17 +141,41 @@ Important files:
 
 ## BioEmu Colab Workflow
 
-`run_bioemu_colab.ipynb` is intentionally thin:
+`run_bioemu_colab.ipynb` is the executable no-Drive first-five workflow:
 
-1. Checks GPU availability.
-2. Installs `bioemu[cuda]` and this package.
-3. Mounts Google Drive.
-4. Reads a FASTA file.
-5. Calls `run_bioemu_from_fasta(...)`.
-6. Writes a portable bundle with `manifest.json`, `nodes/*.pdb`, and raw outputs.
+1. Requires the official VS Code Colab extension and accepts NVIDIA `L4` or
+   `T4` runtimes by default.
+2. Reports the connected GPU plus allowed list and stops rather than falling
+   back to another device.
+3. Extracts the locally created workspace ZIP uploaded to `/content`.
+4. Installs `bioemu[cuda]` and the uploaded project in the remote runtime.
+5. Requests two smoke samples for `P69441 / 4AKE_A__1AKE_A`.
+6. Provides separate 200-sample cells for all five pairs, ordered by sequence
+   length.
+7. Converts BioEmu `topology.pdb` plus `samples.xtc` into portable PDB nodes.
+8. Runs the residue adapter, graph construction, path search, and visual output
+   writers after every completed bundle.
+9. Creates one result ZIP per pair under `/content/exports` for immediate
+   extension download.
 
-Download or sync that bundle to `data/bioemu_outputs/latest`, then run the local
-precomputed BioEmu CLI to build the graph and path outputs.
+The notebook file and canonical data remain local, but its selected kernel and
+`/content` filesystem are remote and ephemeral. Do not use Run All for the
+production cells; download and import each result before beginning the next.
+Each production cell remains one pair/sample-count task because BioEmu still
+lacks mid-sample checkpointing.
+
+`bioemu_colab_to_graph_workflow.ipynb` is now a local post-download verifier. It
+reports import status for all five production pairs and can rerun graph analysis
+without BioEmu or a GPU.
+
+`analyze_bioemu_outputs.ipynb` is the concise local interface for a downloaded
+dataset-aware bundle. The older standalone endpoint analyzer remains
+available through `scripts/run_bioemu_precomputed_experiment.py`.
+
+Every BioEmu task distinguishes `requested_samples` from `retained_samples`.
+The first is the requested generation target; the second is the number of
+validated bundle nodes actually available to graph analysis. A task can retain
+fewer nodes after trajectory conversion or validity filtering.
 
 ## py3Dmol View
 

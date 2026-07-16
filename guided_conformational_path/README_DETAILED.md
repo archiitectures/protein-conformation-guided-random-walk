@@ -58,9 +58,20 @@ The dummy generator is for pipeline testing. It is not a physical protein sample
 - Normalizes supported sampler outputs: PDB paths, PDB text strings, coordinate
   arrays with shape `(L, 3)` or `(N, L, 3)`, or `.pdb` files written under the
   raw output directory.
+- Recognizes the official `bioemu.sample.main` Python entry point.
+- Expands official `topology.pdb` plus `samples.xtc` output into one C-alpha PDB
+  node per physical trajectory frame. `mdtraj` is imported lazily from the
+  BioEmu environment, and nanometer coordinates are converted to Angstrom.
+- Excludes trajectories marked as unphysical.
 
 BioEmu samples are treated as external candidate nodes. They do not establish
 kinetic connectivity or physical transition dynamics by themselves.
+
+The bundle records both `n_samples_requested` and `n_samples_written`. The
+requested value is a target passed to BioEmu; the written value is the number
+of normalized, retained PDB nodes after trajectory conversion and filtering.
+Downstream graph analysis operates on retained nodes only and must not infer
+that a requested count was physically produced.
 
 `bioemu_io.py`
 
@@ -75,6 +86,40 @@ kinetic connectivity or physical transition dynamics by themselves.
 - Uses endpoint PDB files plus BioEmu bundle samples.
 - Reuses the same graph, path-search, and output writers as the synthetic/PDB
   workflow.
+
+`dataset_bioemu_adapter.py`
+
+- Bridges an exported `protein_conformer_dataset` endpoint pair to a full-sequence
+  Colab BioEmu bundle.
+- `load_dataset_pair_selection(...)` loads the pair manifest, aligned endpoint
+  arrays, selected sequence, and common-residue mapping.
+- `load_adapted_bioemu_nodes(...)` requires exact sequence identity, verifies
+  full sample length, selects common endpoint residues, and rigidly aligns each
+  sample into the endpoint coordinate frame.
+- Stores one-based sequence positions on every adapted node so missing-residue
+  gaps remain explicit during validity checks.
+- Raises `DatasetBioEmuAdapterError` rather than guessing when mapping or
+  sequence provenance is ambiguous.
+
+`dataset_bioemu_experiment.py`
+
+- Defines `DatasetBioEmuConfig` for the one-command Colab-to-local handoff.
+- `run_dataset_bioemu_experiment(...)` invokes the adapter, graph construction,
+  Dijkstra path search, validity summaries, and standard experiment metadata.
+- Does not modify the downloaded BioEmu bundle. `--write-nodes` can be used by
+  the output layer when persisted adapted coordinates are useful.
+
+`colab_transfer.py`
+
+- Defines versioned workspace and pair-result ZIP schemas for the no-Drive VS
+  Code Colab workflow.
+- `create_workspace_archive(...)` packages runtime source plus exactly five
+  exported endpoint pairs while excluding local environments and caches.
+- `create_result_archive(...)` combines one complete BioEmu bundle and graph
+  output directory with provenance and retained-sample metadata.
+- `import_result_archive(...)` rejects unsafe members, invalid schemas,
+  mismatched identifiers, incomplete outputs, and implicit overwrite before
+  restoring canonical local paths.
 
 ## Scoring
 
@@ -97,6 +142,9 @@ Lower scores mean cheaper/more plausible graph edges.
   - finite values
   - consecutive C-alpha bond-distance bounds
   - coarse non-neighbor C-alpha clash-like distances
+- If `node.metadata["residue_positions"]` is present, only true consecutive
+  sequence positions are treated as bonded neighbors. This prevents unresolved
+  endpoint residues from producing false bond penalties or hiding clashes.
 
 The clash check is C-alpha-only. It does not detect full atom-atom clashes.
 
@@ -169,8 +217,7 @@ Notable controls:
 
 - `allow_fallback=False` keeps the recursive Gaussian graph/path even when it
   misses the configured target intermediate-count range.
-- `progress_callback=` lets notebooks report recursive-iteration progress
-  without making tqdm a required package dependency.
+- `progress_callback=` lets notebooks report recursive-iteration progress.
 
 The experiment tries:
 

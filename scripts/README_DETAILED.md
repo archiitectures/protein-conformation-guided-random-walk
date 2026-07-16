@@ -2,6 +2,18 @@
 
 This folder contains command-line entry points. Scripts are thin interfaces over the package code.
 
+## `build_dataset.py`
+
+Builds candidate experimental endpoint datasets from one mutually exclusive
+input mode: `--manifest`, `--uniprot-ids`, `--uniprot-ids-file`, or `--pdb-ids`.
+Use `--resume` for matching stage checkpoints and `--force` to recompute.
+
+## `inspect_entry.py`
+
+Prints endpoint metadata, sequence identity, aligned coverage, common C-alpha
+count, RMSD, missing-residue fractions, ligand and partner differences,
+mutations, warnings, rejection reasons, sequence selection, and artifact paths.
+
 ## `run_demo.py`
 
 Purpose: quick end-to-end smoke demo.
@@ -21,15 +33,15 @@ Behavior:
 Typical command:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv run python scripts/run_demo.py
+uv run python scripts/run_demo.py
 ```
 
 With PDB endpoints:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv run python scripts/run_demo.py \
-  --endpoint-a data/examples/A.pdb \
-  --endpoint-b data/examples/B.pdb \
+uv run python scripts/run_demo.py \
+  --endpoint-a data/pdb_inputs/a.pdb \
+  --endpoint-b data/pdb_inputs/b.pdb \
   --n-samples 20 \
   --scorer rmsd
 ```
@@ -43,7 +55,7 @@ Purpose: command-line interface for the larger experiment implemented in `guided
 Default command:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv run python scripts/run_large_synthetic_experiment.py
+uv run python scripts/run_large_synthetic_experiment.py
 ```
 
 High-level behavior:
@@ -117,13 +129,14 @@ Google Colab.
 Default command:
 
 ```bash
-UV_CACHE_DIR=.uv-cache uv run python scripts/run_bioemu_precomputed_experiment.py \
+uv run python scripts/run_bioemu_precomputed_experiment.py \
   --bioemu-bundle-dir data/bioemu_outputs/latest
 ```
 
 High-level behavior:
 
-1. Loads endpoint PDBs from `data/pdb_inputs/A.pdb` and `data/pdb_inputs/B.pdb`.
+1. Loads endpoint PDBs supplied by `--endpoint-a` and `--endpoint-b` (the
+   checked-in demo fixtures are `data/pdb_inputs/a.pdb` and `b.pdb`).
 2. Loads `manifest.json` plus generated PDB samples from the BioEmu bundle.
 3. Treats BioEmu samples as neutral `external` graph nodes.
 4. Builds the weighted graph, finds the A-to-B shortest path, and writes outputs.
@@ -131,8 +144,8 @@ High-level behavior:
 Useful parameters:
 
 ```bash
---endpoint-a data/pdb_inputs/A.pdb
---endpoint-b data/pdb_inputs/B.pdb
+--endpoint-a data/pdb_inputs/a.pdb
+--endpoint-b data/pdb_inputs/b.pdb
 --bioemu-bundle-dir data/bioemu_outputs/latest
 --max-bioemu-samples 200
 --outputs-dir outputs/bioemu_experiment
@@ -140,6 +153,86 @@ Useful parameters:
 --no-py3dmol
 --no-animation
 ```
+
+## `run_dataset_bioemu_experiment.py`
+
+Purpose: automatic local graph analysis for BioEmu samples generated from a
+dataset pair's selected sequence in Colab.
+
+Typical command:
+
+```bash
+uv run python scripts/run_dataset_bioemu_experiment.py \
+  --pair-dir data/dataset/first_five_proteins/P69441/pairs/4AKE_A__1AKE_A \
+  --bioemu-bundle-dir data/bioemu_outputs/first_five_proteins/P69441/4AKE_A__1AKE_A/n_200 \
+  --outputs-dir outputs/dataset_bioemu/P69441/4AKE_A__1AKE_A/n_200 \
+  --k-neighbors 10
+```
+
+High-level behavior:
+
+1. Loads the dataset pair's selected BioEmu sequence, aligned endpoints, and
+   common-residue mapping.
+2. Verifies that the downloaded Colab bundle contains that exact sequence and
+   full-length C-alpha samples.
+3. Selects the BioEmu coordinates corresponding to residues observed in both
+   endpoints and aligns them into the endpoint frame.
+4. Builds the graph, runs Dijkstra path search, and writes the standard graph,
+   JSON, GIF, PyMOL, and py3Dmol outputs.
+
+Useful parameters:
+
+```bash
+--max-bioemu-samples 200
+--k-neighbors 10
+--write-nodes
+--no-animation
+--no-pymol
+--no-py3dmol
+```
+
+Use this script for endpoint pairs exported by the dataset generator. Use
+`run_bioemu_precomputed_experiment.py` only for the older workflow with two
+standalone endpoint PDB files that already match every BioEmu sample row.
+
+## `colab_transfer.py`
+
+Purpose: transfer the current uncommitted project and first-five dataset through
+the VS Code Colab extension without Google Drive.
+
+Build the upload archive:
+
+```bash
+uv run python scripts/colab_transfer.py package-workspace
+```
+
+This writes `outputs/colab_transfers/guided_conformation_workspace.zip` with
+only runtime source, project metadata, and the five-pair dataset. It excludes
+Git history, virtual environments, caches, tests, notebooks, and prior outputs.
+
+Import one downloaded pair result:
+
+```bash
+uv run python scripts/colab_transfer.py import-result \
+  outputs/colab_transfers/downloads/P69441__4AKE_A__1AKE_A__n_200.zip
+```
+
+The importer validates archive paths, schema, identifiers, sample counts, and
+required bundle/graph files before writing canonical local destinations. It
+refuses to overwrite an existing run unless `--force` is supplied.
+
+## Parallel Project Scripts
+
+The scripts under `parallel_bioemu_tools/scripts/` belong to the isolated
+parallel project and must be run with that project selected:
+
+```bash
+UV_CACHE_DIR=.uv-cache uv --project parallel_bioemu_tools run \
+  python parallel_bioemu_tools/scripts/run_worker.py --help
+```
+
+See `parallel_bioemu_tools/README.md` for the complete prepare, worker,
+supervisor, watchdog, collector, and VS Code Colab commands.
 
 ## Design Rule For Scripts
 

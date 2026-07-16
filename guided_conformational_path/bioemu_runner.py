@@ -10,6 +10,7 @@ from __future__ import annotations
 import importlib
 import inspect
 import json
+import math
 import shutil
 from collections.abc import Callable, Iterable
 from datetime import datetime, timezone
@@ -86,7 +87,11 @@ def run_bioemu_from_fasta(
             return PDB paths, PDB text strings, coordinate arrays with shape
             ``(L, 3)`` or ``(N, L, 3)``, dictionaries containing those values, or
             ``None`` after writing PDB files under the provided output directory.
-        **bioemu_kwargs: Extra sampler-specific keyword arguments.
+        **bioemu_kwargs: Extra sampler-specific keyword arguments. For BioEmu
+            versions that expose ``batch_size_100``, the runner supplies a
+            length-aware minimum when the caller does not provide one. This
+            prevents older releases from rounding the actual batch size to
+            zero for longer proteins.
 
     Returns:
         The manifest dictionary that was also written to
@@ -191,6 +196,7 @@ def run_bioemu_from_fasta(
 def _resolve_bioemu_sampler(bioemu_modules: Iterable[Any]) -> Callable[..., Any]:
     """Find a callable sampler on an imported BioEmu module."""
     candidate_names = (
+        "main",
         "sample",
         "sample_ensemble",
         "generate",
@@ -248,6 +254,12 @@ def _call_sampler(
         }
         return sampler(**kwargs)
 
+    if "batch_size_100" in signature.parameters and "batch_size_100" not in bioemu_kwargs:
+        bioemu_kwargs = {
+            **bioemu_kwargs,
+            "batch_size_100": _safe_batch_size_100(len(sequence)),
+        }
+
     accepts_var_kwargs = any(
         parameter.kind is inspect.Parameter.VAR_KEYWORD
         for parameter in signature.parameters.values()
@@ -284,12 +296,35 @@ def _call_sampler(
     return sampler(**kwargs)
 
 
+def _safe_batch_size_100(sequence_length: int) -> int:
+    """Return a reference batch size that scales to at least one sample.
+
+    Older BioEmu releases computed ``int(batch_size_100 * (100 / L) ** 2)``
+    without clamping the result. The ceiling here guarantees that expression
+    is at least one while retaining BioEmu's conservative default for shorter
+    sequences.
+    """
+    if sequence_length <= 0:
+        raise ValueError("sequence_length must be positive")
+    return max(10, math.ceil((sequence_length / 100) ** 2))
+
+
 def _normalize_outputs_to_nodes(
     result: Any,
     raw_output_dir: Path,
     nodes_dir: Path,
 ) -> list[dict[str, Any]]:
-    """Convert supported BioEmu outputs into ``nodes/*.pdb`` records."""
+    """Convert supported BioEmu outputs into ``nodes/*.pdb`` records.
+
+    Current BioEmu releases normally write ``topology.pdb`` and
+    ``samples.xtc``. Those trajectory frames are expanded first. PDB paths,
+    PDB text, and coordinate-array return values remain supported for custom
+    samplers and tests.
+    """
+    trajectory_records = _normalize_xtc_trajectories(raw_output_dir, nodes_dir)
+    if trajectory_records:
+        return trajectory_records
+
     records: list[dict[str, Any]] = []
     seen_paths: set[Path] = set()
     for item in _iter_output_items(result, raw_output_dir):
@@ -323,6 +358,90 @@ def _normalize_outputs_to_nodes(
             }
         )
     return records
+
+
+def _normalize_xtc_trajectories(
+    raw_output_dir: Path,
+    nodes_dir: Path,
+) -> list[dict[str, Any]]:
+    """Expand BioEmu XTC frames into minimal C-alpha PDB graph nodes.
+
+    BioEmu stores coordinates in XTC files in nanometers. ``mdtraj`` is loaded
+    lazily from the BioEmu environment, C-alpha atoms are selected by topology,
+    and coordinates are converted to Angstrom before using this project's PDB
+    writer. Files whose name contains ``unphysical`` are deliberately excluded.
+    """
+    discovered_paths = sorted(
+        path
+        for path in raw_output_dir.rglob("*.xtc")
+        if "unphysical" not in path.name.lower()
+    )
+    standard_sample_paths = [path for path in discovered_paths if path.name == "samples.xtc"]
+    xtc_paths = standard_sample_paths or discovered_paths
+    if not xtc_paths:
+        return []
+
+    try:
+        mdtraj = importlib.import_module("mdtraj")
+    except ImportError as exc:
+        raise BioEmuRunnerError(
+            "BioEmu produced XTC trajectories, but mdtraj is unavailable. "
+            "Install BioEmu in the same environment or run `pip install mdtraj`."
+        ) from exc
+
+    records: list[dict[str, Any]] = []
+    for trajectory_index, xtc_path in enumerate(xtc_paths):
+        topology_path = _find_trajectory_topology(xtc_path, raw_output_dir)
+        try:
+            trajectory = mdtraj.load(str(xtc_path), top=str(topology_path))
+        except Exception as exc:
+            raise BioEmuRunnerError(
+                f"Could not read BioEmu trajectory {xtc_path} with topology {topology_path}: {exc}"
+            ) from exc
+        ca_indices = np.asarray(trajectory.topology.select("name CA"), dtype=int)
+        if ca_indices.size == 0:
+            raise BioEmuRunnerError(
+                f"BioEmu topology contains no C-alpha atoms: {topology_path}"
+            )
+        for frame_index, frame in enumerate(np.asarray(trajectory.xyz, dtype=float)):
+            node_id = f"bioemu_{len(records):06d}"
+            destination = nodes_dir / f"{node_id}.pdb"
+            ca_coords_angstrom = frame[ca_indices] * 10.0
+            write_pdb_ca(destination, ca_coords_angstrom)
+            records.append(
+                {
+                    "node_id": node_id,
+                    "source": "external",
+                    "pdb_path": str(destination.relative_to(nodes_dir.parent)),
+                    "raw_path": str(xtc_path),
+                    "metadata": {
+                        "generator": "BioEmu",
+                        "source_format": "xtc_trajectory",
+                        "trajectory_path": str(xtc_path),
+                        "topology_path": str(topology_path),
+                        "trajectory_index": trajectory_index,
+                        "frame_index": frame_index,
+                        "coordinate_unit": "angstrom",
+                    },
+                }
+            )
+    return records
+
+
+def _find_trajectory_topology(xtc_path: Path, raw_output_dir: Path) -> Path:
+    """Find the topology PDB associated with one BioEmu XTC trajectory."""
+    candidates = [
+        xtc_path.with_name("topology.pdb"),
+        raw_output_dir / "topology.pdb",
+    ]
+    candidates.extend(sorted(xtc_path.parent.glob("*topology*.pdb")))
+    candidates.extend(sorted(raw_output_dir.rglob("topology.pdb")))
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    raise BioEmuRunnerError(
+        f"BioEmu trajectory has no topology.pdb: {xtc_path}"
+    )
 
 
 def _iter_output_items(result: Any, raw_output_dir: Path) -> Iterable[Any]:
