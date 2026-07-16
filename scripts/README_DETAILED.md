@@ -24,9 +24,11 @@ Behavior:
 2. Otherwise creates small synthetic toy endpoints.
 3. Generates Gaussian perturbation nodes from A and B.
 4. Builds a weighted graph.
-5. Runs shortest-path search.
+5. Runs Dijkstra plus bounded exact/diverse candidate-path search.
 6. Writes:
    - `outputs/path_summary.json`
+   - `outputs/candidate_paths.json`
+   - `outputs/candidate_paths.html`
    - `outputs/graph.png`
    - `outputs/nodes/*.pdb`
 

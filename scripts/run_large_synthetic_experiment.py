@@ -75,6 +75,11 @@ def parse_args() -> argparse.Namespace:
         default=0.125,
         help="Transparency for non-path graph edges in graph.png.",
     )
+    parser.add_argument("--path-top-k", type=int, default=4)
+    parser.add_argument("--min-path-edge-diversity", type=float, default=0.20)
+    parser.add_argument("--path-candidate-scan-limit", type=int, default=1000)
+    parser.add_argument("--no-candidate-report", action="store_false", dest="write_candidate_report")
+    parser.add_argument("--write-alternative-path-visuals", action="store_true")
     parser.add_argument(
         "--no-animation",
         action="store_false",
@@ -116,6 +121,8 @@ def parse_args() -> argparse.Namespace:
         write_pymol=True,
         write_py3dmol=True,
         write_animation=True,
+        write_candidate_report=True,
+        write_alternative_path_visuals=False,
     )
     return parser.parse_args()
 

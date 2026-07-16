@@ -20,10 +20,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from guided_conformational_path.generators import DummyPerturbationGenerator
+from guided_conformational_path.candidate_report import write_candidate_path_reports
 from guided_conformational_path.graph import build_conformation_graph
 from guided_conformational_path.io import read_pdb_ca, write_pdb_ca
 from guided_conformational_path.nodes import ConformationNode
-from guided_conformational_path.path_search import find_shortest_path
+from guided_conformational_path.path_search import find_shortest_path, find_top_k_paths
 from guided_conformational_path.scoring import DistanceHistogramScorer, RMSDScorer
 from guided_conformational_path.visualization import plot_graph
 
@@ -41,6 +42,10 @@ def main() -> None:
     parser.add_argument("--scorer", choices=["rmsd", "distance_histogram"], default="rmsd")
     parser.add_argument("--outputs-dir", type=Path, default=Path("outputs"))
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--path-top-k", type=int, default=4)
+    parser.add_argument("--min-path-edge-diversity", type=float, default=0.20)
+    parser.add_argument("--path-candidate-scan-limit", type=int, default=1000)
+    parser.add_argument("--no-candidate-report", action="store_false", dest="write_candidate_report")
     parser.add_argument(
         "--resume",
         action="store_true",
@@ -62,6 +67,15 @@ def main() -> None:
     scorer = RMSDScorer() if args.scorer == "rmsd" else DistanceHistogramScorer(metric="l2")
     graph = build_conformation_graph(endpoint_a, endpoint_b, generated_a, generated_b, scorer)
     result = find_shortest_path(graph, endpoint_a.node_id, endpoint_b.node_id, beta=1.0)
+    candidates = find_top_k_paths(
+        graph,
+        endpoint_a.node_id,
+        endpoint_b.node_id,
+        k=args.path_top_k,
+        beta=1.0,
+        diversity_threshold=args.min_path_edge_diversity,
+        scan_limit=args.path_candidate_scan_limit,
+    )
 
     args.outputs_dir.mkdir(parents=True, exist_ok=True)
     nodes_dir = args.outputs_dir / "nodes"
@@ -74,6 +88,8 @@ def main() -> None:
         json.dump(result.to_dict(), handle, indent=2)
 
     plot_graph(graph, result.node_ids, args.outputs_dir / "graph.png")
+    if args.write_candidate_report:
+        write_candidate_path_reports(args.outputs_dir, graph, candidates)
     print(f"Shortest path: {' -> '.join(result.node_ids)}")
     print(f"Total cost: {result.total_cost:.4f}")
     print(f"Wrote {summary_path} and {args.outputs_dir / 'graph.png'}")

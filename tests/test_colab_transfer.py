@@ -160,6 +160,46 @@ def test_create_result_archive_rejects_missing_sample_pdb(tmp_path: Path) -> Non
         create_result_archive(bundle_dir, graph_dir, tmp_path / "result.zip")
 
 
+def test_result_archive_accepts_declared_candidate_report(tmp_path: Path) -> None:
+    bundle_dir, graph_dir = _fake_result(tmp_path)
+    summary_path = graph_dir / "experiment_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    summary["candidate_paths"] = {
+        "schema_version": "candidate_paths_v1",
+        "json": "candidate_paths.json",
+        "html": "candidate_paths.html",
+        "exact_count": 1,
+        "diverse_count": 0,
+    }
+    summary_path.write_text(json.dumps(summary), encoding="utf-8")
+    (graph_dir / "candidate_paths.json").write_text(
+        json.dumps({"schema_version": "candidate_paths_v1"}),
+        encoding="utf-8",
+    )
+    (graph_dir / "candidate_paths.html").write_text("<!doctype html>", encoding="utf-8")
+
+    archive = create_result_archive(bundle_dir, graph_dir, tmp_path / "result.zip")
+
+    with zipfile.ZipFile(archive) as handle:
+        assert "graph_outputs/candidate_paths.json" in handle.namelist()
+        assert "graph_outputs/candidate_paths.html" in handle.namelist()
+
+
+def test_result_archive_rejects_missing_declared_candidate_report(tmp_path: Path) -> None:
+    bundle_dir, graph_dir = _fake_result(tmp_path)
+    summary_path = graph_dir / "experiment_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    summary["candidate_paths"] = {
+        "schema_version": "candidate_paths_v1",
+        "json": "candidate_paths.json",
+        "html": "candidate_paths.html",
+    }
+    summary_path.write_text(json.dumps(summary), encoding="utf-8")
+
+    with pytest.raises(ColabTransferError, match="report files are missing"):
+        create_result_archive(bundle_dir, graph_dir, tmp_path / "result.zip")
+
+
 def test_colab_transfer_cli_parses_commands(monkeypatch) -> None:
     monkeypatch.setattr(
         sys,

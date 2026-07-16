@@ -28,11 +28,17 @@ import networkx as nx
 import numpy as np
 from scipy.spatial import cKDTree
 
+from guided_conformational_path.candidate_report import write_candidate_path_reports
 from guided_conformational_path.generators import DummyPerturbationGenerator
 from guided_conformational_path.graph import build_conformation_graph
 from guided_conformational_path.io import CARecord, read_pdb_ca_records, write_pdb_ca
 from guided_conformational_path.nodes import ConformationNode
-from guided_conformational_path.path_search import PathResult, find_shortest_path
+from guided_conformational_path.path_search import (
+    CandidatePathCollection,
+    PathResult,
+    find_shortest_path,
+    find_top_k_paths,
+)
 from guided_conformational_path.scoring import EdgeScorer, kabsch_rmsd
 from guided_conformational_path.validity import check_node_validity
 from guided_conformational_path.visualization import plot_graph
@@ -67,6 +73,11 @@ class LargeSyntheticConfig:
     graph_min_edge_weight: float | None = None
     graph_max_edge_weight: float | None = None
     graph_non_path_edge_alpha: float = 0.125
+    path_top_k: int = 4
+    min_path_edge_diversity: float = 0.20
+    path_candidate_scan_limit: int = 1000
+    write_candidate_report: bool = True
+    write_alternative_path_visuals: bool = False
 
     @property
     def networkx_k_neighbors(self) -> int | None:
@@ -84,6 +95,7 @@ class LargeSyntheticRun:
     path_result: PathResult
     summary: dict[str, Any]
     fallback_used: bool
+    candidate_paths: CandidatePathCollection | None = None
 
 
 @dataclass(slots=True)
@@ -116,6 +128,11 @@ class PDBEndpointConfig:
     graph_min_edge_weight: float | None = None
     graph_max_edge_weight: float | None = None
     graph_non_path_edge_alpha: float = 0.125
+    path_top_k: int = 4
+    min_path_edge_diversity: float = 0.20
+    path_candidate_scan_limit: int = 1000
+    write_candidate_report: bool = True
+    write_alternative_path_visuals: bool = False
     matching_method: str = "exact_then_geometric"
     min_exact_match_fraction: float = 0.8
     geometric_match_distance_cutoff: float = 5.0
@@ -888,6 +905,15 @@ def run_endpoint_experiment(
         "A": asdict(check_node_validity(endpoint_a)),
         "B": asdict(check_node_validity(endpoint_b)),
     }
+    candidate_paths = find_top_k_paths(
+        selected_graph,
+        endpoint_a.node_id,
+        endpoint_b.node_id,
+        k=config.path_top_k,
+        beta=1.0,
+        diversity_threshold=config.min_path_edge_diversity,
+        scan_limit=config.path_candidate_scan_limit,
+    )
 
     return LargeSyntheticRun(
         endpoint_a=endpoint_a,
@@ -896,6 +922,7 @@ def run_endpoint_experiment(
         path_result=selected_result,
         summary=summary,
         fallback_used=use_fallback,
+        candidate_paths=candidate_paths,
     )
 
 
@@ -1719,8 +1746,80 @@ def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> N
     if config.write_py3dmol:
         html_path = write_py3dmol_path_html(config.outputs_dir, run)
         run.summary["py3dmol_path_view"] = str(html_path)
+    if run.candidate_paths is not None and config.write_candidate_report:
+        candidate_json, candidate_html = write_candidate_path_reports(
+            config.outputs_dir,
+            run.graph,
+            run.candidate_paths,
+        )
+        run.summary["candidate_paths"] = {
+            "schema_version": "candidate_paths_v1",
+            "json": candidate_json.name,
+            "html": candidate_html.name,
+            "exact_count": len(run.candidate_paths.exact_paths),
+            "diverse_count": len(run.candidate_paths.diverse_paths),
+        }
+    if run.candidate_paths is not None and config.write_alternative_path_visuals:
+        alternative_paths = _write_alternative_path_visuals(run, config)
+        run.summary["alternative_path_visuals"] = alternative_paths
     with (config.outputs_dir / "experiment_summary.json").open("w", encoding="utf-8") as handle:
         json.dump(run.summary, handle, indent=2)
+
+
+def _write_alternative_path_visuals(
+    run: LargeSyntheticRun,
+    config: LargeSyntheticConfig,
+) -> list[dict[str, Any]]:
+    """Write requested heavy visuals once for each unique non-best path."""
+    if run.candidate_paths is None:
+        return []
+    best_nodes = tuple(run.path_result.node_ids)
+    unique_candidates = {}
+    for candidate in [*run.candidate_paths.exact_paths, *run.candidate_paths.diverse_paths]:
+        node_key = tuple(candidate.node_ids)
+        if node_key != best_nodes:
+            unique_candidates.setdefault(node_key, candidate)
+
+    written: list[dict[str, Any]] = []
+    for candidate in sorted(unique_candidates.values(), key=lambda item: item.global_cost_rank):
+        destination = config.outputs_dir / "alternative_paths" / f"candidate_{candidate.global_cost_rank:03d}"
+        alternative_run = LargeSyntheticRun(
+            endpoint_a=run.endpoint_a,
+            endpoint_b=run.endpoint_b,
+            graph=run.graph,
+            path_result=PathResult(
+                node_ids=list(candidate.node_ids),
+                total_cost=candidate.total_cost,
+                edge_scores=[dict(edge) for edge in candidate.edge_scores],
+                metadata=dict(candidate.metadata),
+            ),
+            summary={},
+            fallback_used=run.fallback_used,
+            candidate_paths=None,
+        )
+        artifacts: dict[str, Any] = {
+            "global_cost_rank": candidate.global_cost_rank,
+            "node_ids": candidate.node_ids,
+            "output_dir": str(destination),
+        }
+        if config.write_animation:
+            artifacts["path_morph_gif"] = str(
+                write_path_morph_gif(
+                    destination,
+                    alternative_run,
+                    frames_per_edge=config.animation_frames_per_edge,
+                    fps=config.animation_fps,
+                    dpi=config.animation_dpi,
+                )
+            )
+        if config.write_pymol:
+            artifacts["pymol_path_view"] = str(write_pymol_path_view(destination, alternative_run))
+        if config.write_py3dmol:
+            artifacts["py3dmol_path_view"] = str(
+                write_py3dmol_path_html(destination, alternative_run)
+            )
+        written.append(artifacts)
+    return written
 
 
 def format_run_summary(run: LargeSyntheticRun, outputs_dir: Path) -> str:
@@ -1747,4 +1846,10 @@ def format_run_summary(run: LargeSyntheticRun, outputs_dir: Path) -> str:
     py3dmol_path = run.summary.get("py3dmol_path_view")
     if py3dmol_path:
         lines.append(f"Wrote py3Dmol path view HTML: {py3dmol_path}")
+    candidate_paths = run.summary.get("candidate_paths")
+    if candidate_paths:
+        lines.append(
+            "Wrote candidate path reports: "
+            f"{outputs_dir / candidate_paths['json']} and {outputs_dir / candidate_paths['html']}"
+        )
     return "\n".join(lines)
