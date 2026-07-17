@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
+from guided_conformational_path.bioemu_io import BIOEMU_BUNDLE_SCHEMA
+
 
 WORKSPACE_ARCHIVE_SCHEMA = "guided_conformation_colab_workspace_v1"
 RESULT_ARCHIVE_SCHEMA = "guided_conformation_colab_result_v1"
@@ -247,14 +249,33 @@ def _validate_extracted_result(
         if not required.is_file():
             raise ColabTransferError(f"Extracted result is missing {required.name}")
     _validate_declared_candidate_report(graph_dir, graph_summary)
+    if bundle_manifest.get("schema_version") != BIOEMU_BUNDLE_SCHEMA:
+        raise ColabTransferError("Extracted BioEmu bundle has an unsupported schema")
+    requested_samples = _positive_int(
+        bundle_manifest.get("n_samples_requested"),
+        "bundle n_samples_requested",
+    )
+    if requested_samples != transfer_manifest.get("requested_samples"):
+        raise ColabTransferError("Requested sample count does not match result manifest")
     samples = bundle_manifest.get("samples")
     if not isinstance(samples, list) or len(samples) != transfer_manifest.get("retained_samples"):
         raise ColabTransferError("Retained sample count does not match result manifest")
     _validate_bundle_sample_paths(bundle_dir, samples)
-    graph_input = graph_summary.get("input", {})
+    bundle_sequence = bundle_manifest.get("sequence")
+    if not isinstance(bundle_sequence, dict) or bundle_sequence != transfer_manifest.get("sequence"):
+        raise ColabTransferError("Bundle sequence does not match result manifest")
+    graph_input = graph_summary.get("input")
+    if not isinstance(graph_input, dict) or graph_input.get("mode") != "dataset_bioemu":
+        raise ColabTransferError("Extracted graph is not a dataset BioEmu experiment")
     for key in ("protein_id", "pair_id"):
         if graph_input.get(key) != transfer_manifest.get(key):
             raise ColabTransferError(f"Extracted graph {key} does not match result manifest")
+    if graph_input.get("selected_sequence_length") != bundle_sequence.get("length"):
+        raise ColabTransferError("Extracted graph and bundle sequence lengths do not match")
+    if graph_summary.get("n_generated_nodes") != len(samples):
+        raise ColabTransferError("Extracted graph generated-node count does not match bundle")
+    if graph_summary.get("n_nodes") != len(samples) + 2:
+        raise ColabTransferError("Extracted graph node count does not include both endpoints")
 
 
 def _archive_files(source_root: Path, archive_root: PurePosixPath) -> list[tuple[Path, PurePosixPath]]:

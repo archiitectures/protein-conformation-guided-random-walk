@@ -9,8 +9,10 @@ experiment definitions in their UI layer.
 from __future__ import annotations
 
 import io
+import itertools
 import json
 import os
+import re
 import tempfile
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -38,6 +40,11 @@ from guided_conformational_path.path_search import (
     PathResult,
     find_shortest_path,
     find_top_k_paths,
+)
+from guided_conformational_path.protein_metadata import (
+    protein_heading_html,
+    protein_title_prefix,
+    resolve_protein_metadata,
 )
 from guided_conformational_path.scoring import EdgeScorer, kabsch_rmsd
 from guided_conformational_path.validity import check_node_validity
@@ -76,6 +83,8 @@ class LargeSyntheticConfig:
     path_top_k: int = 4
     min_path_edge_diversity: float = 0.20
     path_candidate_scan_limit: int = 1000
+    num_top_gifs_generated: int = 6
+    num_bottom_gifs_generated: int = 1
     write_candidate_report: bool = True
     write_alternative_path_visuals: bool = False
 
@@ -131,6 +140,8 @@ class PDBEndpointConfig:
     path_top_k: int = 4
     min_path_edge_diversity: float = 0.20
     path_candidate_scan_limit: int = 1000
+    num_top_gifs_generated: int = 6
+    num_bottom_gifs_generated: int = 1
     write_candidate_report: bool = True
     write_alternative_path_visuals: bool = False
     matching_method: str = "exact_then_geometric"
@@ -1259,6 +1270,8 @@ def write_py3dmol_path_html(output_dir: Path, run: LargeSyntheticRun) -> Path:
     medium_trace_stride = max(1, run.endpoint_a.n_residues // 20)
     model_json = json.dumps(models)
     coordinate_json = json.dumps(coordinate_payloads)
+    protein_heading = protein_heading_html(run.summary)
+    protein_meta_line = f"  <p>Protein: {protein_heading}</p>\n" if protein_heading else ""
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1278,7 +1291,7 @@ def write_py3dmol_path_html(output_dir: Path, run: LargeSyntheticRun) -> Path:
 </head>
 <body>
   <h1>Selected A-to-B Path Structure View</h1>
-  <p>This view overlays every C-alpha residue for A, B, and each selected path node from the NetworkX path.</p>
+{protein_meta_line}  <p>This view overlays every C-alpha residue for A, B, and each selected path node from the NetworkX path.</p>
   <p>Short paths are translated side-by-side. Paths longer than four nodes are arranged around a circle, with A and B displayed as a close endpoint pair. Use the controls to switch between atom spheres, backbone sticks plus nodes, or both. Motion traces are intentionally sparse so the view does not become a wall of inter-residue edges.</p>
   <p>Path: <code>{' -> '.join(run.path_result.node_ids)}</code></p>
   <div id="controls">
@@ -1455,6 +1468,7 @@ def path_morph_frames(
     positive_movements = [movement for movement in edge_movements if movement > 0.0]
     reference_movement = float(np.mean(positive_movements)) if positive_movements else 1.0
     path_frames: list[dict[str, Any]] = []
+    title_prefix = protein_title_prefix(run.summary)
     for edge_idx, (node_i, node_j) in enumerate(zip(path_nodes[:-1], path_nodes[1:])):
         edge_movement = edge_movements[edge_idx]
         raw_duration_weight = edge_movement / reference_movement if reference_movement > 0.0 else 1.0
@@ -1475,7 +1489,7 @@ def path_morph_frames(
                     "start_node_id": node_i.node_id,
                     "end_node_id": node_j.node_id,
                     "title": (
-                        f"Segment {edge_idx + 1}/{len(path_nodes) - 1}: "
+                        f"{title_prefix}Segment {edge_idx + 1}/{len(path_nodes) - 1}: "
                         f"{node_i.node_id} -> {node_j.node_id} "
                         f"({frame_idx + 1}/{frames_per_edge})"
                     ),
@@ -1573,6 +1587,7 @@ def write_path_morph_gif(
     frames_per_edge: int = 20,
     fps: int = 10,
     dpi: int = 120,
+    output_filename: str = "path_morph.gif",
     *,
     min_duration_weight: float = 0.75,
     max_duration_weight: float = 3.0,
@@ -1615,7 +1630,7 @@ def write_path_morph_gif(
             buffer.close()
         if not gif_frames:
             raise RuntimeError("No animation frames were generated")
-        gif_path = output_dir / "path_morph.gif"
+        gif_path = output_dir / output_filename
         gif_frames[0].save(
             gif_path,
             save_all=True,
@@ -1719,8 +1734,222 @@ def display_py3dmol_path(run: LargeSyntheticRun, width: int = 900, height: int =
     return view
 
 
-def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> None:
+def _path_result_from_node_ids(
+    graph: nx.Graph,
+    node_ids: list[str],
+    *,
+    beta: float | None = 1.0,
+    metadata: dict[str, Any] | None = None,
+) -> PathResult:
+    """Build a PathResult from node IDs using stored graph edge scores."""
+    edge_scores: list[dict[str, float | str]] = []
+    total_cost = 0.0
+    for node_i, node_j in zip(node_ids[:-1], node_ids[1:]):
+        edge_data = graph[node_i][node_j]
+        weight = float(edge_data["weight"])
+        record: dict[str, float | str] = {
+            "from": node_i,
+            "to": node_j,
+            "weight": weight,
+            "score": float(edge_data.get("score", weight)),
+        }
+        if beta is not None:
+            record["unnormalized_probability"] = float(np.exp(-beta * weight))
+        edge_scores.append(record)
+        total_cost += weight
+    path_metadata = {
+        "n_path_nodes": len(node_ids),
+        "n_path_edges": max(0, len(node_ids) - 1),
+        "beta": beta,
+    }
+    if metadata:
+        path_metadata.update(metadata)
+    return PathResult(
+        node_ids=list(node_ids),
+        total_cost=float(total_cost),
+        edge_scores=edge_scores,
+        metadata=path_metadata,
+    )
+
+
+def _path_run_from_result(run: LargeSyntheticRun, path_result: PathResult) -> LargeSyntheticRun:
+    """Return a run-like wrapper for rendering an alternate path."""
+    return LargeSyntheticRun(
+        endpoint_a=run.endpoint_a,
+        endpoint_b=run.endpoint_b,
+        graph=run.graph,
+        path_result=path_result,
+        summary=run.summary,
+        fallback_used=run.fallback_used,
+        candidate_paths=None,
+    )
+
+
+def _top_gif_split(num_top_gifs_generated: int) -> tuple[int, int]:
+    """Split requested top GIFs into exact and diverse buckets."""
+    exact_count = (num_top_gifs_generated + 1) // 2
+    diverse_count = num_top_gifs_generated // 2
+    return exact_count, diverse_count
+
+
+def _select_random_non_top_path_results(
+    run: LargeSyntheticRun,
+    *,
+    count: int,
+    scan_limit: int,
+    seed: int,
+    beta: float | None = 1.0,
+) -> list[PathResult]:
+    """Select deterministic random simple paths outside the reported top-path union."""
+    if count <= 0 or scan_limit <= 0:
+        return []
+
+    excluded = {
+        tuple(run.path_result.node_ids),
+    }
+    if run.candidate_paths is not None:
+        excluded.update(tuple(path.node_ids) for path in run.candidate_paths.exact_paths)
+        excluded.update(tuple(path.node_ids) for path in run.candidate_paths.diverse_paths)
+
+    eligible: list[PathResult] = []
+    seen: set[tuple[str, ...]] = set()
+    generator = nx.shortest_simple_paths(
+        run.graph,
+        run.endpoint_a.node_id,
+        run.endpoint_b.node_id,
+        weight="weight",
+    )
+    for global_rank, raw_path in enumerate(itertools.islice(generator, scan_limit), start=1):
+        path_key = tuple(raw_path)
+        if path_key in seen:
+            continue
+        seen.add(path_key)
+        if path_key in excluded:
+            continue
+        eligible.append(
+            _path_result_from_node_ids(
+                run.graph,
+                list(path_key),
+                beta=beta,
+                metadata={
+                    "selection_category": "random_non_top",
+                    "selection_global_cost_rank": global_rank,
+                },
+            )
+        )
+
+    if not eligible:
+        return []
+
+    rng = np.random.default_rng(seed)
+    chosen_indices = sorted(rng.choice(len(eligible), size=min(count, len(eligible)), replace=False).tolist())
+    return [eligible[index] for index in chosen_indices]
+
+
+_CATEGORIZED_GIF_NAME = re.compile(
+    r"(?:top_(?:exact|diverse)_\d{2,}_global_\d{3,}|random_non_top_\d{2,})\.gif"
+)
+
+
+def _cleanup_categorized_path_gifs(output_dir: Path) -> None:
+    """Remove only GIF files owned by categorized path generation."""
+    gif_dir = output_dir / "path_gifs"
+    if not gif_dir.is_dir():
+        return
+    for path in gif_dir.iterdir():
+        if path.is_file() and _CATEGORIZED_GIF_NAME.fullmatch(path.name):
+            path.unlink()
+    if not any(gif_dir.iterdir()):
+        gif_dir.rmdir()
+
+
+def _write_categorized_path_gifs(
+    run: LargeSyntheticRun,
+    config: Any,
+    random_non_top_paths: list[PathResult],
+) -> list[dict[str, Any]]:
+    """Write categorized path GIFs without heavy PyMOL/py3Dmol side artifacts."""
+    if not config.write_animation or run.candidate_paths is None:
+        return []
+
+    exact_count, diverse_count = _top_gif_split(int(config.num_top_gifs_generated))
+    gif_dir = config.outputs_dir / "path_gifs"
+    written: list[dict[str, Any]] = []
+
+    for category, candidates in (
+        ("top_exact", run.candidate_paths.exact_paths[:exact_count] if exact_count > 0 else []),
+        ("top_diverse", run.candidate_paths.diverse_paths[:diverse_count] if diverse_count > 0 else []),
+    ):
+        for category_rank, candidate in enumerate(candidates, start=1):
+            filename = (
+                f"{category}_{category_rank:02d}_global_{candidate.global_cost_rank:03d}.gif"
+            )
+            path_result = PathResult(
+                node_ids=list(candidate.node_ids),
+                total_cost=candidate.total_cost,
+                edge_scores=[dict(edge) for edge in candidate.edge_scores],
+                metadata={
+                    **dict(candidate.metadata),
+                    "selection_category": category,
+                    "selection_category_rank": category_rank,
+                    "selection_global_cost_rank": candidate.global_cost_rank,
+                },
+            )
+            relative_output_path = Path("path_gifs") / filename
+            write_path_morph_gif(
+                gif_dir,
+                _path_run_from_result(run, path_result),
+                frames_per_edge=config.animation_frames_per_edge,
+                fps=config.animation_fps,
+                dpi=config.animation_dpi,
+                output_filename=filename,
+            )
+            written.append(
+                {
+                    "category": category,
+                    "category_rank": category_rank,
+                    "global_cost_rank": candidate.global_cost_rank,
+                    "node_ids": list(candidate.node_ids),
+                    "total_cost": candidate.total_cost,
+                    "edge_scores": [dict(edge) for edge in candidate.edge_scores],
+                    "path_metadata": dict(path_result.metadata),
+                    "relative_output_path": str(relative_output_path),
+                }
+            )
+
+    for category_rank, path_result in enumerate(random_non_top_paths, start=1):
+        filename = f"random_non_top_{category_rank:02d}.gif"
+        relative_output_path = Path("path_gifs") / filename
+        write_path_morph_gif(
+            gif_dir,
+            _path_run_from_result(run, path_result),
+            frames_per_edge=config.animation_frames_per_edge,
+            fps=config.animation_fps,
+            dpi=config.animation_dpi,
+            output_filename=filename,
+        )
+        written.append(
+            {
+                "category": "random_non_top",
+                "category_rank": category_rank,
+                "global_cost_rank": path_result.metadata.get("selection_global_cost_rank"),
+                "node_ids": list(path_result.node_ids),
+                "total_cost": path_result.total_cost,
+                "edge_scores": [dict(edge) for edge in path_result.edge_scores],
+                "path_metadata": dict(path_result.metadata),
+                "relative_output_path": str(relative_output_path),
+            }
+        )
+
+    return written
+
+
+def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig | PDBEndpointConfig | Any) -> None:
     """Write output files for a completed large synthetic run."""
+    _validate_gif_counts(config)
+    _cleanup_categorized_path_gifs(config.outputs_dir)
+    run.summary.pop("categorized_path_gifs", None)
+    resolve_protein_metadata(run.summary)
     write_outputs(
         output_dir=config.outputs_dir,
         graph=run.graph,
@@ -1731,6 +1960,25 @@ def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> N
         graph_max_edge_weight=config.graph_max_edge_weight,
         graph_non_path_edge_alpha=config.graph_non_path_edge_alpha,
     )
+    random_non_top_paths: list[PathResult] = []
+    if (
+        config.write_animation
+        and run.candidate_paths is not None
+        and int(config.num_bottom_gifs_generated) > 0
+    ):
+        random_seed = int(
+            getattr(config, "seed", 7)
+            if getattr(config, "seed", None) is not None
+            else 7
+        )
+        random_non_top_paths = _select_random_non_top_path_results(
+            run,
+            count=int(config.num_bottom_gifs_generated),
+            scan_limit=int(config.path_candidate_scan_limit),
+            seed=random_seed,
+            beta=1.0,
+        )
+
     if config.write_animation:
         gif_path = write_path_morph_gif(
             config.outputs_dir,
@@ -1740,6 +1988,13 @@ def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> N
             dpi=config.animation_dpi,
         )
         run.summary["path_morph_gif"] = str(gif_path)
+        categorized_gifs = _write_categorized_path_gifs(
+            run,
+            config,
+            random_non_top_paths,
+        )
+        if categorized_gifs:
+            run.summary["categorized_path_gifs"] = categorized_gifs
     if config.write_pymol:
         pml_path = write_pymol_path_view(config.outputs_dir, run)
         run.summary["pymol_path_view"] = str(pml_path)
@@ -1751,6 +2006,8 @@ def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> N
             config.outputs_dir,
             run.graph,
             run.candidate_paths,
+            summary=run.summary,
+            random_non_top_paths=random_non_top_paths,
         )
         run.summary["candidate_paths"] = {
             "schema_version": "candidate_paths_v1",
@@ -1759,11 +2016,23 @@ def write_run_outputs(run: LargeSyntheticRun, config: LargeSyntheticConfig) -> N
             "exact_count": len(run.candidate_paths.exact_paths),
             "diverse_count": len(run.candidate_paths.diverse_paths),
         }
+        if random_non_top_paths:
+            run.summary["candidate_paths"]["random_non_top_count"] = len(
+                random_non_top_paths
+            )
     if run.candidate_paths is not None and config.write_alternative_path_visuals:
         alternative_paths = _write_alternative_path_visuals(run, config)
         run.summary["alternative_path_visuals"] = alternative_paths
     with (config.outputs_dir / "experiment_summary.json").open("w", encoding="utf-8") as handle:
         json.dump(run.summary, handle, indent=2)
+
+
+def _validate_gif_counts(config: Any) -> None:
+    """Reject invalid categorized GIF counts before any output rendering."""
+    for field_name in ("num_top_gifs_generated", "num_bottom_gifs_generated"):
+        value = int(getattr(config, field_name))
+        if value < 0:
+            raise ValueError(f"{field_name} must be nonnegative; got {value}")
 
 
 def _write_alternative_path_visuals(

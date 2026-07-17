@@ -41,6 +41,8 @@ class DatasetBioEmuConfig:
     path_top_k: int = 4
     min_path_edge_diversity: float = 0.20
     path_candidate_scan_limit: int = 1000
+    num_top_gifs_generated: int = 6
+    num_bottom_gifs_generated: int = 1
     write_candidate_report: bool = True
     write_alternative_path_visuals: bool = False
 
@@ -87,6 +89,8 @@ def run_dataset_bioemu_experiment(config: DatasetBioEmuConfig) -> LargeSynthetic
         "dataset_pair_manifest": str(selection.manifest_path),
         "bioemu_bundle_dir": str(config.bioemu_bundle_dir),
         "protein_id": selection.protein_id,
+        "protein_name": selection.protein_name,
+        "uniprot_id": selection.uniprot_id,
         "pair_id": selection.pair_id,
         "selected_sequence_length": len(selection.selected_sequence),
         "common_ca_count": len(selection.residue_positions),

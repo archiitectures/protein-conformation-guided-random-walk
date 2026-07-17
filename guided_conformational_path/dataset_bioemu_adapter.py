@@ -45,6 +45,8 @@ class DatasetPairSelection:
         mapping_source: ``canonical`` for UniProt positions or ``construct`` for
             pairwise construct indices.
         protein_id: Dataset protein identifier, normally a UniProt accession.
+        protein_name: Preferred local protein name when present in the manifest.
+        uniprot_id: UniProt accession when present in the manifest.
         pair_id: Stable endpoint-pair identifier.
     """
 
@@ -57,6 +59,8 @@ class DatasetPairSelection:
     residue_positions: np.ndarray
     mapping_source: str
     protein_id: str
+    protein_name: str | None
+    uniprot_id: str | None
     pair_id: str
 
 
@@ -117,6 +121,8 @@ def load_dataset_pair_selection(pair_dir_or_manifest: str | Path) -> DatasetPair
         )
 
     protein_id = str(manifest.get("protein_id") or manifest.get("uniprot_id") or pair_dir.parent.name)
+    protein_name = _preferred_protein_name(manifest)
+    uniprot_id = _preferred_uniprot_id(manifest)
     pair_id = str(manifest.get("pair_id") or pair_dir.name)
     shared_metadata = {
         "dataset_pair_manifest": str(manifest_path),
@@ -151,6 +157,8 @@ def load_dataset_pair_selection(pair_dir_or_manifest: str | Path) -> DatasetPair
         residue_positions=residue_positions,
         mapping_source=source,
         protein_id=protein_id,
+        protein_name=protein_name,
+        uniprot_id=uniprot_id,
         pair_id=pair_id,
     )
 
@@ -371,3 +379,25 @@ def _unique_node_id(candidate: str, sample_index: int, used_ids: set[str]) -> st
         suffix += 1
         unique = f"{prefixed}_{suffix}"
     return unique
+
+
+def _preferred_protein_name(manifest: dict[str, Any]) -> str | None:
+    for candidate in (
+        manifest.get("protein_name"),
+        manifest.get("structure_a", {}).get("protein_name") if isinstance(manifest.get("structure_a"), dict) else None,
+        manifest.get("structure_b", {}).get("protein_name") if isinstance(manifest.get("structure_b"), dict) else None,
+    ):
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    return None
+
+
+def _preferred_uniprot_id(manifest: dict[str, Any]) -> str | None:
+    for candidate in (
+        manifest.get("uniprot_id"),
+        manifest.get("structure_a", {}).get("uniprot_id") if isinstance(manifest.get("structure_a"), dict) else None,
+        manifest.get("structure_b", {}).get("uniprot_id") if isinstance(manifest.get("structure_b"), dict) else None,
+    ):
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    return None

@@ -152,6 +152,34 @@ def test_import_result_archive_rejects_path_traversal(tmp_path: Path) -> None:
         import_result_archive(archive, local_repo)
 
 
+@pytest.mark.parametrize(
+    ("member", "field", "value", "message"),
+    [
+        ("bioemu_bundle/manifest.json", "n_samples_requested", 3, "Requested sample count"),
+        ("bioemu_bundle/manifest.json", "schema_version", "unknown", "unsupported schema"),
+        ("graph_outputs/experiment_summary.json", "n_generated_nodes", 1, "generated-node count"),
+        ("graph_outputs/experiment_summary.json", "n_nodes", 99, "graph node count"),
+        ("graph_outputs/experiment_summary.json", "input.mode", "bioemu_precomputed", "not a dataset"),
+        ("graph_outputs/experiment_summary.json", "input.selected_sequence_length", 3, "sequence lengths"),
+    ],
+)
+def test_import_rejects_mismatched_embedded_provenance(
+    tmp_path: Path,
+    member: str,
+    field: str,
+    value: object,
+    message: str,
+) -> None:
+    bundle_dir, graph_dir = _fake_result(tmp_path)
+    archive = create_result_archive(bundle_dir, graph_dir, tmp_path / "result.zip")
+    _rewrite_archive_json(archive, member, field, value)
+    local_repo = tmp_path / "local_repo"
+    local_repo.mkdir()
+
+    with pytest.raises(ColabTransferError, match=message):
+        import_result_archive(archive, local_repo)
+
+
 def test_create_result_archive_rejects_missing_sample_pdb(tmp_path: Path) -> None:
     bundle_dir, graph_dir = _fake_result(tmp_path)
     (bundle_dir / "nodes/bioemu_000001.pdb").unlink()
@@ -283,7 +311,9 @@ def _fake_result(tmp_path: Path) -> tuple[Path, Path]:
                     "protein_id": "PTEST",
                     "pair_id": "A__B",
                     "selected_sequence_length": 4,
-                }
+                },
+                "n_generated_nodes": 2,
+                "n_nodes": 4,
             }
         ),
         encoding="utf-8",
@@ -291,3 +321,26 @@ def _fake_result(tmp_path: Path) -> tuple[Path, Path]:
     (graph_dir / "path_summary.json").write_text("{}", encoding="utf-8")
     (graph_dir / "graph.png").write_bytes(b"fake-png")
     return bundle_dir, graph_dir
+
+
+def _rewrite_archive_json(
+    archive: Path,
+    member_name: str,
+    field: str,
+    value: object,
+) -> None:
+    """Replace one top-level JSON field in a test ZIP member."""
+    replacement = archive.with_suffix(".replacement.zip")
+    with zipfile.ZipFile(archive) as source, zipfile.ZipFile(replacement, "w") as destination:
+        for member in source.infolist():
+            content = source.read(member.filename)
+            if member.filename == member_name:
+                payload = json.loads(content)
+                target = payload
+                path = field.split(".")
+                for component in path[:-1]:
+                    target = target[component]
+                target[path[-1]] = value
+                content = json.dumps(payload).encode("utf-8")
+            destination.writestr(member, content)
+    replacement.replace(archive)

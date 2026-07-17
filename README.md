@@ -1,5 +1,11 @@
 # Protein Conformation Guided Random Walk
 
+This repository is maintained as one worktree inside the `aa_overall_proj_1`
+mother folder. Commands below assume the repository root as the working
+directory. The root package uses the root `uv` environment; the optional
+`parallel_bioemu_tools/` subproject has its own `pyproject.toml` and lockfile
+but remains in this same worktree.
+
 This repository is a research prototype for building candidate conformational
 graphs between two experimentally observed protein endpoint structures. The
 current end-to-end workflow is:
@@ -56,7 +62,7 @@ locally.
 
 ## Dataset To Graph Workflow
 
-Build a standardized endpoint dataset from the checked-in explicit manifest:
+Build a standardized endpoint dataset from the tracked explicit manifest:
 
 ```bash
 uv run python scripts/build_dataset.py \
@@ -91,9 +97,12 @@ uv run python scripts/inspect_entry.py \
   --pair-id 4AKE_A__1AKE_A
 ```
 
-The checked-in five-pair dataset used by the Colab workflow is under
-`data/dataset/first_five_proteins/`. Generated cache, dataset, BioEmu, and
-analysis content should not be committed.
+The five-pair manifest used by the Colab workflow is tracked at
+`data/input/first_five_proteins.csv`; its generated dataset under
+`data/dataset/first_five_proteins/` is local and ignored. The five pairs are
+currently `manual_review` rather than `accepted`, because the exports retain
+ligand, mutation, construct, source, or length/context caveats. Generated
+cache, dataset, BioEmu, and analysis content should not be committed.
 
 ## BioEmu Handoff
 
@@ -104,8 +113,8 @@ requested sample count, retained sample count, and node paths. A request for
 200 samples is a target: BioEmu may retain fewer physical trajectory frames,
 and outputs labeled unphysical are not converted into graph nodes.
 
-The supported no-Drive VS Code Colab flow packages source and the checked-in
-five-pair dataset:
+The supported no-Drive VS Code Colab flow packages source and the locally
+generated five-pair dataset:
 
 ```bash
 uv run python scripts/colab_transfer.py package-workspace
@@ -126,8 +135,16 @@ uv run python scripts/colab_transfer.py import-result \
 Imported bundles are placed at
 `data/bioemu_outputs/first_five_proteins/<protein>/<pair>/n_<requested>/`; graph
 outputs are placed at `outputs/dataset_bioemu/<protein>/<pair>/n_<requested>/`.
+These are ignored generated paths, not checked-in results. At this checkout,
+local production results are partial; do not assume the P00889 or P35557
+archives are present until they have been downloaded and imported.
 For local analysis, use `scripts/run_dataset_bioemu_experiment.py` and the
 dataset pair directory rather than manually copying endpoint PDBs.
+That command is also the graph-only rerun path: point it at an existing BioEmu
+bundle and a new output directory to rebuild graph search, reports, and visuals
+without sampling with BioEmu again. Use
+`scripts/run_bioemu_precomputed_experiment.py` for the analogous standalone-PDB
+bundle workflow.
 
 The independent parallel workflow is documented in
 [parallel_bioemu_tools/README.md](parallel_bioemu_tools/README.md). It shards
@@ -150,19 +167,35 @@ connected, while a positive value sparsifies the graph.
 Typical outputs include:
 
 - `experiment_summary.json` and `path_summary.json` for provenance and path data.
-- `candidate_paths.json` and sortable `candidate_paths.html` for exact and
-  diversity-filtered alternatives, cost deltas, overlap metrics, and shared-layout
-  graph thumbnails.
+- `candidate_paths.json` and sortable `candidate_paths.html` for exact,
+  diversity-filtered, and selected `random_non_top` comparison paths. Reports
+  include costs, deltas, overlap/diversity metrics, and edge diagnostics; the
+  HTML adds shared-layout graph thumbnails.
 - `graph.png` for the weighted NetworkX view.
-- `path_morph.gif` for an interpolated C-alpha path animation.
+- `path_morph.gif` for the canonical best-path C-alpha animation.
+- `path_gifs/` for categorized path animations. Defaults write six top GIFs,
+  split as three exact and three diverse paths, plus one deterministic non-top
+  path selected outside the reported top-path union.
 - `pymol_path/view_path.pml` and path-node PDB files.
 - `py3dmol_path_view.html` for a standalone browser view.
 
 Use `--path-top-k`, `--min-path-edge-diversity`, and
-`--path-candidate-scan-limit` to tune candidate search. Expensive GIF, PyMOL,
-and py3Dmol artifacts remain best-path-only unless
-`--write-alternative-path-visuals` is set. These costs and rankings are
-heuristics, not calibrated energies or path probabilities.
+`--path-candidate-scan-limit` to tune candidate search. Use
+`--num-top-gifs-generated` and `--num-bottom-gifs-generated` to control the
+categorized GIF counts; zero disables that category and negative values are
+invalid. `--no-animation` disables both the canonical and categorized GIFs.
+PyMOL and py3Dmol remain best-path-only unless
+`--write-alternative-path-visuals` is set.
+On rerun, the output writer removes stale feature-owned categorized GIF names
+before writing the new set, while preserving unrelated files in `path_gifs/`
+and elsewhere in the output directory.
+
+When a valid UniProt accession is available, GIF titles include the resolved
+protein name and accession, and the candidate-path and py3Dmol HTML pages link
+that label to UniProt. Name resolution prefers run metadata and cached values,
+can query UniProt when online, and falls back safely to an accession-only label
+when offline. These costs and rankings are heuristics, not calibrated energies
+or path probabilities.
 
 The C-alpha validity and clash checks are coarse and are not full-atom
 structural validation. A shortest graph path is a heuristic candidate route,
@@ -178,7 +211,7 @@ not evidence of kinetic connectivity.
   inspection, and demos.
 - `notebooks/`: UI layers for synthetic/PDB experiments, Colab execution, and
   local post-download verification.
-- `parallel_bioemu_tools/`: isolated shard workers, Hugging Face durability,
+- `parallel_bioemu_tools/`: same-worktree shard workers, Hugging Face durability,
   heartbeat/watchdog/recovery, VS Code Colab batching, and local collection.
 - `tests/`: offline pytest coverage for dataset, BioEmu handoff, notebooks,
   graph behavior, and parallel orchestration.

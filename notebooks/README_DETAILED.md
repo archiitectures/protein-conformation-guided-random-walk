@@ -166,7 +166,9 @@ lacks mid-sample checkpointing.
 
 `bioemu_colab_to_graph_workflow.ipynb` is now a local post-download verifier. It
 reports import status for all five production pairs and can rerun graph analysis
-without BioEmu or a GPU.
+without BioEmu or a GPU. A status entry is not a successful result: production
+archives must be downloaded and imported individually, and missing P00889 or
+P35557 archives are not treated as local results.
 
 `analyze_bioemu_outputs.ipynb` is the concise local interface for a downloaded
 dataset-aware bundle. The older standalone endpoint analyzer remains

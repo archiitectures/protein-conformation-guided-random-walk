@@ -78,6 +78,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--path-top-k", type=int, default=4)
     parser.add_argument("--min-path-edge-diversity", type=float, default=0.20)
     parser.add_argument("--path-candidate-scan-limit", type=int, default=1000)
+    parser.add_argument("--num-top-gifs-generated", type=int, default=6)
+    parser.add_argument("--num-bottom-gifs-generated", type=int, default=1)
     parser.add_argument("--no-candidate-report", action="store_false", dest="write_candidate_report")
     parser.add_argument("--write-alternative-path-visuals", action="store_true")
     parser.add_argument(

@@ -28,6 +28,8 @@ def run_colab_pair(
     path_top_k: int = 4,
     min_path_edge_diversity: float = 0.20,
     path_candidate_scan_limit: int = 1000,
+    num_top_gifs_generated: int = 6,
+    num_bottom_gifs_generated: int = 1,
     write_alternative_path_visuals: bool = False,
     seed: int = 7,
 ) -> dict[str, Any]:
@@ -103,6 +105,8 @@ def run_colab_pair(
         path_top_k=path_top_k,
         min_path_edge_diversity=min_path_edge_diversity,
         path_candidate_scan_limit=path_candidate_scan_limit,
+        num_top_gifs_generated=num_top_gifs_generated,
+        num_bottom_gifs_generated=num_bottom_gifs_generated,
         write_candidate_report=True,
         write_alternative_path_visuals=write_alternative_path_visuals,
     )

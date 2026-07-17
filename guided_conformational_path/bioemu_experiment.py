@@ -15,6 +15,7 @@ from guided_conformational_path.large_synthetic import (
 )
 from guided_conformational_path.validity import check_node_validity
 from guided_conformational_path.path_search import find_top_k_paths
+from guided_conformational_path.protein_metadata import is_valid_uniprot_accession
 
 
 @dataclass(slots=True)
@@ -40,6 +41,8 @@ class BioEmuPrecomputedConfig:
     path_top_k: int = 4
     min_path_edge_diversity: float = 0.20
     path_candidate_scan_limit: int = 1000
+    num_top_gifs_generated: int = 6
+    num_bottom_gifs_generated: int = 1
     write_candidate_report: bool = True
     write_alternative_path_visuals: bool = False
     matching_method: str = "exact_then_geometric"
@@ -104,6 +107,7 @@ def run_bioemu_precomputed_experiment(config: BioEmuPrecomputedConfig) -> LargeS
         "n_residues": endpoint_a.n_residues,
         "matching": endpoint_a.metadata["matching"],
         "bioemu_sequence": manifest.get("sequence", {}),
+        "uniprot_id": _manifest_uniprot_accession(manifest),
     }
     summary["endpoint_validity"] = {
         "A": asdict(check_node_validity(endpoint_a)),
@@ -136,3 +140,15 @@ def _json_ready_config(config: BioEmuPrecomputedConfig) -> dict[str, Any]:
         if isinstance(value, Path):
             values[key] = str(value)
     return values
+
+
+def _manifest_uniprot_accession(manifest: dict[str, Any]) -> str | None:
+    """Extract a UniProt accession from BioEmu sequence metadata when possible."""
+    sequence_metadata = manifest.get("sequence")
+    if not isinstance(sequence_metadata, dict):
+        return None
+    sequence_id = sequence_metadata.get("id")
+    if not isinstance(sequence_id, str) or not sequence_id.strip():
+        return None
+    accession = sequence_id.split("_", 1)[0].strip().upper()
+    return accession if is_valid_uniprot_accession(accession) else None

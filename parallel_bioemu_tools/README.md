@@ -1,6 +1,9 @@
 # parallel_bioemu_tools
 
-Isolated orchestration utilities for parallel BioEmu bundle generation and local collection.
+Same-worktree orchestration utilities for parallel BioEmu bundle generation and
+local collection. This directory is a subproject of the root repository under
+`aa_overall_proj_1`; its separate `uv.lock` isolates dependencies, not source
+control or filesystem layout.
 
 ## Scope
 
@@ -24,7 +27,7 @@ This subproject does not start live BioEmu or Hugging Face operations by itself 
 
 ## Commands
 
-Create the isolated environment from its checked-in lockfile:
+Create the subproject environment from its checked-in lockfile:
 
 ```bash
 UV_CACHE_DIR=.uv-cache uv --project parallel_bioemu_tools sync \

@@ -38,6 +38,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--path-top-k", type=int, default=4)
     parser.add_argument("--min-path-edge-diversity", type=float, default=0.20)
     parser.add_argument("--path-candidate-scan-limit", type=int, default=1000)
+    parser.add_argument("--num-top-gifs-generated", type=int, default=6)
+    parser.add_argument("--num-bottom-gifs-generated", type=int, default=1)
     parser.add_argument("--no-candidate-report", action="store_false", dest="write_candidate_report")
     parser.add_argument("--write-alternative-path-visuals", action="store_true")
     parser.add_argument("--matching-method", default="exact_then_geometric")
@@ -83,6 +85,8 @@ def main() -> None:
         path_top_k=args.path_top_k,
         min_path_edge_diversity=args.min_path_edge_diversity,
         path_candidate_scan_limit=args.path_candidate_scan_limit,
+        num_top_gifs_generated=args.num_top_gifs_generated,
+        num_bottom_gifs_generated=args.num_bottom_gifs_generated,
         write_candidate_report=args.write_candidate_report,
         write_alternative_path_visuals=args.write_alternative_path_visuals,
         matching_method=args.matching_method,

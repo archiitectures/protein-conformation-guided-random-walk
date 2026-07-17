@@ -16,6 +16,7 @@ build/
 
 outputs/*
 !outputs/.gitkeep
+!outputs/README_DETAILED.md
 
 # Local/private experiment inputs and generated dataset artifacts.
 data/pdb_inputs/*

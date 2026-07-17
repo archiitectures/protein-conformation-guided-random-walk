@@ -82,6 +82,8 @@ Useful parameters:
 --fallback-samples-per-waypoint 0
 --k-neighbors 0
 --outputs-dir outputs/large_synthetic
+--num-top-gifs-generated 6
+--num-bottom-gifs-generated 1
 --animation-frames-per-edge 20
 --animation-fps 10
 --animation-dpi 120
@@ -108,6 +110,19 @@ Visualization output controls:
 --no-py3dmol
 ```
 
+The default animation set keeps `path_morph.gif` as the canonical best-path
+animation and requests seven categorized files under `path_gifs/`: three exact
+top paths, three diverse alternatives, and one deterministic non-top path.
+`--num-top-gifs-generated 0` or `--num-bottom-gifs-generated 0` disables that
+category; either option rejects negative values. `--no-animation` skips both
+the canonical GIF and all categorized GIFs. If fewer qualifying paths exist,
+the script writes only those available.
+
+Selected `random_non_top` paths are also written to `candidate_paths.json` and
+shown in a separate table in `candidate_paths.html`, with costs, deltas,
+edge-overlap/diversity, intermediate overlap, per-edge diagnostics, and an HTML
+graph thumbnail. They are comparison samples, not worst-path claims.
+
 Outputs:
 
 ```text
@@ -116,6 +131,10 @@ outputs/large_synthetic/
   path_summary.json
   graph.png
   path_morph.gif
+  path_gifs/
+    top_exact_01_global_001.gif
+    top_diverse_01_global_<rank>.gif
+    random_non_top_01.gif
   py3dmol_path_view.html
   pymol_path/
     view_path.pml
@@ -151,6 +170,8 @@ Useful parameters:
 --bioemu-bundle-dir data/bioemu_outputs/latest
 --max-bioemu-samples 200
 --outputs-dir outputs/bioemu_experiment
+--num-top-gifs-generated 6
+--num-bottom-gifs-generated 1
 --no-pymol
 --no-py3dmol
 --no-animation
@@ -188,6 +209,8 @@ Useful parameters:
 --max-bioemu-samples 200
 --k-neighbors 10
 --write-nodes
+--num-top-gifs-generated 6
+--num-bottom-gifs-generated 1
 --no-animation
 --no-pymol
 --no-py3dmol
@@ -197,9 +220,26 @@ Use this script for endpoint pairs exported by the dataset generator. Use
 `run_bioemu_precomputed_experiment.py` only for the older workflow with two
 standalone endpoint PDB files that already match every BioEmu sample row.
 
+Both analyzers are graph-only rerun commands when their input bundle already
+exists: they reload normalized bundle nodes and regenerate graph search,
+candidate reports, GIFs, PyMOL, and py3Dmol outputs without invoking BioEmu.
+Choose a new `--outputs-dir` when preserving an earlier analysis matters.
+Reusing an output directory is also safe for categorized GIFs: the writer
+removes stale `top_exact_*`, `top_diverse_*`, and `random_non_top_*` GIFs that
+it owns, but preserves unrelated files in `path_gifs/` and the rest of the
+output tree.
+
+Dataset-aware runs carry the protein name and UniProt accession from the pair
+manifest. Standalone runs can infer a valid accession from BioEmu sequence
+metadata. GIF titles show the resolved name/accession, while
+`candidate_paths.html` and `py3dmol_path_view.html` hyperlink the label to the
+UniProt entry. Resolution uses local metadata and caches first, attempts the
+UniProt API only when needed, and remains usable offline with an accession-only
+fallback.
+
 ## `colab_transfer.py`
 
-Purpose: transfer the current uncommitted project and first-five dataset through
+Purpose: transfer the current worktree and first-five dataset through
 the VS Code Colab extension without Google Drive.
 
 Build the upload archive:
@@ -225,8 +265,9 @@ refuses to overwrite an existing run unless `--force` is supplied.
 
 ## Parallel Project Scripts
 
-The scripts under `parallel_bioemu_tools/scripts/` belong to the isolated
-parallel project and must be run with that project selected:
+The scripts under `parallel_bioemu_tools/scripts/` belong to the parallel
+subproject in this same worktree. Its dependencies are isolated by its own
+project metadata and must be run with that project selected:
 
 ```bash
 UV_CACHE_DIR=.uv-cache uv --project parallel_bioemu_tools run \

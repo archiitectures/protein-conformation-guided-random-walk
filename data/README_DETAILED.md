@@ -32,13 +32,18 @@ utility and does not replace the dataset parser.
   choices, metadata, QC report, and `manifest.json`; the root contains CSV/YAML
   summaries and run logs.
 
+The generated five-pair export is local ignored state, not a checked-in
+dataset. The tracked input manifest is `input/first_five_proteins.csv`. Its
+five current pair exports are `manual_review`; that status records QC warnings
+for human interpretation and is not evidence of a transition.
+
 Generated contents are ignored except for directory placeholders. Resume state
 is under `<dataset-output>/.state/` and is reusable only when the input and
 configuration fingerprint matches.
 
 ## BioEmu Results
 
-The importer writes the no-Drive five-pair results under:
+The importer writes downloaded no-Drive five-pair results under:
 
 ```text
 data/bioemu_outputs/first_five_proteins/<protein>/<pair>/n_<requested>/
@@ -52,7 +57,10 @@ selected sequence, requested count, retained count, and relative node paths.
 The requested count is not guaranteed to equal the retained count: trajectory
 conversion uses BioEmu's retained physical trajectory frames and excludes
 outputs labeled unphysical. The graph's C-alpha validity checks apply penalties;
-they do not perform an additional node-filtering pass here. Use
+they do not perform an additional node-filtering pass here. The local result
+set may be incomplete: missing production archives, including P00889 and
+P35557 when they have not been downloaded, are not represented by placeholder
+bundles. Use
 `scripts/colab_transfer.py import-result` to validate and install result ZIPs;
 do not extract them manually.
 

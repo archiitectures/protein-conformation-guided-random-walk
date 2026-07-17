@@ -121,7 +121,7 @@ parsing.
 
 ## `test_colab_notebooks.py`
 
-Enforces the L4-only, no-Drive notebook contract, all five production pair
+Enforces the L4/T4, no-Drive notebook contract, all five production pair
 calls, canonical local post-download paths, and Python syntax for every BioEmu
 notebook code cell.
 

@@ -173,8 +173,13 @@ Since edge `weight` is a cost, smaller is better.
 - Candidate metrics include structural-cost deltas, edge Jaccard/diversity,
   intermediate-node Jaccard, global cost rank, and per-edge diagnostics.
 - `candidate_report.py` writes versioned JSON and sortable, escaped HTML with a
-  deterministic shared NetworkX layout. This comparison does not imply kinetic
-  connectivity or physical transition probabilities.
+  deterministic shared NetworkX layout. When a valid UniProt accession is
+  available, its protein heading links to the canonical UniProt entry. This
+  comparison does not imply kinetic connectivity or physical transition
+  probabilities.
+- Selected `random_non_top` comparison paths are included in the JSON and in a
+  separate HTML table with cost/delta, edge overlap/diversity, intermediate
+  overlap, per-edge diagnostics, and the shared-layout graph thumbnail.
 - Returns `PathResult` with:
   - ordered node IDs
   - total cost
@@ -213,7 +218,8 @@ Major config objects:
 - `LargeSyntheticConfig`: generated globular A/B endpoints.
 - `PDBEndpointConfig`: PDB-provided A/B endpoints.
 - Both configs support `write_animation`, `animation_frames_per_edge`,
-  `animation_fps`, and `animation_dpi`.
+  `animation_fps`, `animation_dpi`, `num_top_gifs_generated`, and
+  `num_bottom_gifs_generated`.
 
 Main run functions:
 
@@ -246,10 +252,31 @@ PDB endpoint matching:
 
 - `path_morph_frames(...)` builds interpolated best-path backbone frames.
 - `write_path_morph_gif(...)` writes a Matplotlib/Pillow GIF for the selected
-  best path.
+  path. `path_morph.gif` remains the canonical best-path filename.
+- Categorized animation output goes under `path_gifs/`. Defaults request three
+  exact GIFs, three diverse GIFs, and one seed-deterministic non-top GIF, using
+  `top_exact_<category-rank>_global_<cost-rank>.gif`,
+  `top_diverse_<category-rank>_global_<cost-rank>.gif`, and
+  `random_non_top_<category-rank>.gif` names. Zero disables a category and
+  negative counts raise `ValueError` before rendering.
+- Before a rerun writes categorized animations, it removes only stale GIFs
+  matching those feature-owned naming patterns. Unrelated files in
+  `path_gifs/` and elsewhere under the output directory are preserved.
 - `write_pymol_path_view(...)` writes path-node PDBs and `view_path.pml`.
 - `write_py3dmol_path_html(...)` writes standalone 3Dmol.js HTML.
 - `display_py3dmol_path(...)` returns an inline notebook viewer.
+
+`protein_metadata.py` resolves visualization labels from existing run metadata,
+the temporary JSON cache, repository UniProt response caches, or the
+UniProt API in that order. Network and cache failures are non-fatal: a valid
+accession remains the offline display fallback. GIF titles include the resolved
+name/accession, and candidate-report and py3Dmol HTML headings hyperlink valid
+accessions to UniProt.
+
+`run_dataset_bioemu_experiment(...)` and
+`run_bioemu_precomputed_experiment(...)` only consume existing normalized
+BioEmu bundles. Calling them again rebuilds the graph, path candidates, reports,
+and visuals without importing or running the BioEmu sampler.
 
 ## Adding New Functionality
 
