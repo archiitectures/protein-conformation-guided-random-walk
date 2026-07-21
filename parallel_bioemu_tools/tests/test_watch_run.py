@@ -11,7 +11,8 @@ from parallel_bioemu_tools.manifests import PairRunSpec, RunManifest, ShardAssig
 
 
 def load_watchdog():
-    spec = importlib.util.spec_from_file_location("watch_run", "parallel_bioemu_tools/scripts/watch_run.py")
+    script = Path(__file__).resolve().parents[1] / "scripts/watch_run.py"
+    spec = importlib.util.spec_from_file_location("watch_run", script)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(module)

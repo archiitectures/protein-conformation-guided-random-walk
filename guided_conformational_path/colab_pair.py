@@ -23,6 +23,7 @@ def run_colab_pair(
     *,
     workspace_dir: str | Path = "/content/protein-conformation-guided-random-walk",
     content_root: str | Path = "/content",
+    dataset_label: str = "first_five_proteins",
     graph_k_neighbors: int = 10,
     write_visual_outputs: bool = True,
     path_top_k: int = 4,
@@ -45,6 +46,8 @@ def run_colab_pair(
         n_samples: Number of BioEmu conformations to request.
         workspace_dir: Extracted repository root on the remote runtime.
         content_root: Colab filesystem root used for runs and result exports.
+        dataset_label: Name of the exported dataset directory under
+            ``data/dataset``.
         graph_k_neighbors: Number of nearest neighbors used to sparsify the
             conformation graph. Zero selects a fully connected graph.
         write_visual_outputs: Whether to write PyMOL, py3Dmol, and GIF outputs.
@@ -59,7 +62,9 @@ def run_colab_pair(
 
     workspace = Path(workspace_dir).expanduser().resolve()
     content = Path(content_root).expanduser().resolve()
-    dataset_root = workspace / "data/dataset/first_five_proteins"
+    if not dataset_label or len(Path(dataset_label).parts) != 1 or dataset_label in {".", ".."}:
+        raise ValueError("dataset_label must be a single safe directory name")
+    dataset_root = workspace / "data" / "dataset" / dataset_label
     pair_manifests = {
         path.parent.name: path
         for path in sorted(dataset_root.glob("*/pairs/*/manifest.json"))
@@ -112,11 +117,12 @@ def run_colab_pair(
     )
     run = run_dataset_bioemu_experiment(config)
     write_run_outputs(run, config)
-    create_result_archive(bundle_dir, graph_dir, archive_path)
+    create_result_archive(bundle_dir, graph_dir, archive_path, dataset_label=dataset_label)
 
     result: dict[str, Any] = {
         "protein_id": protein_id,
         "pair_id": pair_id,
+        "dataset_label": dataset_label,
         "requested_samples": n_samples,
         "retained_samples": run.summary["n_generated_nodes"],
         "path": run.path_result.node_ids,

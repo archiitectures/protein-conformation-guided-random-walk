@@ -22,7 +22,7 @@ def test_sampling_notebook_is_no_drive_and_contains_every_pair() -> None:
     assert "/content/drive" not in source
     assert "drive.mount" not in source
     assert "git clone" not in source.lower()
-    assert "guided_conformation_workspace.zip" in source
+    assert 'UPLOAD_ARCHIVE = CONTENT_ROOT / f"{EXPERIMENT_LABEL}_workspace.zip"' in source
     assert "create_result_archive" in source
     assert 'run_pair("4AKE_A__1AKE_A", n_samples=2)' in source
     assert "BioEmu still cannot checkpoint mid-sample" in source
@@ -42,7 +42,9 @@ def test_colab_workflow_notebook_uses_only_local_imported_paths() -> None:
 
     assert "/content/drive" not in source
     assert "drive.mount" not in source
-    assert "data/bioemu_outputs/first_five_proteins" in source
+    assert 'EXPERIMENT_LABEL = "first_five_proteins"' in source
+    assert 'EXPERIMENT_LABEL = "first_five_proteins"  # or "non_ideal_transitions_n3"' in source
+    assert "data/bioemu_outputs" in source
     assert "outputs/dataset_bioemu" in source
 
 

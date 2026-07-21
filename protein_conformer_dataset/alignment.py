@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+from typing import Any
 
 import numpy as np
 from Bio.Align import PairwiseAligner
@@ -70,6 +71,128 @@ def map_to_canonical(chain: ParsedChain, canonical_sequence: str) -> None:
     metrics = sequence_metrics(chain.sequence, canonical_sequence)
     for structure_index, canonical_index in metrics.aligned_pairs:
         chain.residues[structure_index].uniprot_position = canonical_index + 1
+
+
+def select_shared_domain_from_b(
+    chain_a: ParsedChain,
+    chain_b: ParsedChain,
+    *,
+    minimum_identity: float = 0.90,
+    minimum_reference_coverage: float = 0.90,
+) -> tuple[ParsedChain, ParsedChain, dict[str, Any]]:
+    """Trim endpoint A to the sequence-aligned construct represented by endpoint B.
+
+    This opt-in operation supports comparisons where endpoint B is an isolated
+    domain from the same protein as full-length endpoint A. It selects only
+    aligned residue pairs, preserving author residue metadata for export and
+    using endpoint B as the construct sequence supplied to BioEmu.
+    """
+    metrics = sequence_metrics(chain_a.sequence, chain_b.sequence)
+    if metrics.identity < minimum_identity:
+        raise ValueError(
+            "Shared-domain selection requires high sequence identity; "
+            f"observed {metrics.identity:.3f}, minimum {minimum_identity:.3f}"
+        )
+    matched_pairs = tuple(
+        (index_a, index_b)
+        for index_a, index_b in metrics.aligned_pairs
+        if chain_a.sequence[index_a] == chain_b.sequence[index_b]
+    )
+    matched_reference_coverage = len(matched_pairs) / len(chain_b.sequence)
+    if matched_reference_coverage < minimum_reference_coverage:
+        raise ValueError(
+            "Shared-domain selection does not cover enough exact endpoint-B residues; "
+            f"observed {matched_reference_coverage:.3f}, minimum {minimum_reference_coverage:.3f}"
+        )
+    if not matched_pairs:
+        raise ValueError("Shared-domain selection found no aligned residues")
+
+    indices_a, indices_b = zip(*matched_pairs)
+    selected_a = _trim_chain(chain_a, indices_a, "A", chain_b.record.structure_id)
+    selected_b = _trim_chain(chain_b, indices_b, "B", chain_b.record.structure_id)
+    selection = {
+        "mode": "shared_domain_from_b",
+        "reference_endpoint": "B",
+        "reference_structure_id": chain_b.record.structure_id,
+        "selected_residue_count": len(indices_a),
+        "sequence_identity": metrics.identity,
+        "reference_coverage": matched_reference_coverage,
+        "endpoint_a_original_indices": [chain_a.residues[index].index for index in indices_a],
+        "endpoint_b_original_indices": [chain_b.residues[index].index for index in indices_b],
+        "caveat": (
+            "Endpoint A was trimmed to the sequence-aligned domain represented by endpoint B; "
+            "this is a domain-only comparison, not a full-protein transition."
+        ),
+    }
+    return selected_a, selected_b, selection
+
+
+def select_shared_exact_matches(
+    chain_a: ParsedChain,
+    chain_b: ParsedChain,
+    *,
+    minimum_identity: float = 0.85,
+    minimum_selected_residues: int = 40,
+) -> tuple[ParsedChain, ParsedChain, dict[str, Any]]:
+    """Keep exact aligned residues while sampling the canonical full sequence.
+
+    This is intended for an explicitly documented mutation-stabilized endpoint.
+    The endpoint coordinate comparison excludes non-identical residues, while
+    downstream BioEmu samples still use the canonical protein sequence and are
+    selected by retained UniProt positions.
+    """
+    metrics = sequence_metrics(chain_a.sequence, chain_b.sequence)
+    if metrics.identity < minimum_identity:
+        raise ValueError(
+            "Exact-match selection requires related endpoint constructs; "
+            f"observed {metrics.identity:.3f}, minimum {minimum_identity:.3f}"
+        )
+    matched_pairs = tuple(
+        (index_a, index_b)
+        for index_a, index_b in metrics.aligned_pairs
+        if chain_a.sequence[index_a] == chain_b.sequence[index_b]
+    )
+    if len(matched_pairs) < minimum_selected_residues:
+        raise ValueError(
+            "Exact-match selection retained too few residues; "
+            f"observed {len(matched_pairs)}, minimum {minimum_selected_residues}"
+        )
+    indices_a, indices_b = zip(*matched_pairs)
+    selected_a = _trim_chain(chain_a, indices_a, "A", chain_a.record.structure_id)
+    selected_b = _trim_chain(chain_b, indices_b, "B", chain_a.record.structure_id)
+    selection = {
+        "mode": "shared_exact_matches",
+        "reference_endpoint": "A",
+        "selected_residue_count": len(matched_pairs),
+        "full_alignment_identity": metrics.identity,
+        "excluded_nonidentical_residue_count": len(metrics.aligned_pairs) - len(matched_pairs),
+        "caveat": (
+            "Only exact sequence matches between endpoints are compared; BioEmu samples use the "
+            "canonical sequence and the mutation-stabilized endpoint remains a manual-review case."
+        ),
+    }
+    return selected_a, selected_b, selection
+
+
+def _trim_chain(
+    chain: ParsedChain,
+    indices: tuple[int, ...],
+    endpoint_label: str,
+    reference_structure_id: str,
+) -> ParsedChain:
+    """Return a residue-subset chain while retaining original residue identifiers."""
+    metadata = {
+        **chain.record.metadata,
+        "domain_selection": {
+            "mode": "shared_domain_from_b",
+            "endpoint": endpoint_label,
+            "reference_structure_id": reference_structure_id,
+        },
+    }
+    return ParsedChain(
+        record=replace(chain.record, metadata=metadata),
+        residues=[chain.residues[index] for index in indices],
+    )
 
 
 def align_chains(chain_a: ParsedChain, chain_b: ParsedChain) -> ChainAlignment:

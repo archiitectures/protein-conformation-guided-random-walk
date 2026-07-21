@@ -44,6 +44,36 @@ def test_export_writes_standardized_endpoint_files(tmp_path: Path, mmcif_factory
     assert manifest["paths"]["bioemu_sequence"] == "sequence/bioemu_selected.fasta"
 
 
+def test_export_records_domain_only_selection(tmp_path: Path, mmcif_factory) -> None:
+    path_a = mmcif_factory("domain_a.cif", length=45)
+    path_b = mmcif_factory("domain_b.cif", length=45, deformation=1.0)
+    record_a = StructureRecord("AAAA", "1", "A", "A", uniprot_id="P1", file_path=str(path_a))
+    record_b = StructureRecord("BBBB", "1", "A", "A", uniprot_id="P1", file_path=str(path_b))
+    chain_a = parse_mmcif_chain(path_a, record_a)
+    chain_b = parse_mmcif_chain(path_b, record_b)
+    pair = compare_pair("toy", chain_a, chain_b, QCConfig())
+    sequence = choose_bioemu_sequence(chain_a.sequence, chain_b.sequence, "A" * 45)
+    domain_selection = {
+        "mode": "shared_domain_from_b",
+        "selected_residue_count": 45,
+        "caveat": "Domain-only comparison.",
+    }
+
+    manifest_path = export_endpoint_pair(
+        pair,
+        chain_a,
+        chain_b,
+        sequence,
+        tmp_path / "entry",
+        domain_selection=domain_selection,
+    )
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    report = (tmp_path / "entry/reports/qc_summary.md").read_text(encoding="utf-8")
+    assert manifest["domain_selection"] == domain_selection
+    assert "Domain Selection" in report
+
+
 def test_explicit_manifest_exports_every_row_and_resumes(
     tmp_path: Path, mmcif_factory
 ) -> None:

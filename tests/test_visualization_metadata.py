@@ -174,7 +174,7 @@ def test_path_morph_frame_titles_include_resolved_protein_label() -> None:
 
 def test_colab_pair_propagates_gif_count_settings(tmp_path: Path, monkeypatch) -> None:
     workspace = tmp_path / "workspace"
-    pair_dir = workspace / "data/dataset/first_five_proteins/P35557/pairs/PAIR_A__PAIR_B"
+    pair_dir = workspace / "data/dataset/non_ideal_transitions_n3/P35557/pairs/PAIR_A__PAIR_B"
     sequence_dir = pair_dir / "sequence"
     sequence_dir.mkdir(parents=True)
     fasta_path = sequence_dir / "bioemu_selected.fasta"
@@ -218,12 +218,14 @@ def test_colab_pair_propagates_gif_count_settings(tmp_path: Path, monkeypatch) -
         5,
         workspace_dir=workspace,
         content_root=tmp_path / "content",
+        dataset_label="non_ideal_transitions_n3",
         num_top_gifs_generated=9,
         num_bottom_gifs_generated=4,
     )
 
     assert captured == {"top": 9, "bottom": 4}
     assert result["archive_sha256"] == "sha"
+    assert result["dataset_label"] == "non_ideal_transitions_n3"
 
 
 def _run_with_summary(summary: dict[str, object]) -> LargeSyntheticRun:

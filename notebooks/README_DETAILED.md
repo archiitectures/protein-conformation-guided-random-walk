@@ -141,7 +141,8 @@ Important files:
 
 ## BioEmu Colab Workflow
 
-`run_bioemu_colab.ipynb` is the executable no-Drive first-five workflow:
+`run_bioemu_colab.ipynb` is the executable no-Drive workflow for a selected
+dataset label. It includes first-five and `non_ideal_transitions_n3` pair cells:
 
 1. Requires the official VS Code Colab extension and accepts NVIDIA `L4` or
    `T4` runtimes by default.

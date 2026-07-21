@@ -18,6 +18,7 @@ from guided_conformational_path.bioemu_io import BIOEMU_BUNDLE_SCHEMA
 WORKSPACE_ARCHIVE_SCHEMA = "guided_conformation_colab_workspace_v1"
 RESULT_ARCHIVE_SCHEMA = "guided_conformation_colab_result_v1"
 WORKSPACE_ROOT = "protein-conformation-guided-random-walk"
+LEGACY_DATASET_LABEL = "first_five_proteins"
 
 _SOURCE_DIRECTORIES = (
     "guided_conformational_path",
@@ -60,12 +61,13 @@ def create_workspace_archive(
     dataset = Path(dataset_root).expanduser().resolve()
     output = Path(destination).expanduser().resolve()
     _require_directory(root, "repository root")
-    _require_directory(dataset, "first-five dataset root")
+    _require_directory(dataset, "dataset root")
+    dataset_label = _safe_component(dataset.name, "dataset_label")
 
     pair_manifests = sorted(dataset.glob("*/pairs/*/manifest.json"))
-    if len(pair_manifests) != 5:
+    if not pair_manifests:
         raise ColabTransferError(
-            f"Expected 5 pair manifests under {dataset}, found {len(pair_manifests)}"
+            f"Expected at least one pair manifest under {dataset}, found none"
         )
 
     sources: list[tuple[Path, PurePosixPath]] = []
@@ -81,7 +83,7 @@ def create_workspace_archive(
     sources.extend(
         _archive_files(
             dataset,
-            PurePosixPath(WORKSPACE_ROOT, "data", "dataset", "first_five_proteins"),
+            PurePosixPath(WORKSPACE_ROOT, "data", "dataset", dataset_label),
         )
     )
 
@@ -89,7 +91,8 @@ def create_workspace_archive(
         "schema_version": WORKSPACE_ARCHIVE_SCHEMA,
         "created_at_utc": _utc_now(),
         "workspace_root": WORKSPACE_ROOT,
-        "dataset_relative_path": "data/dataset/first_five_proteins",
+        "dataset_label": dataset_label,
+        "dataset_relative_path": f"data/dataset/{dataset_label}",
         "pair_count": len(pair_manifests),
         "pair_ids": [path.parent.name for path in pair_manifests],
         "file_count": len(sources),
@@ -103,11 +106,14 @@ def create_result_archive(
     bundle_dir: str | Path,
     graph_outputs_dir: str | Path,
     destination: str | Path,
+    *,
+    dataset_label: str = "first_five_proteins",
 ) -> Path:
     """Archive one completed BioEmu bundle and its graph outputs for download."""
     bundle = Path(bundle_dir).expanduser().resolve()
     graph_outputs = Path(graph_outputs_dir).expanduser().resolve()
     output = Path(destination).expanduser().resolve()
+    safe_dataset_label = _safe_component(dataset_label, "dataset_label")
     _require_directory(bundle, "BioEmu bundle")
     _require_directory(graph_outputs, "graph outputs")
 
@@ -152,6 +158,7 @@ def create_result_archive(
         "created_at_utc": _utc_now(),
         "protein_id": protein_id,
         "pair_id": pair_id,
+        "dataset_label": safe_dataset_label,
         "requested_samples": requested_samples,
         "retained_samples": len(samples),
         "sequence": bundle_sequence,
@@ -192,6 +199,10 @@ def import_result_archive(
 
         protein_id = _safe_component(manifest.get("protein_id"), "protein_id")
         pair_id = _safe_component(manifest.get("pair_id"), "pair_id")
+        dataset_label = _safe_component(
+            manifest.get("dataset_label", "first_five_proteins"),
+            "dataset_label",
+        )
         requested_samples = _positive_int(
             manifest.get("requested_samples"),
             "requested_samples",
@@ -201,14 +212,15 @@ def import_result_archive(
             root
             / "data"
             / "bioemu_outputs"
-            / "first_five_proteins"
+            / dataset_label
             / protein_id
             / pair_id
             / run_name
         )
-        graph_destination = (
-            root / "outputs" / "dataset_bioemu" / protein_id / pair_id / run_name
-        )
+        graph_root = root / "outputs" / "dataset_bioemu"
+        if dataset_label != LEGACY_DATASET_LABEL:
+            graph_root = graph_root / dataset_label
+        graph_destination = graph_root / protein_id / pair_id / run_name
         with tempfile.TemporaryDirectory(prefix="colab_result_") as temp_name:
             temp_root = Path(temp_name)
             handle.extractall(temp_root)
@@ -227,6 +239,7 @@ def import_result_archive(
         "schema_version": RESULT_ARCHIVE_SCHEMA,
         "protein_id": protein_id,
         "pair_id": pair_id,
+        "dataset_label": dataset_label,
         "requested_samples": requested_samples,
         "retained_samples": manifest.get("retained_samples"),
         "bundle_dir": str(bundle_destination),

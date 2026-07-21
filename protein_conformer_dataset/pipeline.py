@@ -12,7 +12,11 @@ from typing import Any, Iterable
 
 import pandas as pd
 
-from protein_conformer_dataset.alignment import map_to_canonical
+from protein_conformer_dataset.alignment import (
+    map_to_canonical,
+    select_shared_domain_from_b,
+    select_shared_exact_matches,
+)
 from protein_conformer_dataset.checkpoint import StateStore
 from protein_conformer_dataset.config import DatasetConfig
 from protein_conformer_dataset.download import CachedHttpClient, DownloadError
@@ -259,12 +263,35 @@ class DatasetPipeline:
         )
         if len(chains) != 2:
             raise ValueError("One or both explicit endpoint structures could not be parsed")
+        requested_domain_selection = _domain_selection_from_row(row)
+        requested_residue_selection = _residue_selection_from_row(row)
+        if requested_domain_selection is not None and requested_residue_selection is not None:
+            raise ValueError("domain_mode and residue_mode cannot be combined in one endpoint pair")
+        domain_selection: dict[str, Any] | None = None
+        residue_selection: dict[str, Any] | None = None
+        comparison_chains = chains
+        if requested_domain_selection is not None:
+            selected_a, selected_b, derived_domain_selection = select_shared_domain_from_b(
+                chains[0],
+                chains[1],
+                minimum_identity=0.90,
+                minimum_reference_coverage=0.90,
+            )
+            comparison_chains = [selected_a, selected_b]
+            domain_selection = {**derived_domain_selection, **requested_domain_selection}
+        if requested_residue_selection is not None:
+            selected_a, selected_b, derived_residue_selection = select_shared_exact_matches(
+                chains[0],
+                chains[1],
+            )
+            comparison_chains = [selected_a, selected_b]
+            residue_selection = {**derived_residue_selection, **requested_residue_selection}
         comparisons_payload = state.load(unit_id, "comparisons", enabled=self._resume_enabled())
         if comparisons_payload is None:
             pair = compare_pair(
                 row["protein_id"],
-                chains[0],
-                chains[1],
+                comparison_chains[0],
+                comparison_chains[1],
                 self.config.qc,
                 state_a=row.get("state_a") or None,
                 state_b=row.get("state_b") or None,
@@ -273,20 +300,42 @@ class DatasetPipeline:
             state.save(unit_id, "comparisons", [pair.to_dict()])
         else:
             pair = EndpointPair.from_dict(comparisons_payload[0])
-        sequence_choice = choose_bioemu_sequence(
-            chains[0].sequence,
-            chains[1].sequence,
-            canonical.sequence if canonical else None,
-            minimum_identity=self.config.qc.minimum_sequence_identity,
-            minimum_coverage=self.config.qc.minimum_aligned_coverage,
-        )
+        if requested_residue_selection is not None:
+            if canonical is None:
+                raise ValueError("residue_mode requires a UniProt canonical sequence")
+            sequence_choice = SequenceChoice(
+                canonical_sequence=canonical.sequence,
+                construct_sequence=chains[0].sequence,
+                selected_sequence=canonical.sequence,
+                source="canonical",
+                warnings=[
+                    "Using the canonical sequence while graph coordinates are restricted to exact "
+                    "endpoint matches from a mutation-stabilized construct"
+                ],
+            )
+        else:
+            sequence_choice = choose_bioemu_sequence(
+                comparison_chains[0].sequence,
+                comparison_chains[1].sequence,
+                canonical.sequence if canonical else None,
+                minimum_identity=self.config.qc.minimum_sequence_identity,
+                minimum_coverage=self.config.qc.minimum_aligned_coverage,
+            )
         destination = (
             self.config.output_dir / _safe_id(row["protein_id"]) / "pairs" / _safe_id(pair.pair_id)
         )
         manifest_path = destination / "manifest.json"
         export_payload = state.load(unit_id, "export", enabled=self._resume_enabled())
         if export_payload is None or not manifest_path.exists():
-            export_endpoint_pair(pair, chains[0], chains[1], sequence_choice, destination)
+            export_endpoint_pair(
+                pair,
+                comparison_chains[0],
+                comparison_chains[1],
+                sequence_choice,
+                destination,
+                domain_selection=domain_selection,
+                residue_selection=residue_selection,
+            )
             state.save(unit_id, "export", {"manifest_path": str(manifest_path)})
         pair_row = pair_table_row(pair, manifest_path)
         pair_row["candidate_rank"] = 1
@@ -412,3 +461,33 @@ def _unique_normalized(values: Iterable[str]) -> list[str]:
 
 def _safe_id(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value.strip()) or "unnamed"
+
+
+def _domain_selection_from_row(row: dict[str, str]) -> dict[str, str] | None:
+    """Validate the optional explicit-manifest domain selection mode."""
+    mode = (row.get("domain_mode") or "").strip().lower()
+    if not mode:
+        return None
+    if mode != "shared_domain_from_b":
+        raise ValueError(
+            "Unsupported domain_mode "
+            f"{mode!r}; supported values: shared_domain_from_b"
+        )
+    return {
+        "mode": mode,
+        "requested_by": "explicit_manifest",
+        "reference_endpoint": "B",
+    }
+
+
+def _residue_selection_from_row(row: dict[str, str]) -> dict[str, str] | None:
+    """Validate the optional mutation-tolerant exact-residue selection mode."""
+    mode = (row.get("residue_mode") or "").strip().lower()
+    if not mode:
+        return None
+    if mode != "shared_exact_matches":
+        raise ValueError(
+            "Unsupported residue_mode "
+            f"{mode!r}; supported values: shared_exact_matches"
+        )
+    return {"mode": mode, "requested_by": "explicit_manifest", "reference_endpoint": "A"}

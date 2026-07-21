@@ -40,6 +40,25 @@ def test_create_workspace_archive_contains_source_and_five_pairs(tmp_path: Path)
     assert not any("__pycache__" in name or name.endswith(".pyc") for name in names)
 
 
+def test_workspace_archive_supports_non_first_five_dataset_labels(tmp_path: Path) -> None:
+    repo_root, _ = _fake_workspace(tmp_path)
+    dataset_root = repo_root / "data/dataset/non_ideal_transitions_n3"
+    for index in range(3):
+        pair_dir = dataset_root / f"P{index}" / "pairs" / f"A{index}__B{index}"
+        pair_dir.mkdir(parents=True)
+        (pair_dir / "manifest.json").write_text("{}", encoding="utf-8")
+
+    archive = create_workspace_archive(repo_root, dataset_root, tmp_path / "workspace.zip")
+
+    with zipfile.ZipFile(archive) as handle:
+        manifest = json.loads(handle.read("colab_workspace_manifest.json"))
+        names = set(handle.namelist())
+    assert manifest["dataset_label"] == "non_ideal_transitions_n3"
+    assert manifest["dataset_relative_path"] == "data/dataset/non_ideal_transitions_n3"
+    assert manifest["pair_count"] == 3
+    assert any("data/dataset/non_ideal_transitions_n3/" in name for name in names)
+
+
 def test_create_and_import_result_archive_round_trip(tmp_path: Path) -> None:
     bundle_dir, graph_dir = _fake_result(tmp_path)
     archive = create_result_archive(bundle_dir, graph_dir, tmp_path / "PTEST_A__B_n_2.zip")
@@ -61,6 +80,28 @@ def test_create_and_import_result_archive_round_trip(tmp_path: Path) -> None:
     assert (expected_bundle / "nodes/bioemu_000001.pdb").exists()
     assert (expected_graph / "experiment_summary.json").exists()
     assert (expected_graph / "graph.png").exists()
+
+
+def test_import_result_archive_uses_declared_dataset_label(tmp_path: Path) -> None:
+    bundle_dir, graph_dir = _fake_result(tmp_path)
+    archive = create_result_archive(
+        bundle_dir,
+        graph_dir,
+        tmp_path / "result.zip",
+        dataset_label="non_ideal_transitions_n3",
+    )
+    local_repo = tmp_path / "local_repo"
+    local_repo.mkdir()
+
+    result = import_result_archive(archive, local_repo)
+
+    assert result["dataset_label"] == "non_ideal_transitions_n3"
+    assert Path(result["bundle_dir"]) == (
+        local_repo / "data/bioemu_outputs/non_ideal_transitions_n3/PTEST/A__B/n_2"
+    )
+    assert Path(result["graph_outputs_dir"]) == (
+        local_repo / "outputs/dataset_bioemu/non_ideal_transitions_n3/PTEST/A__B/n_2"
+    )
 
 
 def test_import_result_archive_refuses_existing_destination(tmp_path: Path) -> None:

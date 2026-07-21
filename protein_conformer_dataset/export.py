@@ -34,6 +34,9 @@ def export_endpoint_pair(
     chain_b: ParsedChain,
     sequence_choice: SequenceChoice,
     destination: str | Path,
+    *,
+    domain_selection: dict[str, Any] | None = None,
+    residue_selection: dict[str, Any] | None = None,
 ) -> Path:
     """Write one complete endpoint-pair directory and return its manifest path."""
     root = Path(destination)
@@ -81,6 +84,10 @@ def export_endpoint_pair(
     )
     manifest = pair.to_dict(include_coordinates=False)
     manifest["sequence_selection"] = asdict(sequence_choice)
+    if domain_selection is not None:
+        manifest["domain_selection"] = domain_selection
+    if residue_selection is not None:
+        manifest["residue_selection"] = residue_selection
     manifest["scientific_caveat"] = (
         "This is a candidate experimentally observed endpoint pair. Multiple structures do not prove "
         "a direct transition, and equilibrium accessibility does not imply kinetic connectivity."
@@ -96,7 +103,15 @@ def export_endpoint_pair(
     }
     manifest_path = root / "manifest.json"
     _write_json(manifest_path, manifest)
-    (root / "reports" / "qc_summary.md").write_text(_qc_markdown(pair, sequence_choice), encoding="utf-8")
+    (root / "reports" / "qc_summary.md").write_text(
+        _qc_markdown(
+            pair,
+            sequence_choice,
+            domain_selection=domain_selection,
+            residue_selection=residue_selection,
+        ),
+        encoding="utf-8",
+    )
     return manifest_path
 
 
@@ -214,11 +229,35 @@ def _environment_metadata(record: StructureRecord) -> dict[str, Any]:
     }
 
 
-def _qc_markdown(pair: EndpointPair, sequence_choice: SequenceChoice) -> str:
+def _qc_markdown(
+    pair: EndpointPair,
+    sequence_choice: SequenceChoice,
+    *,
+    domain_selection: dict[str, Any] | None = None,
+    residue_selection: dict[str, Any] | None = None,
+) -> str:
     quality = pair.quality
     warning_lines = "\n".join(f"- {item}" for item in quality.warnings) or "- None"
     rejection_lines = "\n".join(f"- {item}" for item in quality.rejection_reasons) or "- None"
     sequence_lines = "\n".join(f"- {item}" for item in sequence_choice.warnings) or "- None"
+    domain_section = ""
+    if domain_selection is not None:
+        domain_section = f"""
+## Domain Selection
+
+- Mode: `{domain_selection.get('mode', 'unknown')}`
+- Selected residues: {domain_selection.get('selected_residue_count', 'unknown')}
+- Caveat: {domain_selection.get('caveat', 'Domain-only comparison')}
+"""
+    residue_section = ""
+    if residue_selection is not None:
+        residue_section = f"""
+## Residue Selection
+
+- Mode: `{residue_selection.get('mode', 'unknown')}`
+- Selected residues: {residue_selection.get('selected_residue_count', 'unknown')}
+- Caveat: {residue_selection.get('caveat', 'Only selected matched residues are compared.')}
+"""
     return f"""# Endpoint Pair QC: {pair.pair_id}
 
 Status: **{quality.status.value}**
@@ -248,4 +287,6 @@ Multiple experimental structures do not prove a direct transition pathway. Equil
 accessibility does not imply kinetic connectivity. Ligands, mutations, truncations,
 oligomeric changes, and missing residues can all produce structural differences. This
 report identifies a candidate endpoint pair plus QC evidence, not ground truth.
+{domain_section}
+{residue_section}
 """

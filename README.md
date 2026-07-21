@@ -97,12 +97,19 @@ uv run python scripts/inspect_entry.py \
   --pair-id 4AKE_A__1AKE_A
 ```
 
-The five-pair manifest used by the Colab workflow is tracked at
+The five-pair proof-of-concept manifest is tracked at
 `data/input/first_five_proteins.csv`; its generated dataset under
 `data/dataset/first_five_proteins/` is local and ignored. The five pairs are
 currently `manual_review` rather than `accepted`, because the exports retain
 ligand, mutation, construct, source, or length/context caveats. Generated
 cache, dataset, BioEmu, and analysis content should not be committed.
+
+`data/input/non_ideal_transitions_n3.csv` defines a separate three-target
+physical-consistency experiment. Its RfaH row uses `shared_domain_from_b` to
+compare the alpha-helical CTD embedded in full-length `2OUG` with the isolated
+beta-CTD `2LCL`; it is explicitly a domain-only comparison. Its KaiB row uses
+the canonical ground-state sequence and only exact endpoint residue matches,
+because `5JYT` is mutation-stabilized.
 
 ## BioEmu Handoff
 
@@ -113,12 +120,17 @@ requested sample count, retained sample count, and node paths. A request for
 200 samples is a target: BioEmu may retain fewer physical trajectory frames,
 and outputs labeled unphysical are not converted into graph nodes.
 
-The supported no-Drive VS Code Colab flow packages source and the locally
-generated five-pair dataset:
+The supported no-Drive VS Code Colab flow packages source and one locally
+generated dataset namespace:
 
 ```bash
 uv run python scripts/colab_transfer.py package-workspace
 ```
+
+Pass `--dataset-root data/dataset/non_ideal_transitions_n3` for the hard-target
+batch. New result archives preserve that label and import under
+`data/bioemu_outputs/<label>/` and `outputs/dataset_bioemu/<label>/`; the
+legacy first-five graph-output location is unchanged.
 
 Open `notebooks/run_bioemu_colab.ipynb`, choose an NVIDIA `L4` or `T4` Colab
 server through the VS Code Colab extension, and upload

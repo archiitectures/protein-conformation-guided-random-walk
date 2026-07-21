@@ -19,6 +19,7 @@ class FakeClient:
         self.remote_files: set[str] = set()
         self.uploads: list[str] = []
         self.executions: list[tuple[str, bool]] = []
+        self.executed_code: list[str] = []
         self.downloads: list[str] = []
         self.created_kernels = 0
         self.status_calls = 0
@@ -56,6 +57,7 @@ class FakeClient:
     ) -> str:
         del kernel_id, timeout_seconds
         self.executions.append((label, allow_disconnect))
+        self.executed_code.append(code)
         if self.fail_pair and self.fail_pair in code:
             raise RuntimeError("remote failure")
         if "run_colab_pair" in code and "result =" in code:
@@ -81,7 +83,7 @@ def test_batch_runs_sequentially_and_releases_after_both_verify(
     monkeypatch.setattr(
         batch_module,
         "_import_archive",
-        lambda _archive, root, job: _write_complete_output(root, job),
+        lambda _archive, root, job, _label: _write_complete_output(root, job),
     )
 
     results = run_vscode_colab_batch(
@@ -116,7 +118,7 @@ def test_batch_failure_preserves_first_result_and_does_not_release(
     monkeypatch.setattr(
         batch_module,
         "_import_archive",
-        lambda _archive, root, job: _write_complete_output(root, job),
+        lambda _archive, root, job, _label: _write_complete_output(root, job),
     )
 
     with pytest.raises(RuntimeError, match="remote failure"):
@@ -145,7 +147,7 @@ def test_batch_recovers_remote_archive_without_resampling(
     monkeypatch.setattr(
         batch_module,
         "_import_archive",
-        lambda _archive, root, imported_job: _write_complete_output(root, imported_job),
+        lambda _archive, root, imported_job, _label: _write_complete_output(root, imported_job),
     )
 
     run_vscode_colab_batch(
@@ -171,7 +173,7 @@ def test_new_archive_does_not_require_immediate_contents_api_visibility(
     monkeypatch.setattr(
         batch_module,
         "_import_archive",
-        lambda _archive, root, imported_job: _write_complete_output(root, imported_job),
+        lambda _archive, root, imported_job, _label: _write_complete_output(root, imported_job),
     )
 
     results = run_vscode_colab_batch(
@@ -205,6 +207,67 @@ def test_verified_local_jobs_skip_remote_setup(tmp_path: Path) -> None:
     assert client.created_kernels == 0
 
 
+def test_batch_uses_the_requested_dataset_namespace(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "workspace.zip"
+    archive.write_bytes(b"workspace")
+    job = ColabBatchJob("Q13257", "1DUJ_A__1S2H_A", 200)
+    client = FakeClient()
+    dataset_label = "non_ideal_transitions_n3"
+    monkeypatch.setattr(
+        batch_module,
+        "_import_archive",
+        lambda _archive, root, imported_job, label: _write_complete_output(
+            root, imported_job, dataset_label=label
+        ),
+    )
+
+    run_vscode_colab_batch(
+        client,
+        [job],
+        repo_root=tmp_path,
+        workspace_archive=archive,
+        required_gpu="T4",
+        dataset_label=dataset_label,
+    )
+
+    assert client.uploads == ["/content/non_ideal_transitions_n3_workspace.zip"]
+    assert any(
+        'dataset_label="non_ideal_transitions_n3"' in code
+        for code in client.executed_code
+    )
+    assert verify_local_job(tmp_path, job, dataset_label=dataset_label) is not None
+
+
+def test_batch_resumes_an_existing_kernel_without_setup(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "workspace.zip"
+    archive.write_bytes(b"workspace")
+    job = _jobs()[0]
+    client = FakeClient()
+    monkeypatch.setattr(
+        batch_module,
+        "_import_archive",
+        lambda _archive, root, imported_job, _label: _write_complete_output(root, imported_job),
+    )
+
+    run_vscode_colab_batch(
+        client,
+        [job],
+        repo_root=tmp_path,
+        workspace_archive=archive,
+        recover_kernel_id="known-kernel",
+    )
+
+    assert client.uploads == []
+    assert client.created_kernels == 0
+    assert client.executions[0][0].startswith("BioEmu and graph")
+
+
 def _jobs() -> list[ColabBatchJob]:
     return [
         ColabBatchJob("P00889", "1CTS_A__2CTS_A", 200),
@@ -212,15 +275,24 @@ def _jobs() -> list[ColabBatchJob]:
     ]
 
 
-def _write_complete_output(root: Path, job: ColabBatchJob) -> None:
+def _write_complete_output(
+    root: Path,
+    job: ColabBatchJob,
+    *,
+    dataset_label: str = "first_five_proteins",
+) -> None:
     bundle = (
         root
-        / "data/bioemu_outputs/first_five_proteins"
+        / "data/bioemu_outputs"
+        / dataset_label
         / job.protein_id
         / job.pair_id
         / job.run_name
     )
-    graph = root / "outputs/dataset_bioemu" / job.protein_id / job.pair_id / job.run_name
+    graph_root = root / "outputs/dataset_bioemu"
+    if dataset_label != "first_five_proteins":
+        graph_root = graph_root / dataset_label
+    graph = graph_root / job.protein_id / job.pair_id / job.run_name
     bundle.mkdir(parents=True, exist_ok=True)
     graph.mkdir(parents=True, exist_ok=True)
     nodes_dir = bundle / "nodes"

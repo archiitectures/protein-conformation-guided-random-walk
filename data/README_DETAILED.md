@@ -9,6 +9,11 @@ outputs are intentionally not part of the source package.
   `scripts/build_dataset.py`.
 - `input/first_five_proteins.csv`: the five-pair manifest used by the VS Code
   Colab workflow.
+- `input/non_ideal_transitions_n3.csv`: three deliberately harder endpoint
+  comparisons. Its RfaH row is a CTD-only construct selected from full-length
+  endpoint A by alignment to isolated endpoint B. Its KaiB row uses only exact
+  matched endpoint residues while BioEmu samples the canonical sequence because
+  the fold-switched endpoint is mutation-stabilized.
 - `input/`: the stable place for additional endpoint manifests or one-UniProt-ID
   per-line files.
 - `pdb_inputs/`: optional minimal PDB files for the legacy demo and exploratory
@@ -43,7 +48,8 @@ configuration fingerprint matches.
 
 ## BioEmu Results
 
-The importer writes downloaded no-Drive five-pair results under:
+The importer writes downloaded results under the dataset label recorded in the
+result archive. The legacy five-pair location is:
 
 ```text
 data/bioemu_outputs/first_five_proteins/<protein>/<pair>/n_<requested>/
@@ -51,6 +57,9 @@ data/bioemu_outputs/first_five_proteins/<protein>/<pair>/n_<requested>/
   nodes/*.pdb
   raw_bioemu/
 ```
+
+For `non_ideal_transitions_n3`, the equivalent root is
+`data/bioemu_outputs/non_ideal_transitions_n3/<protein>/<pair>/n_<requested>/`.
 
 `manifest.json` is a portable `bioemu_bundle_v1` manifest. It records the
 selected sequence, requested count, retained count, and relative node paths.

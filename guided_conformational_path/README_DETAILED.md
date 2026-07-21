@@ -113,8 +113,9 @@ that a requested count was physically produced.
 
 - Defines versioned workspace and pair-result ZIP schemas for the no-Drive VS
   Code Colab workflow.
-- `create_workspace_archive(...)` packages runtime source plus exactly five
-  exported endpoint pairs while excluding local environments and caches.
+- `create_workspace_archive(...)` packages runtime source plus one or more
+  exported endpoint pairs under the supplied dataset label while excluding local
+  environments and caches.
 - `create_result_archive(...)` combines one complete BioEmu bundle and graph
   output directory with provenance and retained-sample metadata.
 - `import_result_archive(...)` rejects unsafe members, invalid schemas,

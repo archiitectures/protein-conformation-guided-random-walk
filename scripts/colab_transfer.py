@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
         "--dataset-root",
         type=Path,
         default=ROOT / "data/dataset/first_five_proteins",
+        help="Exported dataset directory, for example data/dataset/non_ideal_transitions_n3.",
     )
     package.add_argument(
         "--output",

@@ -239,7 +239,7 @@ fallback.
 
 ## `colab_transfer.py`
 
-Purpose: transfer the current worktree and first-five dataset through
+Purpose: transfer the current worktree and a selected exported dataset through
 the VS Code Colab extension without Google Drive.
 
 Build the upload archive:
@@ -249,8 +249,11 @@ uv run python scripts/colab_transfer.py package-workspace
 ```
 
 This writes `outputs/colab_transfers/guided_conformation_workspace.zip` with
-only runtime source, project metadata, and the five-pair dataset. It excludes
+only runtime source, project metadata, and the selected dataset. It excludes
 Git history, virtual environments, caches, tests, notebooks, and prior outputs.
+Use `--dataset-root data/dataset/non_ideal_transitions_n3` for the hard-target
+experiment. Result archives carry their dataset label and import into isolated
+BioEmu and graph-output roots.
 
 Import one downloaded pair result:
 

@@ -1,0 +1,4 @@
+protein_id,protein_name,uniprot_id,pdb_a,chain_a,pdb_b,chain_b,state_a,state_b,domain_mode,residue_mode
+Q13257,human_Mad2,Q13257,1DUJ,A,1S2H,A,open,closed,,
+Q79V61,Thermosynechococcus_KaiB,Q79V61,2QKE,A,5JYT,A,ground_state,fold_switched,,shared_exact_matches
+P0AFW0,E_coli_RfaH_CTD,P0AFW0,2OUG,A,2LCL,A,autoinhibited_alpha_CTD,active_beta_CTD,shared_domain_from_b,

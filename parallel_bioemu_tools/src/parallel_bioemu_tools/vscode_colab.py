@@ -59,12 +59,16 @@ class AssignedColabServer:
 
 def read_vscode_safe_storage_password(
     runner: Callable[..., subprocess.CompletedProcess[bytes]] = subprocess.run,
+    *,
+    timeout_seconds: float = 60,
 ) -> bytes:
     """Read the VS Code safe-storage key from macOS Keychain once in memory.
 
     macOS may display one authorization prompt. The returned bytes are never
     persisted by this module and callers should keep their scope short.
     """
+    if timeout_seconds <= 0:
+        raise ValueError("timeout_seconds must be positive")
     try:
         result = runner(
             [
@@ -78,10 +82,12 @@ def read_vscode_safe_storage_password(
             ],
             capture_output=True,
             check=True,
+            timeout=timeout_seconds,
         )
-    except (OSError, subprocess.CalledProcessError) as exc:
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
         raise ColabConnectionError(
-            "Could not read the VS Code safe-storage key from macOS Keychain"
+            "Could not read the VS Code safe-storage key from macOS Keychain "
+            f"within {timeout_seconds:g} seconds"
         ) from exc
     return result.stdout.rstrip(b"\n")
 
