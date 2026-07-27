@@ -1,11 +1,5 @@
 # Protein Conformation Guided Random Walk
 
-This repository is maintained as one worktree inside the `aa_overall_proj_1`
-mother folder. Commands below assume the repository root as the working
-directory. The root package uses the root `uv` environment; the optional
-`parallel_bioemu_tools/` subproject has its own `pyproject.toml` and lockfile
-but remains in this same worktree.
-
 This repository is a research prototype for building candidate conformational
 graphs between two experimentally observed protein endpoint structures. The
 current end-to-end workflow is:
