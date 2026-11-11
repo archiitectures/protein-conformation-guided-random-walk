@@ -1,0 +1,3160 @@
+{
+  "fallback_used": false,
+  "n_nodes": 75,
+  "n_edges": 2775,
+  "n_generated_nodes": 73,
+  "n_valid_nodes": 75,
+  "path_node_ids": [
+    "A",
+    "A_rec_025",
+    "B_rec_021",
+    "B_rec_002",
+    "B"
+  ],
+  "path_families": [
+    "A_endpoint",
+    "A_generated",
+    "B_generated",
+    "B_generated",
+    "B_endpoint"
+  ],
+  "path_intermediates": 3,
+  "total_cost": 316.66556934614965,
+  "route_family_costs": {},
+  "generation_summaries": [
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 1,
+      "side": "A",
+      "parent": "A",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 3,
+      "attempted": 7,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 1,
+      "side": "B",
+      "parent": "B",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 0,
+      "attempted": 4,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "A",
+      "parent": "A_rec_002",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "B",
+      "parent": "B_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 35,
+      "attempted": 39,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "A",
+      "parent": "A_rec_000",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 46,
+      "attempted": 50,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "B",
+      "parent": "B_rec_003",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 18,
+      "attempted": 22,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "A",
+      "parent": "A_rec_003",
+      "requested": 4,
+      "returned": 3,
+      "rejected": 77,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "B",
+      "parent": "B_rec_001",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 12,
+      "attempted": 16,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "A",
+      "parent": "A_rec_001",
+      "requested": 4,
+      "returned": 2,
+      "rejected": 78,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 2,
+      "side": "B",
+      "parent": "B_rec_000",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 72,
+      "attempted": 76,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_002",
+      "requested": 4,
+      "returned": 3,
+      "rejected": 77,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range",
+        "3 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 51,
+      "attempted": 55,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_005",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_006",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_007",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_010",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "11 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_010",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_005",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_000",
+      "requested": 4,
+      "returned": 3,
+      "rejected": 77,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_003",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 42,
+      "attempted": 46,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_003",
+      "requested": 4,
+      "returned": 2,
+      "rejected": 78,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "3 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_011",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_006",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_008",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "A",
+      "parent": "A_rec_008",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "9 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 3,
+      "side": "B",
+      "parent": "B_rec_004",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "7 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_014",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_021",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_019",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_020",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 45,
+      "attempted": 49,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_022",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_005",
+      "requested": 4,
+      "returned": 1,
+      "rejected": 79,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 50,
+      "attempted": 54,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_007",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_006",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_018",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range",
+        "4 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_010",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_010",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_005",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "A",
+      "parent": "A_rec_015",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 4,
+      "side": "B",
+      "parent": "B_rec_025",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_025",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "7 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_021",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_024",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_020",
+      "requested": 4,
+      "returned": 1,
+      "rejected": 79,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_014",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_030",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "9 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_019",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_022",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_002",
+      "requested": 4,
+      "returned": 3,
+      "rejected": 77,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_029",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "10 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_005",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_006",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_023",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 48,
+      "attempted": 52,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "A",
+      "parent": "A_rec_007",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "8 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 5,
+      "side": "B",
+      "parent": "B_rec_028",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "7 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_025",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "10 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_021",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_024",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_020",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_014",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "9 consecutive C-alpha distances outside expected range",
+        "3 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_030",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "3 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_019",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_022",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "6 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_002",
+      "requested": 4,
+      "returned": 3,
+      "rejected": 77,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_034",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "4 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_005",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "7 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_029",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "9 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_023",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "9 consecutive C-alpha distances outside expected range",
+        "2 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_006",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "5 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "A",
+      "parent": "A_rec_007",
+      "requested": 4,
+      "returned": 0,
+      "rejected": 80,
+      "attempted": 80,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "2 consecutive C-alpha distances outside expected range",
+        "1 non-neighbor C-alpha distances below clash threshold"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 6,
+      "side": "B",
+      "parent": "B_rec_002",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 48,
+      "attempted": 52,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [
+        "1 consecutive C-alpha distances outside expected range"
+      ],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian_summary",
+      "requested_total": 80,
+      "returned_total": 73,
+      "max_iterations": 6,
+      "top_k": 8,
+      "samples_per_parent": 4,
+      "returned_by_side": {
+        "A": 32,
+        "B": 41
+      }
+    }
+  ],
+  "config": {
+    "n_residues": 200,
+    "n_samples": 80,
+    "noise_scale": 0.15,
+    "seed": 7,
+    "recursive_max_iterations": 6,
+    "recursive_top_k": 8,
+    "recursive_samples_per_parent": 4,
+    "target_min_intermediates": 3,
+    "target_max_intermediates": 4,
+    "fallback_waypoints": 4,
+    "fallback_samples_per_waypoint": 0,
+    "fallback_noise_scale": 0.05,
+    "k_neighbors": 0,
+    "outputs_dir": "outputs/large_synthetic",
+    "write_nodes": false,
+    "write_pymol": true,
+    "write_py3dmol": true,
+    "graph_min_edge_weight": null,
+    "graph_max_edge_weight": null,
+    "graph_non_path_edge_alpha": 0.125
+  },
+  "input": {
+    "mode": "synthetic",
+    "n_residues": 200
+  },
+  "recursive_gaussian": {
+    "fallback_used": false,
+    "n_nodes": 75,
+    "n_edges": 2775,
+    "n_generated_nodes": 73,
+    "n_valid_nodes": 75,
+    "path_node_ids": [
+      "A",
+      "A_rec_025",
+      "B_rec_021",
+      "B_rec_002",
+      "B"
+    ],
+    "path_families": [
+      "A_endpoint",
+      "A_generated",
+      "B_generated",
+      "B_generated",
+      "B_endpoint"
+    ],
+    "path_intermediates": 3,
+    "total_cost": 316.66556934614965,
+    "route_family_costs": {},
+    "generation_summaries": [
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "A",
+        "parent": "A",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 3,
+        "attempted": 7,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "B",
+        "parent": "B",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 0,
+        "attempted": 4,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_002",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 35,
+        "attempted": 39,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_000",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 46,
+        "attempted": 50,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_003",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 18,
+        "attempted": 22,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_003",
+        "requested": 4,
+        "returned": 3,
+        "rejected": 77,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_001",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 12,
+        "attempted": 16,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_001",
+        "requested": 4,
+        "returned": 2,
+        "rejected": 78,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_000",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 72,
+        "attempted": 76,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_002",
+        "requested": 4,
+        "returned": 3,
+        "rejected": 77,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range",
+          "3 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 51,
+        "attempted": 55,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_005",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_006",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_007",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_010",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "11 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_010",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_005",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_000",
+        "requested": 4,
+        "returned": 3,
+        "rejected": 77,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_003",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 42,
+        "attempted": 46,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_003",
+        "requested": 4,
+        "returned": 2,
+        "rejected": 78,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "3 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_011",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_006",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_008",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "A",
+        "parent": "A_rec_008",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "9 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 3,
+        "side": "B",
+        "parent": "B_rec_004",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "7 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_014",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_021",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_019",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_020",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 45,
+        "attempted": 49,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_022",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_005",
+        "requested": 4,
+        "returned": 1,
+        "rejected": 79,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 50,
+        "attempted": 54,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_007",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_006",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_018",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range",
+          "4 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_010",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_010",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_005",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "A",
+        "parent": "A_rec_015",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 4,
+        "side": "B",
+        "parent": "B_rec_025",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_025",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "7 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_021",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_024",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_020",
+        "requested": 4,
+        "returned": 1,
+        "rejected": 79,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_014",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_030",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "9 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_019",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_022",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_002",
+        "requested": 4,
+        "returned": 3,
+        "rejected": 77,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_029",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "10 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_005",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_006",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_023",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 48,
+        "attempted": 52,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "A",
+        "parent": "A_rec_007",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "8 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 5,
+        "side": "B",
+        "parent": "B_rec_028",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "7 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_025",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "10 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_021",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_024",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_020",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_014",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "9 consecutive C-alpha distances outside expected range",
+          "3 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_030",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "3 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_019",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_022",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "6 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_002",
+        "requested": 4,
+        "returned": 3,
+        "rejected": 77,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_034",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "4 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_005",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "7 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_029",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "9 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_023",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "9 consecutive C-alpha distances outside expected range",
+          "2 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_006",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "5 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "A",
+        "parent": "A_rec_007",
+        "requested": 4,
+        "returned": 0,
+        "rejected": 80,
+        "attempted": 80,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range",
+          "1 non-neighbor C-alpha distances below clash threshold"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 6,
+        "side": "B",
+        "parent": "B_rec_002",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 48,
+        "attempted": 52,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian_summary",
+        "requested_total": 80,
+        "returned_total": 73,
+        "max_iterations": 6,
+        "top_k": 8,
+        "samples_per_parent": 4,
+        "returned_by_side": {
+          "A": 32,
+          "B": 41
+        }
+      }
+    ]
+  },
+  "endpoint_validity": {
+    "A": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    },
+    "B": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    }
+  },
+  "pymol_path_view": "outputs/large_synthetic/pymol_path/view_path.pml",
+  "py3dmol_path_view": "outputs/large_synthetic/py3dmol_path_view.html"
+}

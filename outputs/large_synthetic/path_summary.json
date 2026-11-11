@@ -1,0 +1,45 @@
+{
+  "node_ids": [
+    "A",
+    "A_rec_025",
+    "B_rec_021",
+    "B_rec_002",
+    "B"
+  ],
+  "total_cost": 316.66556934614965,
+  "edge_scores": [
+    {
+      "from": "A",
+      "to": "A_rec_025",
+      "weight": 0.177310990331252,
+      "score": 0.177310990331252,
+      "unnormalized_probability": 0.8375192836190196
+    },
+    {
+      "from": "A_rec_025",
+      "to": "B_rec_021",
+      "weight": 316.3544771480637,
+      "score": 316.3544771480637,
+      "unnormalized_probability": 4.064398189249208e-138
+    },
+    {
+      "from": "B_rec_021",
+      "to": "B_rec_002",
+      "weight": 0.06436881240045836,
+      "score": 0.06436881240045836,
+      "unnormalized_probability": 0.9376591154423017
+    },
+    {
+      "from": "B_rec_002",
+      "to": "B",
+      "weight": 0.0694123953541943,
+      "score": 0.0694123953541943,
+      "unnormalized_probability": 0.932941859845884
+    }
+  ],
+  "metadata": {
+    "n_path_nodes": 5,
+    "n_path_edges": 4,
+    "beta": 1.0
+  }
+}

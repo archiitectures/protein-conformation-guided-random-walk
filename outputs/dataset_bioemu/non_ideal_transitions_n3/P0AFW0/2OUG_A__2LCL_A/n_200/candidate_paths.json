@@ -1,0 +1,585 @@
+{
+  "schema_version": "candidate_paths_v1",
+  "best_path": {
+    "node_ids": [
+      "A",
+      "bioemu_000071",
+      "bioemu_000162",
+      "bioemu_000023",
+      "B"
+    ],
+    "total_cost": 112.75140277851811,
+    "absolute_delta": 0.0,
+    "relative_delta": 0.0,
+    "edge_jaccard": 1.0,
+    "edge_diversity": 0.0,
+    "intermediate_node_jaccard": 1.0,
+    "global_cost_rank": 1,
+    "edge_scores": [
+      {
+        "from": "A",
+        "to": "bioemu_000071",
+        "weight": 67.83715835782995,
+        "score": 67.83715835782995,
+        "unnormalized_probability": 3.456976738104799e-30
+      },
+      {
+        "from": "bioemu_000071",
+        "to": "bioemu_000162",
+        "weight": 38.186843013008016,
+        "score": 38.186843013008016,
+        "unnormalized_probability": 2.6041428165059628e-17
+      },
+      {
+        "from": "bioemu_000162",
+        "to": "bioemu_000023",
+        "weight": 5.0592996350792125,
+        "score": 5.0592996350792125,
+        "unnormalized_probability": 0.006350005276841551
+      },
+      {
+        "from": "bioemu_000023",
+        "to": "B",
+        "weight": 1.668101772600931,
+        "score": 1.668101772600931,
+        "unnormalized_probability": 0.18860474074347855
+      }
+    ],
+    "metadata": {
+      "n_path_nodes": 5,
+      "n_path_edges": 4,
+      "beta": 1.0
+    }
+  },
+  "exact_paths": [
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "B"
+      ],
+      "total_cost": 112.75140277851811,
+      "absolute_delta": 0.0,
+      "relative_delta": 0.0,
+      "edge_jaccard": 1.0,
+      "edge_diversity": 0.0,
+      "intermediate_node_jaccard": 1.0,
+      "global_cost_rank": 1,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "B",
+          "weight": 1.668101772600931,
+          "score": 1.668101772600931,
+          "unnormalized_probability": 0.18860474074347855
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 5,
+        "n_path_edges": 4,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000128",
+        "B"
+      ],
+      "total_cost": 113.1028863411756,
+      "absolute_delta": 0.35148356265749214,
+      "relative_delta": 0.0031173320596988466,
+      "edge_jaccard": 0.16666666666666666,
+      "edge_diversity": 0.8333333333333334,
+      "intermediate_node_jaccard": 0.25,
+      "global_cost_rank": 2,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000128",
+          "weight": 42.18854720173795,
+          "score": 42.18854720173795,
+          "unnormalized_probability": 4.761532475907013e-19
+        },
+        {
+          "from": "bioemu_000128",
+          "to": "B",
+          "weight": 3.077180781607702,
+          "score": 3.077180781607702,
+          "unnormalized_probability": 0.04608900864435237
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 4,
+        "n_path_edges": 3,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "bioemu_000050",
+        "B"
+      ],
+      "total_cost": 113.36167351867043,
+      "absolute_delta": 0.6102707401523162,
+      "relative_delta": 0.00541253345957118,
+      "edge_jaccard": 0.5,
+      "edge_diversity": 0.5,
+      "intermediate_node_jaccard": 0.75,
+      "global_cost_rank": 3,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "bioemu_000050",
+          "weight": 0.8489681139285195,
+          "score": 0.8489681139285195,
+          "unnormalized_probability": 0.4278562030953673
+        },
+        {
+          "from": "bioemu_000050",
+          "to": "B",
+          "weight": 1.4294043988247307,
+          "score": 1.4294043988247307,
+          "unnormalized_probability": 0.23945149737383808
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 6,
+        "n_path_edges": 5,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "bioemu_000026",
+        "B"
+      ],
+      "total_cost": 113.63535102686522,
+      "absolute_delta": 0.8839482483471102,
+      "relative_delta": 0.007839798233672387,
+      "edge_jaccard": 0.5,
+      "edge_diversity": 0.5,
+      "intermediate_node_jaccard": 0.75,
+      "global_cost_rank": 4,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "bioemu_000026",
+          "weight": 1.0970017284141815,
+          "score": 1.0970017284141815,
+          "unnormalized_probability": 0.3338706193008825
+        },
+        {
+          "from": "bioemu_000026",
+          "to": "B",
+          "weight": 1.4550482925338657,
+          "score": 1.4550482925338657,
+          "unnormalized_probability": 0.23338909267833352
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 6,
+        "n_path_edges": 5,
+        "beta": 1.0
+      }
+    }
+  ],
+  "diverse_paths": [
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000128",
+        "B"
+      ],
+      "total_cost": 113.1028863411756,
+      "absolute_delta": 0.35148356265749214,
+      "relative_delta": 0.0031173320596988466,
+      "edge_jaccard": 0.16666666666666666,
+      "edge_diversity": 0.8333333333333334,
+      "intermediate_node_jaccard": 0.25,
+      "global_cost_rank": 2,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000128",
+          "weight": 42.18854720173795,
+          "score": 42.18854720173795,
+          "unnormalized_probability": 4.761532475907013e-19
+        },
+        {
+          "from": "bioemu_000128",
+          "to": "B",
+          "weight": 3.077180781607702,
+          "score": 3.077180781607702,
+          "unnormalized_probability": 0.04608900864435237
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 4,
+        "n_path_edges": 3,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "bioemu_000050",
+        "B"
+      ],
+      "total_cost": 113.36167351867043,
+      "absolute_delta": 0.6102707401523162,
+      "relative_delta": 0.00541253345957118,
+      "edge_jaccard": 0.5,
+      "edge_diversity": 0.5,
+      "intermediate_node_jaccard": 0.75,
+      "global_cost_rank": 3,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "bioemu_000050",
+          "weight": 0.8489681139285195,
+          "score": 0.8489681139285195,
+          "unnormalized_probability": 0.4278562030953673
+        },
+        {
+          "from": "bioemu_000050",
+          "to": "B",
+          "weight": 1.4294043988247307,
+          "score": 1.4294043988247307,
+          "unnormalized_probability": 0.23945149737383808
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 6,
+        "n_path_edges": 5,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "bioemu_000026",
+        "B"
+      ],
+      "total_cost": 113.63535102686522,
+      "absolute_delta": 0.8839482483471102,
+      "relative_delta": 0.007839798233672387,
+      "edge_jaccard": 0.5,
+      "edge_diversity": 0.5,
+      "intermediate_node_jaccard": 0.75,
+      "global_cost_rank": 4,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "bioemu_000026",
+          "weight": 1.0970017284141815,
+          "score": 1.0970017284141815,
+          "unnormalized_probability": 0.3338706193008825
+        },
+        {
+          "from": "bioemu_000026",
+          "to": "B",
+          "weight": 1.4550482925338657,
+          "score": 1.4550482925338657,
+          "unnormalized_probability": 0.23338909267833352
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 6,
+        "n_path_edges": 5,
+        "beta": 1.0
+      }
+    },
+    {
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000023",
+        "bioemu_000163",
+        "B"
+      ],
+      "total_cost": 113.69414339168215,
+      "absolute_delta": 0.9427406131640339,
+      "relative_delta": 0.008361231788981778,
+      "edge_jaccard": 0.5,
+      "edge_diversity": 0.5,
+      "intermediate_node_jaccard": 0.75,
+      "global_cost_rank": 5,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000023",
+          "weight": 5.0592996350792125,
+          "score": 5.0592996350792125,
+          "unnormalized_probability": 0.006350005276841551
+        },
+        {
+          "from": "bioemu_000023",
+          "to": "bioemu_000163",
+          "weight": 1.006535289955632,
+          "score": 1.006535289955632,
+          "unnormalized_probability": 0.36548308133689045
+        },
+        {
+          "from": "bioemu_000163",
+          "to": "B",
+          "weight": 1.6043070958093362,
+          "score": 1.6043070958093362,
+          "unnormalized_probability": 0.201028800360997
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 6,
+        "n_path_edges": 5,
+        "beta": 1.0
+      }
+    }
+  ],
+  "settings": {
+    "k": 4,
+    "diversity_threshold": 0.2,
+    "scan_limit": 1000,
+    "beta": 1.0,
+    "start_id": "A",
+    "end_id": "B"
+  },
+  "scan_count": 5,
+  "returned_counts": {
+    "exact": 4,
+    "diverse": 4,
+    "random_non_top": 1
+  },
+  "random_non_top_paths": [
+    {
+      "category": "random_non_top",
+      "category_rank": 1,
+      "node_ids": [
+        "A",
+        "bioemu_000071",
+        "bioemu_000162",
+        "bioemu_000143",
+        "bioemu_000024",
+        "bioemu_000132",
+        "bioemu_000050",
+        "B"
+      ],
+      "total_cost": 115.79854911061678,
+      "absolute_delta": 3.047146332098663,
+      "relative_delta": 0.027025351853797234,
+      "edge_jaccard": 0.2222222222222222,
+      "edge_diversity": 0.7777777777777778,
+      "intermediate_node_jaccard": 0.2857142857142857,
+      "global_cost_rank": 946,
+      "edge_scores": [
+        {
+          "from": "A",
+          "to": "bioemu_000071",
+          "weight": 67.83715835782995,
+          "score": 67.83715835782995,
+          "unnormalized_probability": 3.456976738104799e-30
+        },
+        {
+          "from": "bioemu_000071",
+          "to": "bioemu_000162",
+          "weight": 38.186843013008016,
+          "score": 38.186843013008016,
+          "unnormalized_probability": 2.6041428165059628e-17
+        },
+        {
+          "from": "bioemu_000162",
+          "to": "bioemu_000143",
+          "weight": 4.246958445318701,
+          "score": 4.246958445318701,
+          "unnormalized_probability": 0.014307685402970087
+        },
+        {
+          "from": "bioemu_000143",
+          "to": "bioemu_000024",
+          "weight": 2.0407209941930917,
+          "score": 2.0407209941930917,
+          "unnormalized_probability": 0.1299349947214096
+        },
+        {
+          "from": "bioemu_000024",
+          "to": "bioemu_000132",
+          "weight": 0.871978384109682,
+          "score": 0.871978384109682,
+          "unnormalized_probability": 0.4181235215084169
+        },
+        {
+          "from": "bioemu_000132",
+          "to": "bioemu_000050",
+          "weight": 1.1854855173326146,
+          "score": 1.1854855173326146,
+          "unnormalized_probability": 0.3055977704596802
+        },
+        {
+          "from": "bioemu_000050",
+          "to": "B",
+          "weight": 1.4294043988247307,
+          "score": 1.4294043988247307,
+          "unnormalized_probability": 0.23945149737383808
+        }
+      ],
+      "metadata": {
+        "n_path_nodes": 8,
+        "n_path_edges": 7,
+        "beta": 1.0,
+        "selection_category": "random_non_top",
+        "selection_global_cost_rank": 946
+      }
+    }
+  ]
+}

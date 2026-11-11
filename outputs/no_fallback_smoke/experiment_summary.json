@@ -1,0 +1,189 @@
+{
+  "fallback_used": false,
+  "n_nodes": 10,
+  "n_edges": 45,
+  "n_generated_nodes": 8,
+  "n_valid_nodes": 10,
+  "path_node_ids": [
+    "A",
+    "A_rec_001",
+    "B_rec_001",
+    "B"
+  ],
+  "path_families": [
+    "A_endpoint",
+    "A_generated",
+    "B_generated",
+    "B_endpoint"
+  ],
+  "path_intermediates": 2,
+  "total_cost": 81.44002000671307,
+  "route_family_costs": {},
+  "generation_summaries": [
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 1,
+      "side": "A",
+      "parent": "A",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 0,
+      "attempted": 4,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian",
+      "iteration": 1,
+      "side": "B",
+      "parent": "B",
+      "requested": 4,
+      "returned": 4,
+      "rejected": 0,
+      "attempted": 4,
+      "max_attempts": 80,
+      "validity_enforced": true,
+      "last_rejection_messages": [],
+      "validity_settings": {
+        "min_bond_distance": 2.5,
+        "max_bond_distance": 4.5,
+        "clash_distance": 2.0
+      }
+    },
+    {
+      "phase": "recursive_gaussian_summary",
+      "requested_total": 8,
+      "returned_total": 8,
+      "max_iterations": 6,
+      "top_k": 8,
+      "samples_per_parent": 4,
+      "returned_by_side": {
+        "A": 4,
+        "B": 4
+      }
+    }
+  ],
+  "config": {
+    "n_residues": 40,
+    "n_samples": 8,
+    "noise_scale": 0.15,
+    "seed": 7,
+    "recursive_max_iterations": 6,
+    "recursive_top_k": 8,
+    "recursive_samples_per_parent": 4,
+    "target_min_intermediates": 20,
+    "target_max_intermediates": 30,
+    "allow_fallback": false,
+    "fallback_waypoints": 4,
+    "fallback_samples_per_waypoint": 0,
+    "fallback_noise_scale": 0.05,
+    "k_neighbors": 0,
+    "outputs_dir": "outputs/no_fallback_smoke",
+    "write_nodes": false,
+    "write_pymol": false,
+    "write_py3dmol": false,
+    "write_animation": false,
+    "animation_frames_per_edge": 20,
+    "animation_fps": 10,
+    "animation_dpi": 120,
+    "graph_min_edge_weight": null,
+    "graph_max_edge_weight": null,
+    "graph_non_path_edge_alpha": 0.125
+  },
+  "input": {
+    "mode": "synthetic",
+    "n_residues": 40
+  },
+  "recursive_path_missed_target": true,
+  "fallback_allowed": false,
+  "recursive_gaussian": {
+    "fallback_used": false,
+    "n_nodes": 10,
+    "n_edges": 45,
+    "n_generated_nodes": 8,
+    "n_valid_nodes": 10,
+    "path_node_ids": [
+      "A",
+      "A_rec_001",
+      "B_rec_001",
+      "B"
+    ],
+    "path_families": [
+      "A_endpoint",
+      "A_generated",
+      "B_generated",
+      "B_endpoint"
+    ],
+    "path_intermediates": 2,
+    "total_cost": 81.44002000671307,
+    "route_family_costs": {},
+    "generation_summaries": [
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "A",
+        "parent": "A",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 0,
+        "attempted": 4,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "B",
+        "parent": "B",
+        "requested": 4,
+        "returned": 4,
+        "rejected": 0,
+        "attempted": 4,
+        "max_attempts": 80,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian_summary",
+        "requested_total": 8,
+        "returned_total": 8,
+        "max_iterations": 6,
+        "top_k": 8,
+        "samples_per_parent": 4,
+        "returned_by_side": {
+          "A": 4,
+          "B": 4
+        }
+      }
+    ]
+  },
+  "endpoint_validity": {
+    "A": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    },
+    "B": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    }
+  }
+}

@@ -1,0 +1,1514 @@
+Building current workspace archive...
+Reading the VS Code Colab assignment from macOS Keychain (at most one authorization prompt)...
+Waiting up to 900 seconds for an assigned T4 server...
+Selected assigned server: m (T4 GPU)
+Uploading one workspace archive for 2 pending job(s)...
+Created dedicated Colab kernel: ac4a3801-3b28-43c8-8a63-1efd67bf8415
+The websocket_ping_timeout (120) cannot be longer than the websocket_ping_interval (30).
+Setting websocket_ping_timeout=30
+
+=== Verify T4 and extract workspace ===
+Connected GPU: Tesla T4
+Extracted workspace: /content/protein-conformation-guided-random-walk
+
+=== Install project and BioEmu CUDA dependencies ===
+Project and BioEmu installation complete.
+
+Batch job 1/2: P00889 / 1CTS_A__2CTS_A
+
+=== BioEmu and graph: P00889 / 1CTS_A__2CTS_A ===
+
+[P00889 / 1CTS_A__2CTS_A] requesting 200 samples
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:138: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+checkpoints/bioemu-v1.1/checkpoint.ckpt:   0%|          | 0.00/125M [00:00<?, ?B/s]
+config.yaml:   0%|          | 0.00/580 [00:00<?, ?B/s]
+Computing igso3_expansion:   0%|          | 0/1000 [00:00<?, ?it/s]
+Computing igso3_expansion:   0%|          | 1/1000 [00:00<05:16,  3.15it/s]
+Computing igso3_expansion:   5%|▌         | 54/1000 [00:00<00:05, 166.70it/s]
+Computing igso3_expansion:   9%|▊         | 86/1000 [00:00<00:04, 197.01it/s]
+Computing igso3_expansion:  12%|█▏        | 115/1000 [00:00<00:04, 217.91it/s]
+Computing igso3_expansion:  15%|█▍        | 148/1000 [00:00<00:03, 247.98it/s]
+Computing igso3_expansion:  18%|█▊        | 181/1000 [00:00<00:03, 269.53it/s]
+Computing igso3_expansion:  21%|██▏       | 213/1000 [00:00<00:02, 284.03it/s]
+Computing igso3_expansion:  24%|██▍       | 245/1000 [00:01<00:02, 294.50it/s]
+Computing igso3_expansion:  28%|██▊       | 278/1000 [00:01<00:02, 302.18it/s]
+Computing igso3_expansion:  31%|███       | 310/1000 [00:01<00:02, 307.31it/s]
+Computing igso3_expansion:  34%|███▍      | 342/1000 [00:01<00:02, 310.51it/s]
+Computing igso3_expansion:  37%|███▋      | 374/1000 [00:01<00:02, 312.82it/s]
+Computing igso3_expansion:  41%|████      | 406/1000 [00:01<00:01, 314.67it/s]
+Computing igso3_expansion:  44%|████▍     | 438/1000 [00:01<00:01, 315.96it/s]
+Computing igso3_expansion:  47%|████▋     | 470/1000 [00:01<00:01, 316.79it/s]
+Computing igso3_expansion:  50%|█████     | 502/1000 [00:01<00:01, 317.28it/s]
+Computing igso3_expansion:  53%|█████▎    | 534/1000 [00:01<00:01, 317.57it/s]
+Computing igso3_expansion:  57%|█████▋    | 566/1000 [00:02<00:01, 317.72it/s]
+Computing igso3_expansion:  60%|█████▉    | 598/1000 [00:02<00:01, 317.82it/s]
+Computing igso3_expansion:  63%|██████▎   | 630/1000 [00:02<00:01, 317.87it/s]
+Computing igso3_expansion:  66%|██████▌   | 662/1000 [00:02<00:01, 317.93it/s]
+Computing igso3_expansion:  69%|██████▉   | 694/1000 [00:02<00:00, 317.91it/s]
+Computing igso3_expansion:  73%|███████▎  | 726/1000 [00:02<00:00, 317.84it/s]
+Computing igso3_expansion:  76%|███████▌  | 758/1000 [00:02<00:00, 317.87it/s]
+Computing igso3_expansion:  79%|███████▉  | 790/1000 [00:02<00:00, 317.85it/s]
+Computing igso3_expansion:  82%|████████▏ | 822/1000 [00:02<00:00, 317.84it/s]
+Computing igso3_expansion:  85%|████████▌ | 854/1000 [00:02<00:00, 317.73it/s]
+Computing igso3_expansion:  89%|████████▊ | 886/1000 [00:03<00:00, 317.84it/s]
+Computing igso3_expansion:  92%|█████████▏| 918/1000 [00:03<00:00, 317.80it/s]
+Computing igso3_expansion:  95%|█████████▌| 950/1000 [00:03<00:00, 317.78it/s]
+Computing igso3_expansion:  98%|█████████▊| 982/1000 [00:03<00:00, 317.81it/s]
+Computing igso3_expansion: 100%|██████████| 1000/1000 [00:03<00:00, 291.30it/s]
+
+Computing igso3_expansion:   0%|          | 0/1000 [00:00<?, ?it/s]
+Computing igso3_expansion:   6%|▋         | 65/1000 [00:00<00:01, 635.82it/s]
+Computing igso3_expansion:  13%|█▎        | 129/1000 [00:00<00:02, 402.87it/s]
+Computing igso3_expansion:  17%|█▋        | 174/1000 [00:00<00:02, 367.38it/s]
+Computing igso3_expansion:  21%|██▏       | 214/1000 [00:00<00:02, 350.33it/s]
+Computing igso3_expansion:  25%|██▌       | 251/1000 [00:00<00:02, 340.45it/s]
+Computing igso3_expansion:  29%|██▊       | 286/1000 [00:00<00:02, 333.98it/s]
+Computing igso3_expansion:  32%|███▏      | 320/1000 [00:00<00:02, 329.43it/s]
+Computing igso3_expansion:  35%|███▌      | 354/1000 [00:01<00:01, 326.02it/s]
+Computing igso3_expansion:  39%|███▊      | 387/1000 [00:01<00:01, 323.57it/s]
+Computing igso3_expansion:  42%|████▏     | 420/1000 [00:01<00:01, 321.76it/s]
+Computing igso3_expansion:  45%|████▌     | 453/1000 [00:01<00:01, 320.49it/s]
+Computing igso3_expansion:  49%|████▊     | 486/1000 [00:01<00:01, 319.77it/s]
+Computing igso3_expansion:  52%|█████▏    | 518/1000 [00:01<00:01, 318.75it/s]
+Computing igso3_expansion:  55%|█████▌    | 550/1000 [00:01<00:01, 318.34it/s]
+Computing igso3_expansion:  58%|█████▊    | 582/1000 [00:01<00:01, 318.25it/s]
+Computing igso3_expansion:  61%|██████▏   | 614/1000 [00:01<00:01, 318.19it/s]
+Computing igso3_expansion:  65%|██████▍   | 646/1000 [00:01<00:01, 318.21it/s]
+Computing igso3_expansion:  68%|██████▊   | 678/1000 [00:02<00:01, 318.15it/s]
+Computing igso3_expansion:  71%|███████   | 710/1000 [00:02<00:00, 318.04it/s]
+Computing igso3_expansion:  74%|███████▍  | 742/1000 [00:02<00:00, 317.70it/s]
+Computing igso3_expansion:  77%|███████▋  | 774/1000 [00:02<00:00, 317.74it/s]
+Computing igso3_expansion:  81%|████████  | 806/1000 [00:02<00:00, 317.79it/s]
+Computing igso3_expansion:  84%|████████▍ | 838/1000 [00:02<00:00, 317.80it/s]
+Computing igso3_expansion:  87%|████████▋ | 870/1000 [00:02<00:00, 317.79it/s]
+Computing igso3_expansion:  90%|█████████ | 902/1000 [00:02<00:00, 317.82it/s]
+Computing igso3_expansion:  93%|█████████▎| 934/1000 [00:02<00:00, 317.85it/s]
+Computing igso3_expansion:  97%|█████████▋| 966/1000 [00:02<00:00, 317.86it/s]
+Computing igso3_expansion: 100%|█████████▉| 998/1000 [00:03<00:00, 317.86it/s]
+Computing igso3_expansion: 100%|██████████| 1000/1000 [00:03<00:00, 328.77it/s]
+
+Computing dlog_igso3_expansion:   0%|          | 0/1000 [00:00<?, ?it/s]
+Computing dlog_igso3_expansion:   2%|▏         | 16/1000 [00:00<00:06, 158.50it/s]
+Computing dlog_igso3_expansion:   3%|▎         | 32/1000 [00:00<00:06, 141.48it/s]
+Computing dlog_igso3_expansion:   5%|▍         | 47/1000 [00:00<00:06, 136.65it/s]
+Computing dlog_igso3_expansion:   6%|▌         | 61/1000 [00:00<00:06, 134.53it/s]
+Computing dlog_igso3_expansion:   8%|▊         | 75/1000 [00:00<00:06, 133.40it/s]
+Computing dlog_igso3_expansion:   9%|▉         | 89/1000 [00:00<00:06, 132.62it/s]
+Computing dlog_igso3_expansion:  10%|█         | 103/1000 [00:00<00:06, 132.05it/s]
+Computing dlog_igso3_expansion:  12%|█▏        | 117/1000 [00:00<00:06, 131.79it/s]
+Computing dlog_igso3_expansion:  13%|█▎        | 131/1000 [00:00<00:06, 131.57it/s]
+Computing dlog_igso3_expansion:  14%|█▍        | 145/1000 [00:01<00:06, 131.38it/s]
+Computing dlog_igso3_expansion:  16%|█▌        | 159/1000 [00:01<00:06, 131.21it/s]
+Computing dlog_igso3_expansion:  17%|█▋        | 173/1000 [00:01<00:06, 131.05it/s]
+Computing dlog_igso3_expansion:  19%|█▊        | 187/1000 [00:01<00:06, 130.91it/s]
+Computing dlog_igso3_expansion:  20%|██        | 201/1000 [00:01<00:06, 130.79it/s]
+Computing dlog_igso3_expansion:  22%|██▏       | 215/1000 [00:01<00:06, 130.65it/s]
+Computing dlog_igso3_expansion:  23%|██▎       | 229/1000 [00:01<00:05, 130.67it/s]
+Computing dlog_igso3_expansion:  24%|██▍       | 243/1000 [00:01<00:05, 130.68it/s]
+Computing dlog_igso3_expansion:  26%|██▌       | 257/1000 [00:01<00:05, 130.55it/s]
+Computing dlog_igso3_expansion:  27%|██▋       | 271/1000 [00:02<00:05, 130.43it/s]
+Computing dlog_igso3_expansion:  28%|██▊       | 285/1000 [00:02<00:05, 130.45it/s]
+Computing dlog_igso3_expansion:  30%|██▉       | 299/1000 [00:02<00:05, 130.40it/s]
+Computing dlog_igso3_expansion:  31%|███▏      | 313/1000 [00:02<00:05, 130.36it/s]
+Computing dlog_igso3_expansion:  33%|███▎      | 327/1000 [00:02<00:05, 130.31it/s]
+Computing dlog_igso3_expansion:  34%|███▍      | 341/1000 [00:02<00:05, 130.26it/s]
+Computing dlog_igso3_expansion:  36%|███▌      | 355/1000 [00:02<00:04, 130.21it/s]
+Computing dlog_igso3_expansion:  37%|███▋      | 369/1000 [00:02<00:04, 130.17it/s]
+Computing dlog_igso3_expansion:  38%|███▊      | 383/1000 [00:02<00:04, 130.12it/s]
+Computing dlog_igso3_expansion:  40%|███▉      | 397/1000 [00:03<00:04, 130.07it/s]
+Computing dlog_igso3_expansion:  41%|████      | 411/1000 [00:03<00:04, 129.99it/s]
+Computing dlog_igso3_expansion:  42%|████▏     | 424/1000 [00:03<00:04, 129.91it/s]
+Computing dlog_igso3_expansion:  44%|████▎     | 437/1000 [00:03<00:04, 129.90it/s]
+Computing dlog_igso3_expansion:  45%|████▌     | 450/1000 [00:03<00:04, 129.88it/s]
+Computing dlog_igso3_expansion:  46%|████▋     | 463/1000 [00:03<00:04, 129.87it/s]
+Computing dlog_igso3_expansion:  48%|████▊     | 476/1000 [00:03<00:04, 129.84it/s]
+Computing dlog_igso3_expansion:  49%|████▉     | 489/1000 [00:03<00:03, 129.83it/s]
+Computing dlog_igso3_expansion:  50%|█████     | 502/1000 [00:03<00:03, 129.80it/s]
+Computing dlog_igso3_expansion:  52%|█████▏    | 515/1000 [00:03<00:03, 129.81it/s]
+Computing dlog_igso3_expansion:  53%|█████▎    | 528/1000 [00:04<00:03, 129.79it/s]
+Computing dlog_igso3_expansion:  54%|█████▍    | 541/1000 [00:04<00:03, 129.76it/s]
+Computing dlog_igso3_expansion:  55%|█████▌    | 554/1000 [00:04<00:03, 129.75it/s]
+Computing dlog_igso3_expansion:  57%|█████▋    | 567/1000 [00:04<00:03, 129.73it/s]
+Computing dlog_igso3_expansion:  58%|█████▊    | 580/1000 [00:04<00:03, 129.72it/s]
+Computing dlog_igso3_expansion:  59%|█████▉    | 593/1000 [00:04<00:03, 129.71it/s]
+Computing dlog_igso3_expansion:  61%|██████    | 606/1000 [00:04<00:03, 129.70it/s]
+Computing dlog_igso3_expansion:  62%|██████▏   | 619/1000 [00:04<00:02, 129.70it/s]
+Computing dlog_igso3_expansion:  63%|██████▎   | 632/1000 [00:04<00:02, 129.76it/s]
+Computing dlog_igso3_expansion:  64%|██████▍   | 645/1000 [00:04<00:02, 129.67it/s]
+Computing dlog_igso3_expansion:  66%|██████▌   | 658/1000 [00:05<00:02, 129.65it/s]
+Computing dlog_igso3_expansion:  67%|██████▋   | 671/1000 [00:05<00:02, 129.63it/s]
+Computing dlog_igso3_expansion:  68%|██████▊   | 684/1000 [00:05<00:02, 129.64it/s]
+Computing dlog_igso3_expansion:  70%|██████▉   | 697/1000 [00:05<00:02, 129.65it/s]
+Computing dlog_igso3_expansion:  71%|███████   | 710/1000 [00:05<00:02, 129.62it/s]
+Computing dlog_igso3_expansion:  72%|███████▏  | 723/1000 [00:05<00:02, 129.60it/s]
+Computing dlog_igso3_expansion:  74%|███████▎  | 736/1000 [00:05<00:02, 129.63it/s]
+Computing dlog_igso3_expansion:  75%|███████▍  | 749/1000 [00:05<00:01, 129.54it/s]
+Computing dlog_igso3_expansion:  76%|███████▌  | 762/1000 [00:05<00:01, 129.61it/s]
+Computing dlog_igso3_expansion:  78%|███████▊  | 775/1000 [00:05<00:01, 129.62it/s]
+Computing dlog_igso3_expansion:  79%|███████▉  | 788/1000 [00:06<00:01, 129.67it/s]
+Computing dlog_igso3_expansion:  80%|████████  | 801/1000 [00:06<00:01, 129.68it/s]
+Computing dlog_igso3_expansion:  81%|████████▏ | 814/1000 [00:06<00:01, 129.61it/s]
+Computing dlog_igso3_expansion:  83%|████████▎ | 827/1000 [00:06<00:01, 129.69it/s]
+Computing dlog_igso3_expansion:  84%|████████▍ | 840/1000 [00:06<00:01, 129.59it/s]
+Computing dlog_igso3_expansion:  85%|████████▌ | 853/1000 [00:06<00:01, 129.66it/s]
+Computing dlog_igso3_expansion:  87%|████████▋ | 866/1000 [00:06<00:01, 129.69it/s]
+Computing dlog_igso3_expansion:  88%|████████▊ | 879/1000 [00:06<00:00, 129.61it/s]
+Computing dlog_igso3_expansion:  89%|████████▉ | 892/1000 [00:06<00:00, 129.54it/s]
+Computing dlog_igso3_expansion:  90%|█████████ | 905/1000 [00:06<00:00, 129.55it/s]
+Computing dlog_igso3_expansion:  92%|█████████▏| 918/1000 [00:07<00:00, 129.61it/s]
+Computing dlog_igso3_expansion:  93%|█████████▎| 931/1000 [00:07<00:00, 129.60it/s]
+Computing dlog_igso3_expansion:  94%|█████████▍| 944/1000 [00:07<00:00, 129.59it/s]
+Computing dlog_igso3_expansion:  96%|█████████▌| 957/1000 [00:07<00:00, 129.61it/s]
+Computing dlog_igso3_expansion:  97%|█████████▋| 970/1000 [00:07<00:00, 129.59it/s]
+Computing dlog_igso3_expansion:  98%|█████████▊| 983/1000 [00:07<00:00, 129.60it/s]
+Computing dlog_igso3_expansion: 100%|█████████▉| 996/1000 [00:07<00:00, 129.58it/s]
+Computing dlog_igso3_expansion: 100%|██████████| 1000/1000 [00:07<00:00, 130.40it/s]
+
+Sampling batches...:   0%|          | 0/200 [00:00<?, ?it/s]
+
+  0%|          | 0/150 [elapsed: 00:00 remaining: ?]
+[A
+
+SUBMIT:   0%|          | 0/150 [elapsed: 00:00 remaining: ?]
+[A
+
+COMPLETE:   0%|          | 0/150 [elapsed: 00:00 remaining: ?]
+[A
+
+COMPLETE: 100%|██████████| 150/150 [elapsed: 00:00 remaining: 00:00]
+[A
+COMPLETE: 100%|██████████| 150/150 [elapsed: 00:01 remaining: 00:00]
+
+
+Downloading AF2 weights:   0%|          | 0/3722752000 [00:00<?, ?it/s]
+[A
+
+Downloading AF2 weights:   0%|          | 430k/3.47G [00:00<14:25, 4.30MB/s]
+[A
+
+Downloading AF2 weights:   0%|          | 3.23M/3.47G [00:00<03:16, 18.9MB/s]
+[A
+
+Downloading AF2 weights:   0%|          | 5.05M/3.47G [00:00<06:20, 9.78MB/s]
+[A
+
+Downloading AF2 weights:   0%|          | 13.7M/3.47G [00:00<02:03, 30.0MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 17.9M/3.47G [00:00<02:46, 22.3MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 22.6M/3.47G [00:01<02:13, 27.7MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 26.3M/3.47G [00:01<03:37, 17.0MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 29.1M/3.47G [00:01<03:25, 17.9MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 31.6M/3.47G [00:01<04:28, 13.7MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 35.4M/3.47G [00:02<03:29, 17.6MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 38.0M/3.47G [00:02<04:05, 15.0MB/s]
+[A
+
+Downloading AF2 weights:   1%|          | 42.1M/3.47G [00:02<03:07, 19.6MB/s]
+[A
+
+Downloading AF2 weights:   1%|▏         | 44.8M/3.47G [00:02<03:59, 15.4MB/s]
+[A
+
+Downloading AF2 weights:   1%|▏         | 47.4M/3.47G [00:02<03:32, 17.3MB/s]
+[A
+
+Downloading AF2 weights:   1%|▏         | 49.6M/3.47G [00:03<04:30, 13.6MB/s]
+[A
+
+Downloading AF2 weights:   1%|▏         | 51.4M/3.47G [00:03<06:03, 10.1MB/s]
+[A
+
+Downloading AF2 weights:   2%|▏         | 58.4M/3.47G [00:03<03:13, 18.9MB/s]
+[A
+
+Downloading AF2 weights:   2%|▏         | 64.0M/3.47G [00:03<02:28, 24.7MB/s]
+[A
+
+Downloading AF2 weights:   2%|▏         | 72.0M/3.47G [00:03<01:47, 34.0MB/s]
+[A
+
+Downloading AF2 weights:   2%|▏         | 80.0M/3.47G [00:03<01:27, 41.8MB/s]
+[A
+
+Downloading AF2 weights:   3%|▎         | 93.1M/3.47G [00:04<00:58, 62.4MB/s]
+[A
+
+Downloading AF2 weights:   3%|▎         | 104M/3.47G [00:04<00:49, 73.3MB/s] 
+[A
+
+Downloading AF2 weights:   3%|▎         | 118M/3.47G [00:04<00:39, 90.3MB/s]
+[A
+
+Downloading AF2 weights:   4%|▎         | 132M/3.47G [00:04<00:34, 104MB/s] 
+[A
+
+Downloading AF2 weights:   4%|▍         | 148M/3.47G [00:04<00:29, 121MB/s]
+[A
+
+Downloading AF2 weights:   5%|▍         | 166M/3.47G [00:04<00:25, 139MB/s]
+[A
+
+Downloading AF2 weights:   5%|▌         | 181M/3.47G [00:04<00:24, 145MB/s]
+[A
+
+Downloading AF2 weights:   6%|▌         | 196M/3.47G [00:04<00:26, 132MB/s]
+[A
+
+Downloading AF2 weights:   6%|▌         | 209M/3.47G [00:04<00:26, 133MB/s]
+[A
+
+Downloading AF2 weights:   6%|▋         | 224M/3.47G [00:04<00:25, 138MB/s]
+[A
+
+Downloading AF2 weights:   7%|▋         | 240M/3.47G [00:05<00:23, 147MB/s]
+[A
+
+Downloading AF2 weights:   7%|▋         | 256M/3.47G [00:05<00:23, 145MB/s]
+[A
+
+Downloading AF2 weights:   8%|▊         | 270M/3.47G [00:05<00:24, 139MB/s]
+[A
+
+Downloading AF2 weights:   8%|▊         | 284M/3.47G [00:05<00:24, 141MB/s]
+[A
+
+Downloading AF2 weights:   9%|▊         | 302M/3.47G [00:05<00:21, 155MB/s]
+[A
+
+Downloading AF2 weights:   9%|▉         | 320M/3.47G [00:05<00:20, 164MB/s]
+[A
+
+Downloading AF2 weights:   9%|▉         | 336M/3.47G [00:05<00:20, 166MB/s]
+[A
+
+Downloading AF2 weights:  10%|█         | 358M/3.47G [00:05<00:18, 185MB/s]
+[A
+
+Downloading AF2 weights:  11%|█         | 377M/3.47G [00:05<00:17, 189MB/s]
+[A
+
+Downloading AF2 weights:  11%|█         | 396M/3.47G [00:06<00:18, 183MB/s]
+[A
+
+Downloading AF2 weights:  12%|█▏        | 413M/3.47G [00:06<00:18, 182MB/s]
+[A
+
+Downloading AF2 weights:  12%|█▏        | 430M/3.47G [00:06<00:19, 168MB/s]
+[A
+
+Downloading AF2 weights:  13%|█▎        | 447M/3.47G [00:06<00:19, 166MB/s]
+[A
+
+Downloading AF2 weights:  13%|█▎        | 468M/3.47G [00:06<00:17, 181MB/s]
+[A
+
+Downloading AF2 weights:  14%|█▎        | 488M/3.47G [00:06<00:16, 189MB/s]
+[A
+
+Downloading AF2 weights:  14%|█▍        | 508M/3.47G [00:06<00:16, 197MB/s]
+[A
+
+Downloading AF2 weights:  15%|█▍        | 527M/3.47G [00:06<00:18, 172MB/s]
+[A
+
+Downloading AF2 weights:  15%|█▌        | 547M/3.47G [00:06<00:17, 180MB/s]
+[A
+
+Downloading AF2 weights:  16%|█▌        | 564M/3.47G [00:07<00:19, 157MB/s]
+[A
+
+Downloading AF2 weights:  16%|█▋        | 580M/3.47G [00:07<00:19, 157MB/s]
+[A
+
+Downloading AF2 weights:  17%|█▋        | 598M/3.47G [00:07<00:18, 164MB/s]
+[A
+
+Downloading AF2 weights:  17%|█▋        | 614M/3.47G [00:07<00:20, 151MB/s]
+[A
+
+Downloading AF2 weights:  18%|█▊        | 632M/3.47G [00:07<00:18, 162MB/s]
+[A
+
+Downloading AF2 weights:  18%|█▊        | 652M/3.47G [00:07<00:17, 174MB/s]
+[A
+
+Downloading AF2 weights:  19%|█▉        | 671M/3.47G [00:07<00:16, 181MB/s]
+[A
+
+Downloading AF2 weights:  20%|█▉        | 693M/3.47G [00:07<00:15, 195MB/s]
+[A
+
+Downloading AF2 weights:  20%|██        | 712M/3.47G [00:07<00:15, 196MB/s]
+[A
+
+Downloading AF2 weights:  21%|██        | 731M/3.47G [00:08<00:15, 186MB/s]
+[A
+
+Downloading AF2 weights:  21%|██        | 749M/3.47G [00:08<00:15, 186MB/s]
+[A
+
+Downloading AF2 weights:  22%|██▏       | 767M/3.47G [00:08<00:15, 186MB/s]
+[A
+
+Downloading AF2 weights:  22%|██▏       | 786M/3.47G [00:08<00:15, 192MB/s]
+[A
+
+Downloading AF2 weights:  23%|██▎       | 805M/3.47G [00:08<00:15, 192MB/s]
+[A
+
+Downloading AF2 weights:  23%|██▎       | 824M/3.47G [00:08<00:14, 192MB/s]
+[A
+
+Downloading AF2 weights:  24%|██▎       | 842M/3.47G [00:08<00:14, 191MB/s]
+[A
+
+Downloading AF2 weights:  24%|██▍       | 863M/3.47G [00:08<00:14, 199MB/s]
+[A
+
+Downloading AF2 weights:  25%|██▍       | 885M/3.47G [00:08<00:13, 209MB/s]
+[A
+
+Downloading AF2 weights:  26%|██▌       | 907M/3.47G [00:08<00:12, 214MB/s]
+[A
+
+Downloading AF2 weights:  26%|██▌       | 927M/3.47G [00:09<00:13, 206MB/s]
+[A
+
+Downloading AF2 weights:  27%|██▋       | 947M/3.47G [00:09<00:25, 106MB/s]
+[A
+
+Downloading AF2 weights:  27%|██▋       | 962M/3.47G [00:09<00:35, 76.9MB/s]
+[A
+
+Downloading AF2 weights:  27%|██▋       | 974M/3.47G [00:10<00:45, 59.6MB/s]
+[A
+
+Downloading AF2 weights:  28%|██▊       | 983M/3.47G [00:10<00:56, 47.3MB/s]
+[A
+
+Downloading AF2 weights:  28%|██▊       | 990M/3.47G [00:10<01:09, 38.7MB/s]
+[A
+
+Downloading AF2 weights:  28%|██▊       | 0.98G/3.47G [00:11<00:54, 49.2MB/s]
+[A
+
+Downloading AF2 weights:  28%|██▊       | 0.99G/3.47G [00:11<01:26, 30.9MB/s]
+[A
+
+Downloading AF2 weights:  29%|██▊       | 1.00G/3.47G [00:11<01:10, 37.5MB/s]
+[A
+
+Downloading AF2 weights:  29%|██▉       | 1.00G/3.47G [00:12<01:42, 25.7MB/s]
+[A
+
+Downloading AF2 weights:  29%|██▉       | 1.01G/3.47G [00:12<01:23, 31.6MB/s]
+[A
+
+Downloading AF2 weights:  29%|██▉       | 1.02G/3.47G [00:12<01:32, 28.3MB/s]
+[A
+
+Downloading AF2 weights:  29%|██▉       | 1.02G/3.47G [00:13<01:50, 23.8MB/s]
+[A
+
+Downloading AF2 weights:  30%|██▉       | 1.02G/3.47G [00:13<02:07, 20.6MB/s]
+[A
+
+Downloading AF2 weights:  30%|██▉       | 1.04G/3.47G [00:13<01:14, 34.9MB/s]
+[A
+
+Downloading AF2 weights:  30%|███       | 1.05G/3.47G [00:13<00:55, 47.2MB/s]
+[A
+
+Downloading AF2 weights:  31%|███       | 1.06G/3.47G [00:13<00:38, 66.7MB/s]
+[A
+
+Downloading AF2 weights:  31%|███       | 1.08G/3.47G [00:13<00:31, 80.6MB/s]
+[A
+
+Downloading AF2 weights:  31%|███▏      | 1.09G/3.47G [00:13<00:25, 99.0MB/s]
+[A
+
+Downloading AF2 weights:  32%|███▏      | 1.11G/3.47G [00:14<00:22, 112MB/s] 
+[A
+
+Downloading AF2 weights:  32%|███▏      | 1.12G/3.47G [00:14<00:20, 123MB/s]
+[A
+
+Downloading AF2 weights:  33%|███▎      | 1.14G/3.47G [00:14<00:18, 135MB/s]
+[A
+
+Downloading AF2 weights:  33%|███▎      | 1.15G/3.47G [00:14<00:16, 151MB/s]
+[A
+
+Downloading AF2 weights:  34%|███▍      | 1.18G/3.47G [00:14<00:14, 172MB/s]
+[A
+
+Downloading AF2 weights:  34%|███▍      | 1.20G/3.47G [00:14<00:13, 184MB/s]
+[A
+
+Downloading AF2 weights:  35%|███▌      | 1.21G/3.47G [00:14<00:13, 174MB/s]
+[A
+
+Downloading AF2 weights:  36%|███▌      | 1.24G/3.47G [00:14<00:12, 190MB/s]
+[A
+
+Downloading AF2 weights:  36%|███▌      | 1.25G/3.47G [00:14<00:12, 192MB/s]
+[A
+
+Downloading AF2 weights:  37%|███▋      | 1.27G/3.47G [00:15<00:12, 195MB/s]
+[A
+
+Downloading AF2 weights:  37%|███▋      | 1.29G/3.47G [00:15<00:11, 195MB/s]
+[A
+
+Downloading AF2 weights:  38%|███▊      | 1.31G/3.47G [00:15<00:13, 175MB/s]
+[A
+
+Downloading AF2 weights:  38%|███▊      | 1.33G/3.47G [00:15<00:13, 175MB/s]
+[A
+
+Downloading AF2 weights:  39%|███▉      | 1.35G/3.47G [00:15<00:12, 188MB/s]
+[A
+
+Downloading AF2 weights:  39%|███▉      | 1.37G/3.47G [00:15<00:11, 199MB/s]
+[A
+
+Downloading AF2 weights:  40%|████      | 1.39G/3.47G [00:15<00:10, 206MB/s]
+[A
+
+Downloading AF2 weights:  41%|████      | 1.41G/3.47G [00:15<00:11, 185MB/s]
+[A
+
+Downloading AF2 weights:  41%|████      | 1.43G/3.47G [00:15<00:12, 182MB/s]
+[A
+
+Downloading AF2 weights:  42%|████▏     | 1.45G/3.47G [00:15<00:11, 191MB/s]
+[A
+
+Downloading AF2 weights:  42%|████▏     | 1.47G/3.47G [00:16<00:10, 198MB/s]
+[A
+
+Downloading AF2 weights:  43%|████▎     | 1.48G/3.47G [00:16<00:10, 195MB/s]
+[A
+
+Downloading AF2 weights:  43%|████▎     | 1.50G/3.47G [00:16<00:10, 192MB/s]
+[A
+
+Downloading AF2 weights:  44%|████▍     | 1.52G/3.47G [00:16<00:11, 184MB/s]
+[A
+
+Downloading AF2 weights:  44%|████▍     | 1.54G/3.47G [00:16<00:11, 186MB/s]
+[A
+
+Downloading AF2 weights:  45%|████▍     | 1.56G/3.47G [00:16<00:10, 189MB/s]
+[A
+
+Downloading AF2 weights:  46%|████▌     | 1.58G/3.47G [00:16<00:10, 200MB/s]
+[A
+
+Downloading AF2 weights:  46%|████▌     | 1.60G/3.47G [00:16<00:09, 205MB/s]
+[A
+
+Downloading AF2 weights:  47%|████▋     | 1.62G/3.47G [00:16<00:09, 205MB/s]
+[A
+
+Downloading AF2 weights:  47%|████▋     | 1.64G/3.47G [00:17<00:09, 202MB/s]
+[A
+
+Downloading AF2 weights:  48%|████▊     | 1.66G/3.47G [00:17<00:09, 211MB/s]
+[A
+
+Downloading AF2 weights:  48%|████▊     | 1.68G/3.47G [00:17<00:09, 210MB/s]
+[A
+
+Downloading AF2 weights:  49%|████▉     | 1.70G/3.47G [00:17<00:08, 225MB/s]
+[A
+
+Downloading AF2 weights:  50%|████▉     | 1.72G/3.47G [00:17<00:08, 221MB/s]
+[A
+
+Downloading AF2 weights:  50%|█████     | 1.74G/3.47G [00:17<00:08, 211MB/s]
+[A
+
+Downloading AF2 weights:  51%|█████     | 1.76G/3.47G [00:17<00:08, 213MB/s]
+[A
+
+Downloading AF2 weights:  51%|█████▏    | 1.79G/3.47G [00:17<00:08, 215MB/s]
+[A
+
+Downloading AF2 weights:  52%|█████▏    | 1.81G/3.47G [00:17<00:08, 220MB/s]
+[A
+
+Downloading AF2 weights:  53%|█████▎    | 1.83G/3.47G [00:17<00:08, 217MB/s]
+[A
+
+Downloading AF2 weights:  53%|█████▎    | 1.85G/3.47G [00:18<00:08, 214MB/s]
+[A
+
+Downloading AF2 weights:  54%|█████▍    | 1.87G/3.47G [00:18<00:07, 219MB/s]
+[A
+
+Downloading AF2 weights:  54%|█████▍    | 1.89G/3.47G [00:18<00:07, 215MB/s]
+[A
+
+Downloading AF2 weights:  55%|█████▌    | 1.91G/3.47G [00:18<00:07, 216MB/s]
+[A
+
+Downloading AF2 weights:  56%|█████▌    | 1.93G/3.47G [00:18<00:08, 202MB/s]
+[A
+
+Downloading AF2 weights:  56%|█████▌    | 1.95G/3.47G [00:18<00:08, 204MB/s]
+[A
+
+Downloading AF2 weights:  57%|█████▋    | 1.97G/3.47G [00:18<00:07, 207MB/s]
+[A
+
+Downloading AF2 weights:  57%|█████▋    | 1.99G/3.47G [00:18<00:07, 221MB/s]
+[A
+
+Downloading AF2 weights:  58%|█████▊    | 2.01G/3.47G [00:18<00:08, 185MB/s]
+[A
+
+Downloading AF2 weights:  59%|█████▊    | 2.03G/3.47G [00:19<00:08, 190MB/s]
+[A
+
+Downloading AF2 weights:  59%|█████▉    | 2.05G/3.47G [00:19<00:13, 112MB/s]
+[A
+
+Downloading AF2 weights:  60%|█████▉    | 2.07G/3.47G [00:19<00:12, 120MB/s]
+[A
+
+Downloading AF2 weights:  60%|██████    | 2.08G/3.47G [00:19<00:16, 88.6MB/s]
+[A
+
+Downloading AF2 weights:  60%|██████    | 2.10G/3.47G [00:19<00:14, 99.5MB/s]
+[A
+
+Downloading AF2 weights:  61%|██████    | 2.11G/3.47G [00:20<00:28, 51.3MB/s]
+[A
+
+Downloading AF2 weights:  61%|██████    | 2.12G/3.47G [00:20<00:33, 43.8MB/s]
+[A
+
+Downloading AF2 weights:  61%|██████▏   | 2.13G/3.47G [00:21<00:29, 49.3MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.13G/3.47G [00:21<00:33, 42.4MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.14G/3.47G [00:21<00:32, 44.1MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.14G/3.47G [00:21<00:37, 37.4MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.15G/3.47G [00:21<00:34, 40.9MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.16G/3.47G [00:22<00:41, 34.3MB/s]
+[A
+
+Downloading AF2 weights:  62%|██████▏   | 2.16G/3.47G [00:22<00:34, 41.1MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.17G/3.47G [00:22<00:39, 35.3MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.17G/3.47G [00:22<00:33, 41.8MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.18G/3.47G [00:22<00:38, 36.1MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.19G/3.47G [00:22<00:32, 42.6MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.19G/3.47G [00:22<00:28, 48.0MB/s]
+[A
+
+Downloading AF2 weights:  63%|██████▎   | 2.20G/3.47G [00:23<00:39, 34.2MB/s]
+[A
+
+Downloading AF2 weights:  64%|██████▎   | 2.21G/3.47G [00:23<00:30, 44.1MB/s]
+[A
+
+Downloading AF2 weights:  64%|██████▍   | 2.21G/3.47G [00:23<00:37, 36.4MB/s]
+[A
+
+Downloading AF2 weights:  64%|██████▍   | 2.22G/3.47G [00:23<00:29, 45.3MB/s]
+[A
+
+Downloading AF2 weights:  64%|██████▍   | 2.22G/3.47G [00:23<00:26, 50.1MB/s]
+[A
+
+Downloading AF2 weights:  65%|██████▍   | 2.24G/3.47G [00:23<00:19, 66.9MB/s]
+[A
+
+Downloading AF2 weights:  65%|██████▍   | 2.25G/3.47G [00:23<00:16, 80.2MB/s]
+[A
+
+Downloading AF2 weights:  65%|██████▌   | 2.26G/3.47G [00:24<00:14, 87.9MB/s]
+[A
+
+Downloading AF2 weights:  65%|██████▌   | 2.27G/3.47G [00:24<00:14, 89.3MB/s]
+[A
+
+Downloading AF2 weights:  66%|██████▌   | 2.28G/3.47G [00:24<00:13, 97.0MB/s]
+[A
+
+Downloading AF2 weights:  66%|██████▌   | 2.29G/3.47G [00:24<00:12, 101MB/s] 
+[A
+
+Downloading AF2 weights:  66%|██████▋   | 2.30G/3.47G [00:24<00:11, 113MB/s]
+[A
+
+Downloading AF2 weights:  67%|██████▋   | 2.32G/3.47G [00:24<00:10, 118MB/s]
+[A
+
+Downloading AF2 weights:  67%|██████▋   | 2.33G/3.47G [00:24<00:09, 128MB/s]
+[A
+
+Downloading AF2 weights:  68%|██████▊   | 2.35G/3.47G [00:24<00:08, 134MB/s]
+[A
+
+Downloading AF2 weights:  68%|██████▊   | 2.37G/3.47G [00:24<00:08, 142MB/s]
+[A
+
+Downloading AF2 weights:  69%|██████▊   | 2.38G/3.47G [00:25<00:07, 156MB/s]
+[A
+
+Downloading AF2 weights:  69%|██████▉   | 2.40G/3.47G [00:25<00:07, 161MB/s]
+[A
+
+Downloading AF2 weights:  70%|██████▉   | 2.42G/3.47G [00:25<00:06, 166MB/s]
+[A
+
+Downloading AF2 weights:  70%|███████   | 2.43G/3.47G [00:25<00:06, 170MB/s]
+[A
+
+Downloading AF2 weights:  71%|███████   | 2.45G/3.47G [00:25<00:06, 175MB/s]
+[A
+
+Downloading AF2 weights:  71%|███████   | 2.47G/3.47G [00:25<00:05, 182MB/s]
+[A
+
+Downloading AF2 weights:  72%|███████▏  | 2.49G/3.47G [00:25<00:05, 187MB/s]
+[A
+
+Downloading AF2 weights:  72%|███████▏  | 2.51G/3.47G [00:25<00:05, 188MB/s]
+[A
+
+Downloading AF2 weights:  73%|███████▎  | 2.53G/3.47G [00:25<00:05, 193MB/s]
+[A
+
+Downloading AF2 weights:  73%|███████▎  | 2.55G/3.47G [00:25<00:04, 200MB/s]
+[A
+
+Downloading AF2 weights:  74%|███████▍  | 2.56G/3.47G [00:26<00:04, 201MB/s]
+[A
+
+Downloading AF2 weights:  75%|███████▍  | 2.58G/3.47G [00:26<00:04, 202MB/s]
+[A
+
+Downloading AF2 weights:  75%|███████▌  | 2.60G/3.47G [00:26<00:04, 205MB/s]
+[A
+
+Downloading AF2 weights:  76%|███████▌  | 2.62G/3.47G [00:26<00:04, 213MB/s]
+[A
+
+Downloading AF2 weights:  76%|███████▋  | 2.65G/3.47G [00:26<00:03, 224MB/s]
+[A
+
+Downloading AF2 weights:  77%|███████▋  | 2.67G/3.47G [00:26<00:03, 224MB/s]
+[A
+
+Downloading AF2 weights:  78%|███████▊  | 2.69G/3.47G [00:26<00:03, 233MB/s]
+[A
+
+Downloading AF2 weights:  78%|███████▊  | 2.72G/3.47G [00:26<00:03, 236MB/s]
+[A
+
+Downloading AF2 weights:  79%|███████▉  | 2.74G/3.47G [00:26<00:03, 235MB/s]
+[A
+
+Downloading AF2 weights:  80%|███████▉  | 2.76G/3.47G [00:26<00:03, 234MB/s]
+[A
+
+Downloading AF2 weights:  80%|████████  | 2.78G/3.47G [00:27<00:03, 230MB/s]
+[A
+
+Downloading AF2 weights:  81%|████████  | 2.80G/3.47G [00:27<00:03, 216MB/s]
+[A
+
+Downloading AF2 weights:  81%|████████▏ | 2.82G/3.47G [00:27<00:03, 216MB/s]
+[A
+
+Downloading AF2 weights:  82%|████████▏ | 2.84G/3.47G [00:27<00:03, 219MB/s]
+[A
+
+Downloading AF2 weights:  83%|████████▎ | 2.87G/3.47G [00:27<00:02, 224MB/s]
+[A
+
+Downloading AF2 weights:  83%|████████▎ | 2.89G/3.47G [00:27<00:02, 233MB/s]
+[A
+
+Downloading AF2 weights:  84%|████████▍ | 2.91G/3.47G [00:27<00:02, 235MB/s]
+[A
+
+Downloading AF2 weights:  85%|████████▍ | 2.93G/3.47G [00:27<00:02, 237MB/s]
+[A
+
+Downloading AF2 weights:  85%|████████▌ | 2.96G/3.47G [00:27<00:02, 231MB/s]
+[A
+
+Downloading AF2 weights:  86%|████████▌ | 2.98G/3.47G [00:27<00:02, 242MB/s]
+[A
+
+Downloading AF2 weights:  87%|████████▋ | 3.00G/3.47G [00:28<00:02, 174MB/s]
+[A
+
+Downloading AF2 weights:  87%|████████▋ | 3.02G/3.47G [00:28<00:02, 171MB/s]
+[A
+
+Downloading AF2 weights:  88%|████████▊ | 3.04G/3.47G [00:28<00:02, 179MB/s]
+[A
+
+Downloading AF2 weights:  88%|████████▊ | 3.06G/3.47G [00:28<00:02, 186MB/s]
+[A
+
+Downloading AF2 weights:  89%|████████▉ | 3.08G/3.47G [00:28<00:02, 185MB/s]
+[A
+
+Downloading AF2 weights:  89%|████████▉ | 3.10G/3.47G [00:28<00:02, 190MB/s]
+[A
+
+Downloading AF2 weights:  90%|████████▉ | 3.12G/3.47G [00:28<00:01, 194MB/s]
+[A
+
+Downloading AF2 weights:  90%|█████████ | 3.14G/3.47G [00:28<00:01, 197MB/s]
+[A
+
+Downloading AF2 weights:  91%|█████████ | 3.16G/3.47G [00:29<00:01, 211MB/s]
+[A
+
+Downloading AF2 weights:  92%|█████████▏| 3.18G/3.47G [00:29<00:01, 228MB/s]
+[A
+
+Downloading AF2 weights:  92%|█████████▏| 3.21G/3.47G [00:29<00:02, 139MB/s]
+[A
+
+Downloading AF2 weights:  93%|█████████▎| 3.22G/3.47G [00:29<00:02, 104MB/s]
+[A
+
+Downloading AF2 weights:  94%|█████████▎| 3.24G/3.47G [00:29<00:01, 126MB/s]
+[A
+
+Downloading AF2 weights:  94%|█████████▍| 3.26G/3.47G [00:30<00:02, 91.4MB/s]
+[A
+
+Downloading AF2 weights:  94%|█████████▍| 3.27G/3.47G [00:30<00:02, 101MB/s] 
+[A
+
+Downloading AF2 weights:  95%|█████████▍| 3.29G/3.47G [00:30<00:02, 80.0MB/s]
+[A
+
+Downloading AF2 weights:  95%|█████████▌| 3.30G/3.47G [00:30<00:01, 89.4MB/s]
+[A
+
+Downloading AF2 weights:  96%|█████████▌| 3.31G/3.47G [00:31<00:02, 67.8MB/s]
+[A
+
+Downloading AF2 weights:  96%|█████████▌| 3.33G/3.47G [00:31<00:01, 80.7MB/s]
+[A
+
+Downloading AF2 weights:  96%|█████████▌| 3.34G/3.47G [00:31<00:02, 61.6MB/s]
+[A
+
+Downloading AF2 weights:  97%|█████████▋| 3.35G/3.47G [00:31<00:01, 69.4MB/s]
+[A
+
+Downloading AF2 weights:  97%|█████████▋| 3.36G/3.47G [00:31<00:02, 56.6MB/s]
+[A
+
+Downloading AF2 weights:  97%|█████████▋| 3.36G/3.47G [00:32<00:02, 48.9MB/s]
+[A
+
+Downloading AF2 weights:  97%|█████████▋| 3.37G/3.47G [00:32<00:02, 48.4MB/s]
+[A
+
+Downloading AF2 weights:  97%|█████████▋| 3.37G/3.47G [00:32<00:02, 38.8MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.38G/3.47G [00:32<00:01, 47.1MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.39G/3.47G [00:32<00:02, 36.2MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.40G/3.47G [00:32<00:01, 45.4MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.40G/3.47G [00:33<00:01, 39.3MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.41G/3.47G [00:33<00:01, 44.2MB/s]
+[A
+
+Downloading AF2 weights:  98%|█████████▊| 3.41G/3.47G [00:33<00:01, 40.4MB/s]
+[A
+
+Downloading AF2 weights:  99%|█████████▉| 3.42G/3.47G [00:33<00:00, 56.2MB/s]
+[A
+
+Downloading AF2 weights:  99%|█████████▉| 3.44G/3.47G [00:33<00:00, 68.8MB/s]
+[A
+
+Downloading AF2 weights:  99%|█████████▉| 3.45G/3.47G [00:33<00:00, 84.2MB/s]
+[A
+
+Downloading AF2 weights: 100%|█████████▉| 3.46G/3.47G [00:33<00:00, 98.6MB/s]
+[A
+Downloading AF2 weights: 100%|██████████| 3.47G/3.47G [00:33<00:00, 110MB/s] 
+
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   0%|          | 1/200 [02:41<8:56:19, 161.71s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   1%|          | 2/200 [03:15<4:45:43, 86.58s/it] 
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   2%|▏         | 3/200 [03:51<3:27:30, 63.20s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   2%|▏         | 4/200 [04:25<2:49:56, 52.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   2%|▎         | 5/200 [05:00<2:28:58, 45.84s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   3%|▎         | 6/200 [05:36<2:16:35, 42.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   4%|▎         | 7/200 [06:11<2:08:29, 39.95s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   4%|▍         | 8/200 [06:46<2:02:49, 38.38s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   4%|▍         | 9/200 [07:21<1:58:40, 37.28s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   5%|▌         | 10/200 [07:56<1:55:59, 36.63s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   6%|▌         | 11/200 [08:31<1:54:00, 36.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   6%|▌         | 12/200 [09:06<1:52:20, 35.86s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   6%|▋         | 13/200 [09:41<1:51:00, 35.62s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   7%|▋         | 14/200 [10:16<1:49:54, 35.45s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   8%|▊         | 15/200 [10:51<1:48:55, 35.32s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   8%|▊         | 16/200 [11:26<1:48:04, 35.24s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   8%|▊         | 17/200 [12:01<1:47:18, 35.18s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:   9%|▉         | 18/200 [12:36<1:46:36, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  10%|▉         | 19/200 [13:12<1:45:55, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  10%|█         | 20/200 [13:47<1:45:22, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  10%|█         | 21/200 [14:22<1:44:51, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  11%|█         | 22/200 [14:57<1:44:19, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  12%|█▏        | 23/200 [15:32<1:43:49, 35.20s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  12%|█▏        | 24/200 [16:08<1:43:19, 35.22s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  12%|█▎        | 25/200 [16:43<1:42:46, 35.24s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  13%|█▎        | 26/200 [17:18<1:42:14, 35.26s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  14%|█▎        | 27/200 [17:53<1:41:37, 35.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  14%|█▍        | 28/200 [18:29<1:41:03, 35.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  14%|█▍        | 29/200 [19:04<1:40:28, 35.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  15%|█▌        | 30/200 [19:39<1:39:49, 35.23s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  16%|█▌        | 31/200 [20:14<1:38:53, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  16%|█▌        | 32/200 [20:49<1:38:31, 35.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  16%|█▋        | 33/200 [21:24<1:37:51, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  17%|█▋        | 34/200 [21:59<1:37:00, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  18%|█▊        | 35/200 [22:35<1:36:46, 35.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  18%|█▊        | 36/200 [23:10<1:35:56, 35.10s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  18%|█▊        | 37/200 [23:45<1:35:29, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  19%|█▉        | 38/200 [24:20<1:34:54, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  20%|█▉        | 39/200 [24:55<1:34:03, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  20%|██        | 40/200 [25:30<1:33:41, 35.13s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  20%|██        | 41/200 [26:05<1:33:08, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  21%|██        | 42/200 [26:40<1:32:20, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  22%|██▏       | 43/200 [27:15<1:31:38, 35.02s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  22%|██▏       | 44/200 [27:50<1:31:09, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  22%|██▎       | 45/200 [28:26<1:30:41, 35.10s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  23%|██▎       | 46/200 [29:01<1:29:59, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  24%|██▎       | 47/200 [29:36<1:29:24, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  24%|██▍       | 48/200 [30:11<1:28:53, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  24%|██▍       | 49/200 [30:46<1:28:22, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  25%|██▌       | 50/200 [31:21<1:27:49, 35.13s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  26%|██▌       | 51/200 [31:56<1:27:18, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  26%|██▌       | 52/200 [32:31<1:26:36, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  26%|██▋       | 53/200 [33:06<1:26:03, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  27%|██▋       | 54/200 [33:42<1:25:29, 35.13s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  28%|██▊       | 55/200 [34:17<1:25:00, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  28%|██▊       | 56/200 [34:52<1:24:34, 35.24s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  28%|██▊       | 57/200 [35:28<1:24:00, 35.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  29%|██▉       | 58/200 [36:02<1:23:12, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  30%|██▉       | 59/200 [36:37<1:22:28, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  30%|███       | 60/200 [37:12<1:21:51, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  30%|███       | 61/200 [37:48<1:21:15, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  31%|███       | 62/200 [38:23<1:20:53, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  32%|███▏      | 63/200 [38:58<1:20:05, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  32%|███▏      | 64/200 [39:33<1:19:30, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  32%|███▎      | 65/200 [40:08<1:19:01, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  33%|███▎      | 66/200 [40:43<1:18:35, 35.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  34%|███▎      | 67/200 [41:19<1:17:55, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  34%|███▍      | 68/200 [41:53<1:17:11, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  34%|███▍      | 69/200 [42:29<1:16:36, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  35%|███▌      | 70/200 [43:04<1:16:02, 35.10s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  36%|███▌      | 71/200 [43:39<1:15:26, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  36%|███▌      | 72/200 [44:14<1:14:54, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  36%|███▋      | 73/200 [44:49<1:14:23, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  37%|███▋      | 74/200 [45:24<1:13:51, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  38%|███▊      | 75/200 [46:00<1:13:20, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  38%|███▊      | 76/200 [46:35<1:12:48, 35.23s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  38%|███▊      | 77/200 [47:10<1:12:15, 35.25s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  39%|███▉      | 78/200 [47:45<1:11:41, 35.26s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  40%|███▉      | 79/200 [48:21<1:11:03, 35.23s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  40%|████      | 80/200 [48:56<1:10:19, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  40%|████      | 81/200 [49:31<1:09:39, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  41%|████      | 82/200 [50:06<1:09:03, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  42%|████▏     | 83/200 [50:41<1:08:31, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  42%|████▏     | 84/200 [51:16<1:08:00, 35.18s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  42%|████▎     | 85/200 [51:51<1:07:25, 35.18s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  43%|████▎     | 86/200 [52:27<1:06:52, 35.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  44%|████▎     | 87/200 [53:02<1:06:11, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  44%|████▍     | 88/200 [53:37<1:05:29, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  44%|████▍     | 89/200 [54:12<1:04:53, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  45%|████▌     | 90/200 [54:47<1:04:25, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  46%|████▌     | 91/200 [55:22<1:03:53, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  46%|████▌     | 92/200 [55:58<1:03:22, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  46%|████▋     | 93/200 [56:33<1:02:48, 35.22s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  47%|████▋     | 94/200 [57:08<1:02:17, 35.26s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  48%|████▊     | 95/200 [57:43<1:01:38, 35.23s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  48%|████▊     | 96/200 [58:18<1:01:01, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  48%|████▊     | 97/200 [58:54<1:00:22, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  49%|████▉     | 98/200 [59:29<59:42, 35.12s/it]  
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  50%|████▉     | 99/200 [1:00:04<59:10, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  50%|█████     | 100/200 [1:00:39<58:40, 35.20s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  50%|█████     | 101/200 [1:01:14<58:05, 35.20s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  51%|█████     | 102/200 [1:01:49<57:26, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  52%|█████▏    | 103/200 [1:02:24<56:49, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  52%|█████▏    | 104/200 [1:03:00<56:11, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  52%|█████▎    | 105/200 [1:03:35<55:34, 35.10s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  53%|█████▎    | 106/200 [1:04:10<54:58, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  54%|█████▎    | 107/200 [1:04:45<54:22, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  54%|█████▍    | 108/200 [1:05:20<53:45, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  55%|█████▍    | 109/200 [1:05:55<53:12, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  55%|█████▌    | 110/200 [1:06:30<52:37, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  56%|█████▌    | 111/200 [1:07:05<52:02, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  56%|█████▌    | 112/200 [1:07:40<51:25, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  56%|█████▋    | 113/200 [1:08:15<50:50, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  57%|█████▋    | 114/200 [1:08:50<50:16, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  57%|█████▊    | 115/200 [1:09:25<49:46, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  58%|█████▊    | 116/200 [1:10:01<49:13, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  58%|█████▊    | 117/200 [1:10:36<48:37, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  59%|█████▉    | 118/200 [1:11:11<48:00, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  60%|█████▉    | 119/200 [1:11:46<47:22, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  60%|██████    | 120/200 [1:12:21<46:44, 35.06s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  60%|██████    | 121/200 [1:12:56<46:07, 35.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  61%|██████    | 122/200 [1:13:31<45:30, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  62%|██████▏   | 123/200 [1:14:06<44:53, 34.99s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  62%|██████▏   | 124/200 [1:14:41<44:16, 34.96s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  62%|██████▎   | 125/200 [1:15:16<43:41, 34.95s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  63%|██████▎   | 126/200 [1:15:50<43:05, 34.94s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  64%|██████▎   | 127/200 [1:16:25<42:28, 34.91s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  64%|██████▍   | 128/200 [1:17:00<41:57, 34.97s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  64%|██████▍   | 129/200 [1:17:36<41:30, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  65%|██████▌   | 130/200 [1:18:11<40:59, 35.13s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  66%|██████▌   | 131/200 [1:18:46<40:26, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  66%|██████▌   | 132/200 [1:19:21<39:50, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  66%|██████▋   | 133/200 [1:19:56<39:11, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  67%|██████▋   | 134/200 [1:20:31<38:33, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  68%|██████▊   | 135/200 [1:21:06<37:57, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  68%|██████▊   | 136/200 [1:21:41<37:22, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  68%|██████▊   | 137/200 [1:22:16<36:49, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  69%|██████▉   | 138/200 [1:22:52<36:15, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  70%|██████▉   | 139/200 [1:23:27<35:41, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  70%|███████   | 140/200 [1:24:02<35:08, 35.14s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  70%|███████   | 141/200 [1:24:37<34:35, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  71%|███████   | 142/200 [1:25:13<34:01, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  72%|███████▏  | 143/200 [1:25:48<33:27, 35.22s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  72%|███████▏  | 144/200 [1:26:23<32:48, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  72%|███████▎  | 145/200 [1:26:58<32:09, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  73%|███████▎  | 146/200 [1:27:33<31:32, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  74%|███████▎  | 147/200 [1:28:08<30:56, 35.02s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  74%|███████▍  | 148/200 [1:28:43<30:21, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  74%|███████▍  | 149/200 [1:29:18<29:46, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  75%|███████▌  | 150/200 [1:29:53<29:11, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  76%|███████▌  | 151/200 [1:30:28<28:36, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  76%|███████▌  | 152/200 [1:31:03<28:02, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  76%|███████▋  | 153/200 [1:31:38<27:26, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  77%|███████▋  | 154/200 [1:32:13<26:52, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  78%|███████▊  | 155/200 [1:32:48<26:17, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  78%|███████▊  | 156/200 [1:33:23<25:42, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  78%|███████▊  | 157/200 [1:33:58<25:06, 35.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  79%|███████▉  | 158/200 [1:34:33<24:30, 35.02s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  80%|███████▉  | 159/200 [1:35:08<23:55, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  80%|████████  | 160/200 [1:35:43<23:20, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  80%|████████  | 161/200 [1:36:18<22:46, 35.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  81%|████████  | 162/200 [1:36:53<22:12, 35.08s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  82%|████████▏ | 163/200 [1:37:29<21:39, 35.12s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  82%|████████▏ | 164/200 [1:38:04<21:05, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  82%|████████▎ | 165/200 [1:38:39<20:30, 35.15s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  83%|████████▎ | 166/200 [1:39:14<19:53, 35.11s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  84%|████████▎ | 167/200 [1:39:49<19:16, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  84%|████████▍ | 168/200 [1:40:24<18:39, 34.99s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  84%|████████▍ | 169/200 [1:40:58<18:03, 34.94s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  85%|████████▌ | 170/200 [1:41:33<17:28, 34.94s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  86%|████████▌ | 171/200 [1:42:08<16:54, 34.98s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  86%|████████▌ | 172/200 [1:42:44<16:20, 35.02s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  86%|████████▋ | 173/200 [1:43:19<15:46, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  87%|████████▋ | 174/200 [1:43:54<15:11, 35.04s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  88%|████████▊ | 175/200 [1:44:29<14:35, 35.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  88%|████████▊ | 176/200 [1:45:04<13:59, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  88%|████████▊ | 177/200 [1:45:39<13:24, 34.97s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  89%|████████▉ | 178/200 [1:46:13<12:48, 34.91s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  90%|████████▉ | 179/200 [1:46:48<12:13, 34.91s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  90%|█████████ | 180/200 [1:47:23<11:39, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  90%|█████████ | 181/200 [1:47:59<11:06, 35.05s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  91%|█████████ | 182/200 [1:48:34<10:31, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  92%|█████████▏| 183/200 [1:49:09<09:57, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  92%|█████████▏| 184/200 [1:49:44<09:22, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  92%|█████████▎| 185/200 [1:50:19<08:47, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  93%|█████████▎| 186/200 [1:50:55<08:12, 35.16s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  94%|█████████▎| 187/200 [1:51:30<07:37, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  94%|█████████▍| 188/200 [1:52:05<07:02, 35.20s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  94%|█████████▍| 189/200 [1:52:40<06:27, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  95%|█████████▌| 190/200 [1:53:15<05:51, 35.19s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  96%|█████████▌| 191/200 [1:53:51<05:16, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  96%|█████████▌| 192/200 [1:54:26<04:41, 35.21s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  96%|█████████▋| 193/200 [1:55:01<04:06, 35.17s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  97%|█████████▋| 194/200 [1:55:36<03:30, 35.09s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  98%|█████████▊| 195/200 [1:56:11<02:54, 34.99s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  98%|█████████▊| 196/200 [1:56:46<02:19, 34.97s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  98%|█████████▊| 197/200 [1:57:21<01:44, 35.00s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...:  99%|█████████▉| 198/200 [1:57:56<01:10, 35.03s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...: 100%|█████████▉| 199/200 [1:58:31<00:35, 35.07s/it]
+INFO:bioemu.get_embeds:Using cached embeddings in /root/.bioemu_embeds_cache.
+Denoising:   0% 0/49 [00:00<?, ?it/s]
+Sampling batches...: 100%|██████████| 200/200 [1:59:06<00:00, 35.10s/it]
+Sampling batches...: 100%|██████████| 200/200 [1:59:06<00:00, 35.73s/it]
+
+Residues: 437
+Fallback used: False
+Graph: 190 nodes, 1561 edges
+Path intermediates: 4
+Shortest path: A -> bioemu_000169 -> bioemu_000161 -> bioemu_000000 -> bioemu_000178 -> B
+Total cost: 4.9026
+Wrote /content/runs/graph_outputs/P00889/1CTS_A__2CTS_A/n_200/experiment_summary.json and /content/runs/graph_outputs/P00889/1CTS_A__2CTS_A/n_200/graph.png
+Wrote path morph GIF: /content/runs/graph_outputs/P00889/1CTS_A__2CTS_A/n_200/path_morph.gif
+Wrote PyMOL path view script: /content/runs/graph_outputs/P00889/1CTS_A__2CTS_A/n_200/pymol_path/view_path.pml
+Wrote py3Dmol path view HTML: /content/runs/graph_outputs/P00889/1CTS_A__2CTS_A/n_200/py3dmol_path_view.html
+Completed result archive: /content/exports/P00889__1CTS_A__2CTS_A__n_200.zip
+BATCH_RESULT_JSON={"archive": "/content/exports/P00889__1CTS_A__2CTS_A__n_200.zip", "archive_sha256": "6c8b1cf9ea070be542e3408f3fb6efcf5edc66124e3275bc658bc2b350a5004b", "pair_id": "1CTS_A__2CTS_A", "path": ["A", "bioemu_000169", "bioemu_000161", "bioemu_000000", "bioemu_000178", "B"], "protein_id": "P00889", "requested_samples": 200, "retained_samples": 188, "total_cost": 4.902597000413287}
+Batch did not fully verify; leaving the Colab runtime connected for recovery.
+Traceback (most recent call last):
+  File "/Users/Archi/AA_Protein-Conformation-Guided-Random-Walk/parallel_bioemu_tools/scripts/run_vscode_colab_batch.py", line 123, in <module>
+    main()
+  File "/Users/Archi/AA_Protein-Conformation-Guided-Random-Walk/parallel_bioemu_tools/scripts/run_vscode_colab_batch.py", line 111, in main
+    results = run_vscode_colab_batch(
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Archi/AA_Protein-Conformation-Guided-Random-Walk/parallel_bioemu_tools/src/parallel_bioemu_tools/vscode_batch.py", line 169, in run_vscode_colab_batch
+    raise BatchControllerError(
+parallel_bioemu_tools.vscode_batch.BatchControllerError: Remote job completed without expected archive: /content/exports/P00889__1CTS_A__2CTS_A__n_200.zip

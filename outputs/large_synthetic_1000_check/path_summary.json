@@ -1,0 +1,53 @@
+{
+  "node_ids": [
+    "A",
+    "low_energy_01",
+    "low_energy_02",
+    "low_energy_03",
+    "low_energy_04",
+    "B"
+  ],
+  "total_cost": 20.602831806255757,
+  "edge_scores": [
+    {
+      "from": "A",
+      "to": "low_energy_01",
+      "weight": 2.0253463075831006,
+      "score": 2.0253463075831006,
+      "unnormalized_probability": 0.13194814063303906
+    },
+    {
+      "from": "low_energy_01",
+      "to": "low_energy_02",
+      "weight": 4.395452947499128,
+      "score": 4.395452947499128,
+      "unnormalized_probability": 0.012333292725985216
+    },
+    {
+      "from": "low_energy_02",
+      "to": "low_energy_03",
+      "weight": 4.668319222640915,
+      "score": 4.668319222640915,
+      "unnormalized_probability": 0.009388035471239765
+    },
+    {
+      "from": "low_energy_03",
+      "to": "low_energy_04",
+      "weight": 4.741890534815927,
+      "score": 4.741890534815927,
+      "unnormalized_probability": 0.00872214107727237
+    },
+    {
+      "from": "low_energy_04",
+      "to": "B",
+      "weight": 4.771822793716689,
+      "score": 4.771822793716689,
+      "unnormalized_probability": 0.008464936256084164
+    }
+  ],
+  "metadata": {
+    "n_path_nodes": 6,
+    "n_path_edges": 5,
+    "beta": 1.0
+  }
+}

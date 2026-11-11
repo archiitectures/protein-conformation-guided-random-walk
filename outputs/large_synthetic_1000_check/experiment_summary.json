@@ -1,0 +1,101 @@
+{
+  "fallback_used": true,
+  "n_nodes": 14,
+  "n_edges": 15,
+  "n_generated_nodes": 12,
+  "n_valid_nodes": 14,
+  "path_node_ids": [
+    "A",
+    "low_energy_01",
+    "low_energy_02",
+    "low_energy_03",
+    "low_energy_04",
+    "B"
+  ],
+  "path_families": [
+    "A_endpoint",
+    "low_energy",
+    "low_energy",
+    "low_energy",
+    "low_energy",
+    "B_endpoint"
+  ],
+  "path_intermediates": 4,
+  "total_cost": 20.602831806255757,
+  "route_family_costs": {
+    "high_detour": 54.10697605797339,
+    "low_energy": 20.602831806255757,
+    "medium_detour": 27.2995465310706
+  },
+  "generation_summaries": [],
+  "gaussian_only": {
+    "fallback_used": false,
+    "n_nodes": 82,
+    "n_edges": 3321,
+    "n_generated_nodes": 80,
+    "n_valid_nodes": 82,
+    "path_node_ids": [
+      "A",
+      "A_gen_017",
+      "B_gen_001",
+      "B"
+    ],
+    "path_families": [
+      "A_endpoint",
+      "A_generated",
+      "B_generated",
+      "B_endpoint"
+    ],
+    "path_intermediates": 2,
+    "total_cost": 99.93465918132645,
+    "route_family_costs": {},
+    "generation_summaries": [
+      {
+        "endpoint": "A",
+        "requested": 40,
+        "returned": 40,
+        "rejected": 33,
+        "attempted": 73,
+        "max_attempts": 800,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "endpoint": "B",
+        "requested": 40,
+        "returned": 40,
+        "rejected": 40,
+        "attempted": 80,
+        "max_attempts": 800,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "2 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      }
+    ]
+  },
+  "endpoint_validity": {
+    "A": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    },
+    "B": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    }
+  }
+}

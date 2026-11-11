@@ -1,0 +1,29 @@
+{
+  "node_ids": [
+    "A",
+    "bioemu_000000",
+    "B"
+  ],
+  "total_cost": 41.53468175892549,
+  "edge_scores": [
+    {
+      "from": "A",
+      "to": "bioemu_000000",
+      "weight": 36.06107527236537,
+      "score": 36.06107527236537,
+      "unnormalized_probability": 2.1820967261201717e-16
+    },
+    {
+      "from": "bioemu_000000",
+      "to": "B",
+      "weight": 5.473606486560115,
+      "score": 5.473606486560115,
+      "unnormalized_probability": 0.004196071760135542
+    }
+  ],
+  "metadata": {
+    "n_path_nodes": 3,
+    "n_path_edges": 2,
+    "beta": 1.0
+  }
+}

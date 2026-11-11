@@ -1,0 +1,222 @@
+{
+  "fallback_used": true,
+  "n_nodes": 14,
+  "n_edges": 15,
+  "n_generated_nodes": 12,
+  "n_valid_nodes": 2,
+  "path_node_ids": [
+    "A",
+    "low_energy_01",
+    "low_energy_02",
+    "low_energy_03",
+    "low_energy_04",
+    "B"
+  ],
+  "path_families": [
+    "A_endpoint",
+    "low_energy",
+    "low_energy",
+    "low_energy",
+    "low_energy",
+    "B_endpoint"
+  ],
+  "path_intermediates": 4,
+  "total_cost": 21.442211187859137,
+  "route_family_costs": {
+    "high_detour": 54.44306985226538,
+    "low_energy": 21.442211187859137,
+    "medium_detour": 29.276319233185696
+  },
+  "generation_summaries": [],
+  "config": {
+    "n_residues": 40,
+    "n_samples": 12,
+    "noise_scale": 0.15,
+    "seed": 7,
+    "recursive_max_iterations": 3,
+    "recursive_top_k": 2,
+    "recursive_samples_per_parent": 2,
+    "target_min_intermediates": 3,
+    "target_max_intermediates": 4,
+    "fallback_waypoints": 4,
+    "fallback_samples_per_waypoint": 0,
+    "fallback_noise_scale": 0.05,
+    "k_neighbors": 0,
+    "outputs_dir": "outputs/animation_smoke",
+    "write_nodes": false,
+    "write_pymol": false,
+    "write_py3dmol": false,
+    "write_animation": true,
+    "animation_frames_per_edge": 3,
+    "animation_fps": 5,
+    "animation_dpi": 72,
+    "graph_min_edge_weight": null,
+    "graph_max_edge_weight": null,
+    "graph_non_path_edge_alpha": 0.125
+  },
+  "input": {
+    "mode": "synthetic",
+    "n_residues": 40
+  },
+  "recursive_gaussian": {
+    "fallback_used": false,
+    "n_nodes": 14,
+    "n_edges": 91,
+    "n_generated_nodes": 12,
+    "n_valid_nodes": 14,
+    "path_node_ids": [
+      "A",
+      "A_rec_002",
+      "B_rec_001",
+      "B"
+    ],
+    "path_families": [
+      "A_endpoint",
+      "A_generated",
+      "B_generated",
+      "B_endpoint"
+    ],
+    "path_intermediates": 2,
+    "total_cost": 81.53767624076714,
+    "route_family_costs": {},
+    "generation_summaries": [
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "A",
+        "parent": "A",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 0,
+        "attempted": 2,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 1,
+        "side": "B",
+        "parent": "B",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 0,
+        "attempted": 2,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_001",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 0,
+        "attempted": 2,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_001",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 1,
+        "attempted": 3,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "A",
+        "parent": "A_rec_000",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 0,
+        "attempted": 2,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian",
+        "iteration": 2,
+        "side": "B",
+        "parent": "B_rec_000",
+        "requested": 2,
+        "returned": 2,
+        "rejected": 1,
+        "attempted": 3,
+        "max_attempts": 40,
+        "validity_enforced": true,
+        "last_rejection_messages": [
+          "1 consecutive C-alpha distances outside expected range"
+        ],
+        "validity_settings": {
+          "min_bond_distance": 2.5,
+          "max_bond_distance": 4.5,
+          "clash_distance": 2.0
+        }
+      },
+      {
+        "phase": "recursive_gaussian_summary",
+        "requested_total": 12,
+        "returned_total": 12,
+        "max_iterations": 3,
+        "top_k": 2,
+        "samples_per_parent": 2,
+        "returned_by_side": {
+          "A": 6,
+          "B": 6
+        }
+      }
+    ]
+  },
+  "endpoint_validity": {
+    "A": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    },
+    "B": {
+      "valid": true,
+      "score": 0.0,
+      "messages": []
+    }
+  },
+  "path_morph_gif": "outputs/animation_smoke/path_morph.gif"
+}

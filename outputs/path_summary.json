@@ -1,0 +1,21 @@
+{
+  "node_ids": [
+    "A",
+    "B"
+  ],
+  "total_cost": 2.098241343997743,
+  "edge_scores": [
+    {
+      "from": "A",
+      "to": "B",
+      "weight": 2.098241343997743,
+      "score": 2.098241343997743,
+      "unnormalized_probability": 0.12267197646756942
+    }
+  ],
+  "metadata": {
+    "n_path_nodes": 2,
+    "n_path_edges": 1,
+    "beta": 1.0
+  }
+}

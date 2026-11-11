@@ -1,0 +1,56 @@
+{
+  "updated_at": "2026-07-17T20:46:25.565862+00:00",
+  "phase": "complete",
+  "jobs": [
+    {
+      "protein_id": "Q13257",
+      "pair_id": "1DUJ_A__1S2H_A",
+      "n_samples": 200
+    },
+    {
+      "protein_id": "Q79V61",
+      "pair_id": "2QKE_A__5JYT_A",
+      "n_samples": 200
+    },
+    {
+      "protein_id": "P0AFW0",
+      "pair_id": "2OUG_A__2LCL_A",
+      "n_samples": 200
+    }
+  ],
+  "results": [
+    {
+      "protein_id": "Q13257",
+      "pair_id": "1DUJ_A__1S2H_A",
+      "requested_samples": 200,
+      "retained_samples": 176,
+      "graph_nodes": 178,
+      "graph_edges": 1623,
+      "path_node_count": 5,
+      "total_cost": 109.52155101667654,
+      "source": "remote_colab"
+    },
+    {
+      "protein_id": "Q79V61",
+      "pair_id": "2QKE_A__5JYT_A",
+      "requested_samples": 200,
+      "retained_samples": 146,
+      "graph_nodes": 148,
+      "graph_edges": 1188,
+      "path_node_count": 4,
+      "total_cost": 90.61093512497283,
+      "source": "remote_colab"
+    },
+    {
+      "protein_id": "P0AFW0",
+      "pair_id": "2OUG_A__2LCL_A",
+      "requested_samples": 200,
+      "retained_samples": 168,
+      "graph_nodes": 170,
+      "graph_edges": 1390,
+      "path_node_count": 5,
+      "total_cost": 112.75140277851811,
+      "source": "remote_colab"
+    }
+  ]
+}
